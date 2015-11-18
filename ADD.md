@@ -23,9 +23,20 @@ The user will open the app when they are looking for directions to the nearest b
 
 
 ####Views / View Controllers/ Classes
+•HomeViewController - map view with bus stations and your location
+•StationViewController - show map with with routes, which pass through that station, marked out. User can click on route to see detailed description
 
 ####Data Models
+Station: 
+  -ID
+  -GeoLocation
+  -[Routes]
 
+Route:
+  -ID
+  -Name
+  -Intersection?
+  
 ##MVP Milestones
 ####Week 1
 •Wireframe Model
