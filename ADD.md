@@ -15,6 +15,7 @@ The user will open the app when they are looking for directions to the nearest b
 ####External Services
 •Google Maps Api
 •Custom Flask Server
+•REST API from https://rwt.to/
 
 ####Screens
 •Splash/Intro screen - automatically move to the next screen.
