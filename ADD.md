@@ -2,13 +2,13 @@
 
 
 ##Objective
-Create an app that makes it easy for users to find the nearest bust stop. The app will also show where they can go from this bus stop or which routes to use to get to their desination.
+Create an app that makes it easy for users to find the nearest available public transport service which they can use to get from point A to point B. This will include Bus and Train services available.
 
 ##Audience
-People in the South Africa who are currently not using public transport because it is too complicated or hard to use. This can apply to people of all ages, but mostly from an upper middle class background who are not accustomed to using public transport.
+People in the South Africa who are currently not using public transport because it is too complicated or hard to use. And to those who only use the services they know how to. This can apply to people of all ages, but mostly from an upper middle class background who are not accustomed to using public transport.
 
 ##Experience
-The user will open the app when they are looking for directions to the nearest bus station. They will be greated by a splash screen and then a map with all the nearby bus stops will be displayed. Upon selecting a bus stop, a new screen will be shown with details about the routes that use that bus stop. The user can select a route to display it on a map and determine if it is suitable for them.
+The user will open the app when they are looking for guidance on how to use public transport to get to some destination. They will be greeted by a splash screen and then a map with all the nearby bus/train station will be displayed. Upon searching/selecting a destination, a new screen will be displayed showing the available routes the user can take to get there.
 
 ##Technical
 
@@ -16,11 +16,12 @@ The user will open the app when they are looking for directions to the nearest b
 •Google Maps Api
 •Custom Flask Server
 •REST API from https://rwt.to/
+•Parse if users are implemented
 
 ####Screens
 •Splash/Intro screen - automatically move to the next screen.
-•Home/Map screen - map showing bus stations and their location - clicking on a bus station will move them to the next screen.
-•Bus station screen - shows routes from bus station on a map.
+•Home/Map screen - map showing stations and their location - Clicking on or searching their destination will take them to the next screen
+•Route screen - shows routes available from location to destination.
 
 
 ####Views / View Controllers/ Classes
