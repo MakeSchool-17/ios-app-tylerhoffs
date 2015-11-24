@@ -486,6 +486,7 @@
 				652B95411C03E8DD00E0260C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		652B95421C03E8DD00E0260C /* Build configuration list for PBXNativeTarget "Transit WiseTests" */ = {
 			isa = XCConfigurationList;
@@ -494,6 +495,7 @@
 				652B95441C03E8DD00E0260C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		652B95451C03E8DD00E0260C /* Build configuration list for PBXNativeTarget "Transit WiseUITests" */ = {
 			isa = XCConfigurationList;
@@ -502,6 +504,7 @@
 				652B95471C03E8DD00E0260C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
