@@ -1,0 +1,522 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		652B95181C03E8DD00E0260C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B95171C03E8DD00E0260C /* AppDelegate.swift */; };
+		652B951A1C03E8DD00E0260C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B95191C03E8DD00E0260C /* ViewController.swift */; };
+		652B951D1C03E8DD00E0260C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 652B951B1C03E8DD00E0260C /* Main.storyboard */; };
+		652B95201C03E8DD00E0260C /* Transit_Wise.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 652B951E1C03E8DD00E0260C /* Transit_Wise.xcdatamodeld */; };
+		652B95221C03E8DD00E0260C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 652B95211C03E8DD00E0260C /* Assets.xcassets */; };
+		652B95251C03E8DD00E0260C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 652B95231C03E8DD00E0260C /* LaunchScreen.storyboard */; };
+		652B95301C03E8DD00E0260C /* Transit_WiseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B952F1C03E8DD00E0260C /* Transit_WiseTests.swift */; };
+		652B953B1C03E8DD00E0260C /* Transit_WiseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B953A1C03E8DD00E0260C /* Transit_WiseUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		652B952C1C03E8DD00E0260C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 652B950C1C03E8DD00E0260C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 652B95131C03E8DD00E0260C;
+			remoteInfo = "Transit Wise";
+		};
+		652B95371C03E8DD00E0260C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 652B950C1C03E8DD00E0260C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 652B95131C03E8DD00E0260C;
+			remoteInfo = "Transit Wise";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		652B95141C03E8DD00E0260C /* Transit Wise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Transit Wise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		652B95171C03E8DD00E0260C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		652B95191C03E8DD00E0260C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		652B951C1C03E8DD00E0260C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		652B951F1C03E8DD00E0260C /* Transit_Wise.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Transit_Wise.xcdatamodel; sourceTree = "<group>"; };
+		652B95211C03E8DD00E0260C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		652B95241C03E8DD00E0260C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		652B95261C03E8DD00E0260C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		652B952B1C03E8DD00E0260C /* Transit WiseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Transit WiseTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		652B952F1C03E8DD00E0260C /* Transit_WiseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transit_WiseTests.swift; sourceTree = "<group>"; };
+		652B95311C03E8DD00E0260C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		652B95361C03E8DD00E0260C /* Transit WiseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Transit WiseUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		652B953A1C03E8DD00E0260C /* Transit_WiseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transit_WiseUITests.swift; sourceTree = "<group>"; };
+		652B953C1C03E8DD00E0260C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		652B95111C03E8DD00E0260C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		652B95281C03E8DD00E0260C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		652B95331C03E8DD00E0260C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		652B950B1C03E8DD00E0260C = {
+			isa = PBXGroup;
+			children = (
+				652B95161C03E8DD00E0260C /* Transit Wise */,
+				652B952E1C03E8DD00E0260C /* Transit WiseTests */,
+				652B95391C03E8DD00E0260C /* Transit WiseUITests */,
+				652B95151C03E8DD00E0260C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		652B95151C03E8DD00E0260C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				652B95141C03E8DD00E0260C /* Transit Wise.app */,
+				652B952B1C03E8DD00E0260C /* Transit WiseTests.xctest */,
+				652B95361C03E8DD00E0260C /* Transit WiseUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		652B95161C03E8DD00E0260C /* Transit Wise */ = {
+			isa = PBXGroup;
+			children = (
+				652B95171C03E8DD00E0260C /* AppDelegate.swift */,
+				652B95191C03E8DD00E0260C /* ViewController.swift */,
+				652B951B1C03E8DD00E0260C /* Main.storyboard */,
+				652B95211C03E8DD00E0260C /* Assets.xcassets */,
+				652B95231C03E8DD00E0260C /* LaunchScreen.storyboard */,
+				652B95261C03E8DD00E0260C /* Info.plist */,
+				652B951E1C03E8DD00E0260C /* Transit_Wise.xcdatamodeld */,
+			);
+			path = "Transit Wise";
+			sourceTree = "<group>";
+		};
+		652B952E1C03E8DD00E0260C /* Transit WiseTests */ = {
+			isa = PBXGroup;
+			children = (
+				652B952F1C03E8DD00E0260C /* Transit_WiseTests.swift */,
+				652B95311C03E8DD00E0260C /* Info.plist */,
+			);
+			path = "Transit WiseTests";
+			sourceTree = "<group>";
+		};
+		652B95391C03E8DD00E0260C /* Transit WiseUITests */ = {
+			isa = PBXGroup;
+			children = (
+				652B953A1C03E8DD00E0260C /* Transit_WiseUITests.swift */,
+				652B953C1C03E8DD00E0260C /* Info.plist */,
+			);
+			path = "Transit WiseUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		652B95131C03E8DD00E0260C /* Transit Wise */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 652B953F1C03E8DD00E0260C /* Build configuration list for PBXNativeTarget "Transit Wise" */;
+			buildPhases = (
+				652B95101C03E8DD00E0260C /* Sources */,
+				652B95111C03E8DD00E0260C /* Frameworks */,
+				652B95121C03E8DD00E0260C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Transit Wise";
+			productName = "Transit Wise";
+			productReference = 652B95141C03E8DD00E0260C /* Transit Wise.app */;
+			productType = "com.apple.product-type.application";
+		};
+		652B952A1C03E8DD00E0260C /* Transit WiseTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 652B95421C03E8DD00E0260C /* Build configuration list for PBXNativeTarget "Transit WiseTests" */;
+			buildPhases = (
+				652B95271C03E8DD00E0260C /* Sources */,
+				652B95281C03E8DD00E0260C /* Frameworks */,
+				652B95291C03E8DD00E0260C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				652B952D1C03E8DD00E0260C /* PBXTargetDependency */,
+			);
+			name = "Transit WiseTests";
+			productName = "Transit WiseTests";
+			productReference = 652B952B1C03E8DD00E0260C /* Transit WiseTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		652B95351C03E8DD00E0260C /* Transit WiseUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 652B95451C03E8DD00E0260C /* Build configuration list for PBXNativeTarget "Transit WiseUITests" */;
+			buildPhases = (
+				652B95321C03E8DD00E0260C /* Sources */,
+				652B95331C03E8DD00E0260C /* Frameworks */,
+				652B95341C03E8DD00E0260C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				652B95381C03E8DD00E0260C /* PBXTargetDependency */,
+			);
+			name = "Transit WiseUITests";
+			productName = "Transit WiseUITests";
+			productReference = 652B95361C03E8DD00E0260C /* Transit WiseUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		652B950C1C03E8DD00E0260C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Transit Wise";
+				TargetAttributes = {
+					652B95131C03E8DD00E0260C = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+					652B952A1C03E8DD00E0260C = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = 652B95131C03E8DD00E0260C;
+					};
+					652B95351C03E8DD00E0260C = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = 652B95131C03E8DD00E0260C;
+					};
+				};
+			};
+			buildConfigurationList = 652B950F1C03E8DD00E0260C /* Build configuration list for PBXProject "Transit Wise" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 652B950B1C03E8DD00E0260C;
+			productRefGroup = 652B95151C03E8DD00E0260C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				652B95131C03E8DD00E0260C /* Transit Wise */,
+				652B952A1C03E8DD00E0260C /* Transit WiseTests */,
+				652B95351C03E8DD00E0260C /* Transit WiseUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		652B95121C03E8DD00E0260C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				652B95251C03E8DD00E0260C /* LaunchScreen.storyboard in Resources */,
+				652B95221C03E8DD00E0260C /* Assets.xcassets in Resources */,
+				652B951D1C03E8DD00E0260C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		652B95291C03E8DD00E0260C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		652B95341C03E8DD00E0260C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		652B95101C03E8DD00E0260C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				652B95201C03E8DD00E0260C /* Transit_Wise.xcdatamodeld in Sources */,
+				652B951A1C03E8DD00E0260C /* ViewController.swift in Sources */,
+				652B95181C03E8DD00E0260C /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		652B95271C03E8DD00E0260C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				652B95301C03E8DD00E0260C /* Transit_WiseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		652B95321C03E8DD00E0260C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				652B953B1C03E8DD00E0260C /* Transit_WiseUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		652B952D1C03E8DD00E0260C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 652B95131C03E8DD00E0260C /* Transit Wise */;
+			targetProxy = 652B952C1C03E8DD00E0260C /* PBXContainerItemProxy */;
+		};
+		652B95381C03E8DD00E0260C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 652B95131C03E8DD00E0260C /* Transit Wise */;
+			targetProxy = 652B95371C03E8DD00E0260C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		652B951B1C03E8DD00E0260C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				652B951C1C03E8DD00E0260C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		652B95231C03E8DD00E0260C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				652B95241C03E8DD00E0260C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		652B953D1C03E8DD00E0260C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		652B953E1C03E8DD00E0260C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		652B95401C03E8DD00E0260C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Transit Wise/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.transitwise.Transit-Wise";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		652B95411C03E8DD00E0260C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Transit Wise/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.transitwise.Transit-Wise";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		652B95431C03E8DD00E0260C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Transit WiseTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.transitwise.Transit-WiseTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Transit Wise.app/Transit Wise";
+			};
+			name = Debug;
+		};
+		652B95441C03E8DD00E0260C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Transit WiseTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.transitwise.Transit-WiseTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Transit Wise.app/Transit Wise";
+			};
+			name = Release;
+		};
+		652B95461C03E8DD00E0260C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Transit WiseUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.transitwise.Transit-WiseUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Transit Wise";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		652B95471C03E8DD00E0260C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Transit WiseUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.transitwise.Transit-WiseUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Transit Wise";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		652B950F1C03E8DD00E0260C /* Build configuration list for PBXProject "Transit Wise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				652B953D1C03E8DD00E0260C /* Debug */,
+				652B953E1C03E8DD00E0260C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		652B953F1C03E8DD00E0260C /* Build configuration list for PBXNativeTarget "Transit Wise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				652B95401C03E8DD00E0260C /* Debug */,
+				652B95411C03E8DD00E0260C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		652B95421C03E8DD00E0260C /* Build configuration list for PBXNativeTarget "Transit WiseTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				652B95431C03E8DD00E0260C /* Debug */,
+				652B95441C03E8DD00E0260C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		652B95451C03E8DD00E0260C /* Build configuration list for PBXNativeTarget "Transit WiseUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				652B95461C03E8DD00E0260C /* Debug */,
+				652B95471C03E8DD00E0260C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		652B951E1C03E8DD00E0260C /* Transit_Wise.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				652B951F1C03E8DD00E0260C /* Transit_Wise.xcdatamodel */,
+			);
+			currentVersion = 652B951F1C03E8DD00E0260C /* Transit_Wise.xcdatamodel */;
+			path = Transit_Wise.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 652B950C1C03E8DD00E0260C /* Project object */;
+}
