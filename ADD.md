@@ -1,3 +1,5 @@
+Planning: https://docs.google.com/spreadsheets/d/1-IO_4kZzq9tRX8e6ZM2k91JYdhKrvihPDY2oYWoJMZc/edit?usp=sharing
+
 #App Design Document
 
 
