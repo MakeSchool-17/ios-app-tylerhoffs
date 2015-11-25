@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		652841DF1C063EE30073F60E /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841DE1C063EE30073F60E /* Trip.swift */; };
+		652841E31C06417C0073F60E /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841E21C06417C0073F60E /* Time.swift */; };
+		652841E51C0641DF0073F60E /* TravelDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841E41C0641DF0073F60E /* TravelDetails.swift */; };
+		652841E91C06425D0073F60E /* Leg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841E81C06425D0073F60E /* Leg.swift */; };
+		652841EB1C0642850073F60E /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841EA1C0642850073F60E /* Path.swift */; };
+		652841ED1C0643920073F60E /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841EC1C0643920073F60E /* Station.swift */; };
+		652841EF1C0643A20073F60E /* _Stations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841EE1C0643A20073F60E /* _Stations.swift */; };
+		652841F11C0644150073F60E /* Agency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841F01C0644150073F60E /* Agency.swift */; };
 		652B95181C03E8DD00E0260C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B95171C03E8DD00E0260C /* AppDelegate.swift */; };
 		652B951A1C03E8DD00E0260C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B95191C03E8DD00E0260C /* ViewController.swift */; };
 		652B951D1C03E8DD00E0260C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 652B951B1C03E8DD00E0260C /* Main.storyboard */; };
@@ -35,6 +43,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		652841DE1C063EE30073F60E /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		652841E21C06417C0073F60E /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		652841E41C0641DF0073F60E /* TravelDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TravelDetails.swift; sourceTree = "<group>"; };
+		652841E81C06425D0073F60E /* Leg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Leg.swift; sourceTree = "<group>"; };
+		652841EA1C0642850073F60E /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		652841EC1C0643920073F60E /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
+		652841EE1C0643A20073F60E /* _Stations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Stations.swift; sourceTree = "<group>"; };
+		652841F01C0644150073F60E /* Agency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Agency.swift; sourceTree = "<group>"; };
 		652B95141C03E8DD00E0260C /* Transit Wise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Transit Wise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		652B95171C03E8DD00E0260C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		652B95191C03E8DD00E0260C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +92,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		652841D71C063E650073F60E /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				652841DE1C063EE30073F60E /* Trip.swift */,
+				652841E21C06417C0073F60E /* Time.swift */,
+				652841E41C0641DF0073F60E /* TravelDetails.swift */,
+				652841E81C06425D0073F60E /* Leg.swift */,
+				652841EA1C0642850073F60E /* Path.swift */,
+				652841EC1C0643920073F60E /* Station.swift */,
+				652841EE1C0643A20073F60E /* _Stations.swift */,
+				652841F01C0644150073F60E /* Agency.swift */,
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
+		652841D81C063E650073F60E /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		652B950B1C03E8DD00E0260C = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +137,8 @@
 		652B95161C03E8DD00E0260C /* Transit Wise */ = {
 			isa = PBXGroup;
 			children = (
+				652841D71C063E650073F60E /* DataModel */,
+				652841D81C063E650073F60E /* ViewControllers */,
 				652B95171C03E8DD00E0260C /* AppDelegate.swift */,
 				652B95191C03E8DD00E0260C /* ViewController.swift */,
 				652B951B1C03E8DD00E0260C /* Main.storyboard */,
@@ -259,8 +299,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				652841F11C0644150073F60E /* Agency.swift in Sources */,
+				652841E31C06417C0073F60E /* Time.swift in Sources */,
+				652841DF1C063EE30073F60E /* Trip.swift in Sources */,
 				652B95201C03E8DD00E0260C /* Transit_Wise.xcdatamodeld in Sources */,
 				652B951A1C03E8DD00E0260C /* ViewController.swift in Sources */,
+				652841EF1C0643A20073F60E /* _Stations.swift in Sources */,
+				652841E51C0641DF0073F60E /* TravelDetails.swift in Sources */,
+				652841ED1C0643920073F60E /* Station.swift in Sources */,
+				652841E91C06425D0073F60E /* Leg.swift in Sources */,
+				652841EB1C0642850073F60E /* Path.swift in Sources */,
 				652B95181C03E8DD00E0260C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
