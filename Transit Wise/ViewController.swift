@@ -8,10 +8,10 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var responseLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +24,16 @@ class ViewController: UIViewController {
                         "time": 900,
                         "_csrf": "Unathi Xcode"]
         
-        Alamofire.request(.POST, "https://rwt.to/api/site/directions", parameters: parameters, encoding: .JSON, headers: headers).responseJSON { (response) -> Void in
-            self.responseLabel.text = String(response)
+        Alamofire.request(.POST, "https://rwt.to/api/site/directions", parameters: parameters, encoding: .JSON, headers: headers).validate().responseJSON { response in
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    print("JSON: \(json["result"]["cost"])")
+                }
+            case .Failure(let error):
+                print(error)
+            }
         }
     }
 
