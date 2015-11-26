@@ -15,6 +15,7 @@
 		652841ED1C0643920073F60E /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841EC1C0643920073F60E /* Station.swift */; };
 		652841EF1C0643A20073F60E /* _Stations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841EE1C0643A20073F60E /* _Stations.swift */; };
 		652841F11C0644150073F60E /* Agency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841F01C0644150073F60E /* Agency.swift */; };
+		652AF3471C067ED000FE6B15 /* RwtTo Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AF3461C067ED000FE6B15 /* RwtTo Client.swift */; };
 		652B95181C03E8DD00E0260C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B95171C03E8DD00E0260C /* AppDelegate.swift */; };
 		652B951A1C03E8DD00E0260C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B95191C03E8DD00E0260C /* ViewController.swift */; };
 		652B951D1C03E8DD00E0260C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 652B951B1C03E8DD00E0260C /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 		652B95251C03E8DD00E0260C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 652B95231C03E8DD00E0260C /* LaunchScreen.storyboard */; };
 		652B95301C03E8DD00E0260C /* Transit_WiseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B952F1C03E8DD00E0260C /* Transit_WiseTests.swift */; };
 		652B953B1C03E8DD00E0260C /* Transit_WiseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B953A1C03E8DD00E0260C /* Transit_WiseUITests.swift */; };
+		F7913DA1FC6013CC2396FD62 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDCA809ED0904DE324696911 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,7 @@
 		652841EC1C0643920073F60E /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		652841EE1C0643A20073F60E /* _Stations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Stations.swift; sourceTree = "<group>"; };
 		652841F01C0644150073F60E /* Agency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Agency.swift; sourceTree = "<group>"; };
+		652AF3461C067ED000FE6B15 /* RwtTo Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RwtTo Client.swift"; sourceTree = "<group>"; };
 		652B95141C03E8DD00E0260C /* Transit Wise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Transit Wise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		652B95171C03E8DD00E0260C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		652B95191C03E8DD00E0260C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +68,9 @@
 		652B95361C03E8DD00E0260C /* Transit WiseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Transit WiseUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		652B953A1C03E8DD00E0260C /* Transit_WiseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transit_WiseUITests.swift; sourceTree = "<group>"; };
 		652B953C1C03E8DD00E0260C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDCA809ED0904DE324696911 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E421AE51979370E378DE434E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		F2496C59D79244E7767BBC87 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7913DA1FC6013CC2396FD62 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,10 +99,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		020CC95283D7508C0674CA90 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BDCA809ED0904DE324696911 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4F361B299005BF9B995AB721 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F2496C59D79244E7767BBC87 /* Pods.debug.xcconfig */,
+				E421AE51979370E378DE434E /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		652841D71C063E650073F60E /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
 				652841DE1C063EE30073F60E /* Trip.swift */,
+				652AF3461C067ED000FE6B15 /* RwtTo Client.swift */,
 				652841E21C06417C0073F60E /* Time.swift */,
 				652841E41C0641DF0073F60E /* TravelDetails.swift */,
 				652841E81C06425D0073F60E /* Leg.swift */,
@@ -121,6 +146,8 @@
 				652B952E1C03E8DD00E0260C /* Transit WiseTests */,
 				652B95391C03E8DD00E0260C /* Transit WiseUITests */,
 				652B95151C03E8DD00E0260C /* Products */,
+				4F361B299005BF9B995AB721 /* Pods */,
+				020CC95283D7508C0674CA90 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -175,9 +202,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 652B953F1C03E8DD00E0260C /* Build configuration list for PBXNativeTarget "Transit Wise" */;
 			buildPhases = (
+				A092347576F842341179C62F /* Check Pods Manifest.lock */,
 				652B95101C03E8DD00E0260C /* Sources */,
 				652B95111C03E8DD00E0260C /* Frameworks */,
 				652B95121C03E8DD00E0260C /* Resources */,
+				0F2E62C619CABD13A6A0FE42 /* Embed Pods Frameworks */,
+				83EA3EA3F9372705D0C19902 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -294,6 +324,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0F2E62C619CABD13A6A0FE42 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		83EA3EA3F9372705D0C19902 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A092347576F842341179C62F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		652B95101C03E8DD00E0260C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -307,6 +385,7 @@
 				652841EF1C0643A20073F60E /* _Stations.swift in Sources */,
 				652841E51C0641DF0073F60E /* TravelDetails.swift in Sources */,
 				652841ED1C0643920073F60E /* Station.swift in Sources */,
+				652AF3471C067ED000FE6B15 /* RwtTo Client.swift in Sources */,
 				652841E91C06425D0073F60E /* Leg.swift in Sources */,
 				652841EB1C0642850073F60E /* Path.swift in Sources */,
 				652B95181C03E8DD00E0260C /* AppDelegate.swift in Sources */,
@@ -447,6 +526,7 @@
 		};
 		652B95401C03E8DD00E0260C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F2496C59D79244E7767BBC87 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Transit Wise/Info.plist";
@@ -458,6 +538,7 @@
 		};
 		652B95411C03E8DD00E0260C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E421AE51979370E378DE434E /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Transit Wise/Info.plist";
