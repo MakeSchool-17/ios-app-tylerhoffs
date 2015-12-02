@@ -11,30 +11,30 @@ import Alamofire
 import SwiftyJSON
 
 class ViewController: UIViewController {
+    
+    let apiClient = RwtToApiClient()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let headers = ["app": "testing", "Content-Type": "application/json"]
-        let parameters = ["start": ["loc": [-25.7561672,28.2289275], "name": "University of Pretoria - Hatfield Campus Main Entrance, Pretoria, Gauteng, South Africa"],
-                        "end": ["loc": [-25.7500498,28.1688913], "name": "Pretoria Central, Pretoria, Gauteng, South Africa"],
-                        "options": ["exclude": ["agencies": [], "cats":[]]],
-                        "time": 900,
-                        "_csrf": "Unathi Xcode"]
-        
-        Alamofire.request(.POST, "https://rwt.to/api/site/directions", parameters: parameters, encoding: .JSON, headers: headers).validate().responseJSON { response in
+        let request = apiClient.callAPI()
+        let myTrip = Trip()
+        request.validate().responseJSON { response in
             switch response.result {
-            case .Success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    print("JSON: \(json["result"]["cost"])")
+                case .Success:
+                    if let value = response.result.value {
+                        let json = JSON(value)
+                        self.apiClient.sendJSONtoTrip(json, trip: myTrip)
+                        print(myTrip.cost)
+                    }
+                case .Failure(let error):
+                    print(error)
                 }
-            case .Failure(let error):
-                print(error)
-            }
         }
+
+        
     }
 
     override func didReceiveMemoryWarning() {

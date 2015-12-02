@@ -13,15 +13,29 @@ class TravelDetails {
     class Transit {
         var distance: Float?
         var time: Int?
+        
+        init(distance: Float, time: Int){
+            self.distance = distance
+            self.time = time
+        }
     }
     
     class Walk {
         var distance: Float?
         var time: Int?
+        
+        init(distance: Float, time: Int){
+            self.distance = distance
+            self.time = time
+        }
     }
     
     class Wait {
         var time: Int?
+        
+        init(time: Int){
+            self.time = time
+        }
     }
     
     var transit: Transit?
@@ -38,7 +52,10 @@ class TravelDetails {
      - parameter wait_time:        (wait-> time)
      
      */
-    init(transit_distance: Float?, transit_time: Int?, walk_distance: Float?, walk_time: Int?, wait_time: Int?){
+    init(transit_distance: Float, transit_time: Int, walk_distance: Float, walk_time: Int, wait_time: Int){
+        self.transit = Transit(distance: transit_distance, time: transit_time)
+        self.walk = Walk(distance: walk_distance, time: walk_time)
+        self.wait = Wait(time: wait_time)
         
     }
     

@@ -56,7 +56,7 @@
 		652AF3461C067ED000FE6B15 /* RwtTo Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RwtTo Client.swift"; sourceTree = "<group>"; };
 		652B95141C03E8DD00E0260C /* Transit Wise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Transit Wise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		652B95171C03E8DD00E0260C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		652B95191C03E8DD00E0260C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		652B95191C03E8DD00E0260C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../ViewController.swift; sourceTree = "<group>"; };
 		652B951C1C03E8DD00E0260C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		652B951F1C03E8DD00E0260C /* Transit_Wise.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Transit_Wise.xcdatamodel; sourceTree = "<group>"; };
 		652B95211C03E8DD00E0260C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -135,6 +135,7 @@
 		652841D81C063E650073F60E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				652B95191C03E8DD00E0260C /* ViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -167,7 +168,6 @@
 				652841D71C063E650073F60E /* DataModel */,
 				652841D81C063E650073F60E /* ViewControllers */,
 				652B95171C03E8DD00E0260C /* AppDelegate.swift */,
-				652B95191C03E8DD00E0260C /* ViewController.swift */,
 				652B951B1C03E8DD00E0260C /* Main.storyboard */,
 				652B95211C03E8DD00E0260C /* Assets.xcassets */,
 				652B95231C03E8DD00E0260C /* LaunchScreen.storyboard */,
@@ -529,6 +529,7 @@
 			baseConfigurationReference = F2496C59D79244E7767BBC87 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Transit Wise/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.transitwise.Transit-Wise";
@@ -541,6 +542,7 @@
 			baseConfigurationReference = E421AE51979370E378DE434E /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Transit Wise/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.transitwise.Transit-Wise";
