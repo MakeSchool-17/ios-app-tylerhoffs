@@ -61,32 +61,32 @@ class Leg {
      Walking leg Initializer
      */
     init(path: Path, instruction: String, pathType: String, station: String, distance: Float, time: Time){
-        self.path = path
+        self.path         = path
         self.instructions = instruction
-        self.pathType = pathType
-        self.station = station
-        self.distance = distance
-        self.time = time
+        self.pathType     = pathType
+        self.station      = station
+        self.distance     = distance
+        self.time         = time
     }
-    
+
     /**
      Rail/Bus leg convenience Initializer
      */
     convenience init(path: Path, instruction: String, pathType: String, station: String, distance: Float, time: Time, bgColour: BgColour, _stations: _Stations, dest: String, fromName: String, toName: String, route: String, service: String, transfers: Bool, agency: Agency, cost: Float, discounted: Bool){
         self.init(path: path,instruction: instruction, pathType: pathType, station: station, distance: distance, time: time)
-        
-        self.bgColour = bgColour
-        self._stations = _stations
-        self.dest = dest
-        self.fromName = fromName
-        self.toName = toName
-        self.route = route
-        self.service = service
-        self.transfers = transfers
-        self.agency = agency
-        self.cost = cost
-        self.discounted = discounted
-        
+
+        self.bgColour     = bgColour
+        self._stations    = _stations
+        self.dest         = dest
+        self.fromName     = fromName
+        self.toName       = toName
+        self.route        = route
+        self.service      = service
+        self.transfers    = transfers
+        self.agency       = agency
+        self.cost         = cost
+        self.discounted   = discounted
+
     }
 
 }

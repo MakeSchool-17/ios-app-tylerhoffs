@@ -32,12 +32,12 @@ class Time {
      
      */
     init(start: Int, end: Int, duration: Int, format_start: String, format_end: String, format_duration: String, format_wait: String){
-        self.start = start
-        self.end = end
-        self.duration = duration
-        self.format_start = format_start
-        self.format_end = format_end
+        self.start           = start
+        self.end             = end
+        self.duration        = duration
+        self.format_start    = format_start
+        self.format_end      = format_end
         self.format_duration = format_duration
-        self.format_wait = format_wait
+        self.format_wait     = format_wait
     }
 }

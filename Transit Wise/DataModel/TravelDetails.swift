@@ -54,8 +54,8 @@ class TravelDetails {
      */
     init(transit_distance: Float, transit_time: Int, walk_distance: Float, walk_time: Int, wait_time: Int){
         self.transit = Transit(distance: transit_distance, time: transit_time)
-        self.walk = Walk(distance: walk_distance, time: walk_time)
-        self.wait = Wait(time: wait_time)
+        self.walk    = Walk(distance: walk_distance, time: walk_time)
+        self.wait    = Wait(time: wait_time)
         
     }
     

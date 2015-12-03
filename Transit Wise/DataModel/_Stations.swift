@@ -12,10 +12,10 @@ class _Stations {
     var start: Station?
     var points: [Station]?
     var end: Station?
-    
+
     init(start: Station?, points: [Station]?, end: Station?){
-        self.start = start
+        self.start  = start
         self.points = points
-        self.end = end
+        self.end    = end
     }
 }
