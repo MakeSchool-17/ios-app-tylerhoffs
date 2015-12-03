@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 /// A single leg of the trip
 class Leg {
@@ -28,10 +29,10 @@ class Leg {
          - parameter B: (bg->[2])
          
          */
-        init(red R: Int, green G: Int, blue B: Int){
-            self.Red   = R
-            self.Green = G
-            self.Blue  = B
+        init(json: JSON){
+            self.Red   = json[0].intValue
+            self.Green = json[1].intValue
+            self.Blue  = json[2].intValue
         }
     }
 
@@ -71,9 +72,20 @@ class Leg {
     /**
      Rail/Bus leg convenience Initializer
      */
-    convenience init(path: Path, instruction: String, pathType: String, station: String, distance: Float, time: Time, bgColour: BgColour, _stations: _Stations, dest: String, fromName: String, toName: String, route: String, service: String, transfers: Bool, agency: Agency, cost: Float, discounted: String){
+    convenience init(path: Path, instruction: String, pathType: String, station: String, distance: Float, time: Time, bgColour: BgColour, _stations: _Stations, dest: String, fromName: String, toName: String, route: String, service: String, transfers: Bool, agency: Agency, cost: Float, discounted: Bool){
         self.init(path: path,instruction: instruction, pathType: pathType, station: station, distance: distance, time: time)
         
+        self.bgColour = bgColour
+        self._stations = _stations
+        self.dest = dest
+        self.fromName = fromName
+        self.toName = toName
+        self.route = route
+        self.service = service
+        self.transfers = transfers
+        self.agency = agency
+        self.cost = cost
+        self.discounted = discounted
         
     }
 

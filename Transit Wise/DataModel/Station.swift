@@ -14,6 +14,7 @@ class Station {
     var name: String?
     var order: Int?
     var zone: Int?
+    var region: String?
     var attrib: String?
     
     /**
@@ -26,8 +27,21 @@ class Station {
      - parameter zone:     used for fare calculation
      
      */
-    init(_id: String?, location: Path.Coordinates?, name: String?, order: Int?, zone: Int?, region: String?){
-            
+    init(_id: String, location: Path.Coordinates, name: String, order: Int, zone: Int, region: String?, attrib: String?){
+        self._id = _id
+        self.location = location
+        self.name = name
+        self.order = order
+        self.zone = zone
+        
+        if let reg = region{
+            self.region = reg
+        }
+        
+        if let att = attrib{
+            self.attrib = att
+        }
+        
     }
     
 }
