@@ -9,8 +9,9 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import GoogleMaps
 
-class RwtToApiClient{
+class RwtToAPIHelper{
     
 //MARK: API Calls
     
@@ -87,6 +88,46 @@ class RwtToApiClient{
         trip.JSONinit(json)
     }
     
-    
+    /**
+     Draw Path on Google Map View
+     
+     - parameter trip:    Trip object reference to the trip that contains the path
+     - parameter mapView: MapView that the path should be drawn on.
+     */
+    func attachPathToMapView(trip: Trip, mapView: GMSMapView){
+        
+        for leg in trip.legs!{
+            let path = GMSMutablePath()
+            
+            if leg.pathType == "Walk"{
+                //TODO: Get Walking path from Google Walking API
+                for point in (leg.path?.points)!{
+                    path.addLatitude(point.lat!, longitude: point.long!)
+                }//FIXME: Remove this for
+            }else{
+                for point in (leg.path?.points)!{
+                    path.addLatitude(point.lat!, longitude: point.long!)
+                }
+            }
+
+            let polyline = GMSPolyline(path: path)
+            
+            switch leg.pathType!{
+                case "Walk":
+                    polyline.strokeColor = UIColor.greenColor()
+                case "Bus":
+                    polyline.strokeColor = UIColor.blueColor()
+                case "Rail":
+                    polyline.strokeColor = UIColor.yellowColor()
+                default:
+                    polyline.strokeColor = UIColor.blueColor()
+                
+            }
+            
+            polyline.strokeWidth = 3.5
+            polyline.map = mapView
+        }
+        
+    }
 
 }

@@ -15,12 +15,12 @@ class Path{
      *  Class representing coordinates. Could be replaced by Native class depending on Map system chosen
      */
     class Coordinates{
-        var long: String?
-        var lat: String?
+        var long: Double?
+        var lat: Double?
 
         init(coord: JSON){
-        self.lat    = coord[0].stringValue
-        self.long   = coord[1].stringValue
+        self.lat    = coord[0].doubleValue
+        self.long   = coord[1].doubleValue
         }
     }
 

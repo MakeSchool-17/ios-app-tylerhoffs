@@ -9,14 +9,22 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import GoogleMaps
 
 class ViewController: UIViewController {
     
-    let apiClient = RwtToApiClient()
+    let apiClient = RwtToAPIHelper()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let camera = GMSCameraPosition.cameraWithLatitude(-25.7561672,
+            longitude:28.2289275, zoom:12, bearing: 30, viewingAngle:60)
+        let mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
+        
+        
+        self.view = mapView
         // Do any additional setup after loading the view, typically from a nib.
         
         let startName = "University of Pretoria - Hatfield Campus Main Entrance, Pretoria, Gauteng, South Africa"
@@ -31,13 +39,14 @@ class ViewController: UIViewController {
                     if let value = response.result.value {
                         let json = JSON(value)
                         self.apiClient.sendJSONtoTrip(json, trip: myTrip)
+                        self.apiClient.attachPathToMapView(myTrip, mapView: mapView)
                         print(myTrip.cost)
                     }
                 case .Failure(let error):
                     print(error)
                 }
         }
-
+        
         
     }
 
