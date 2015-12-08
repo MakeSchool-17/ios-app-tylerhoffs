@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		215379E71C161B5D0069500B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215379E61C161B5D0069500B /* HomeViewController.swift */; };
 		652841DF1C063EE30073F60E /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841DE1C063EE30073F60E /* Trip.swift */; };
 		652841E31C06417C0073F60E /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841E21C06417C0073F60E /* Time.swift */; };
 		652841E51C0641DF0073F60E /* TravelDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841E41C0641DF0073F60E /* TravelDetails.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		215379E61C161B5D0069500B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		652841DE1C063EE30073F60E /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		652841E21C06417C0073F60E /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		652841E41C0641DF0073F60E /* TravelDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TravelDetails.swift; sourceTree = "<group>"; };
@@ -56,7 +58,7 @@
 		652AF3461C067ED000FE6B15 /* RwtToAPIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RwtToAPIHelper.swift; path = DataModel/RwtToAPIHelper.swift; sourceTree = "<group>"; };
 		652B95141C03E8DD00E0260C /* Transit Wise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Transit Wise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		652B95171C03E8DD00E0260C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		652B95191C03E8DD00E0260C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../ViewController.swift; sourceTree = "<group>"; };
+		652B95191C03E8DD00E0260C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		652B951C1C03E8DD00E0260C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		652B951F1C03E8DD00E0260C /* Transit_Wise.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Transit_Wise.xcdatamodel; sourceTree = "<group>"; };
 		652B95211C03E8DD00E0260C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -107,6 +109,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		215379E11C161AC00069500B /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				215379E61C161B5D0069500B /* HomeViewController.swift */,
+			);
+			name = ViewControllers;
+			path = "Transit Wise/ViewControllers";
+			sourceTree = SOURCE_ROOT;
+		};
 		4F361B299005BF9B995AB721 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,14 +140,6 @@
 				652841F01C0644150073F60E /* Agency.swift */,
 			);
 			path = DataModel;
-			sourceTree = "<group>";
-		};
-		652841D81C063E650073F60E /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				652B95191C03E8DD00E0260C /* ViewController.swift */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		652B950B1C03E8DD00E0260C = {
@@ -165,8 +168,9 @@
 			isa = PBXGroup;
 			children = (
 				652AF3461C067ED000FE6B15 /* RwtToAPIHelper.swift */,
+				652B95191C03E8DD00E0260C /* ViewController.swift */,
+				215379E11C161AC00069500B /* ViewControllers */,
 				652841D71C063E650073F60E /* DataModel */,
-				652841D81C063E650073F60E /* ViewControllers */,
 				652B95171C03E8DD00E0260C /* AppDelegate.swift */,
 				652B951B1C03E8DD00E0260C /* Main.storyboard */,
 				652B95211C03E8DD00E0260C /* Assets.xcassets */,
@@ -388,6 +392,7 @@
 				652AF3471C067ED000FE6B15 /* RwtToAPIHelper.swift in Sources */,
 				652841E91C06425D0073F60E /* Leg.swift in Sources */,
 				652841EB1C0642850073F60E /* Path.swift in Sources */,
+				215379E71C161B5D0069500B /* HomeViewController.swift in Sources */,
 				652B95181C03E8DD00E0260C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,3 +8,5 @@ pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 platform :ios, '8.1'
 pod 'GoogleMaps'
 xcodeproj 'Transit Wise.xcodeproj'
+
+pod 'MXParallaxHeader'
