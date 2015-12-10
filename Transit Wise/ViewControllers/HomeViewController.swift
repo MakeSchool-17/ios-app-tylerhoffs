@@ -23,8 +23,6 @@ class HomeViewController: UIViewController {
         
         // Parallax Header
         let header = mapView
-        //header.image = UIImage(named:"success-baby")
-        //header.contentMode = UIViewContentMode.ScaleAspectFill
         
         mainTableView.parallaxHeader.view = header
         mainTableView.parallaxHeader.height = 400
@@ -43,6 +41,18 @@ class HomeViewController: UIViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         cell.textLabel!.text = String(format: "Height %ld", indexPath.row * 10)
         return cell
+    }
+    
+    // MARK: - Table view delegate
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        mainTableView.parallaxHeader.height = CGFloat(indexPath.row * 10)
+    }
+    
+    // MARK: - Scroll view delegate
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        NSLog("progress %f", scrollView.parallaxHeader.progress)
     }
     
     
