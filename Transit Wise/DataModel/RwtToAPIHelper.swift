@@ -37,7 +37,7 @@ class RwtToAPIHelper{
                             ["loc": [endLat,endLong], "name": endName],
                          "options":
                             ["exclude":
-                                ["agencies": getAgencyExcludes(), "cats": getCategoryExcludes()]],
+                                ["agencies": ["52ca9f657d327c6b04000010", "529751763ca4da973400000d"], "cats": []]],
                          "time": 900,
                          "_csrf": "Unathi Xcode"]
 
@@ -46,22 +46,11 @@ class RwtToAPIHelper{
         return request
     }
     
-    /**
-     Call API endpoint to get agencies to exclude
-     
-     - returns: Array of Agency IDs to exclude
-     */
-    func getAgencyExcludes() -> [String]{
-        return ["52ca9f657d327c6b04000010", "529751763ca4da973400000d"]
-    }
     
-    /**
-     Call API endpoint to get categories to exclude
-     
-     - returns: Array of categories to excldue
-     */
-    func getCategoryExcludes() -> [String]{
-        return []
+    func getOptions() -> Alamofire.Request{
+        let request = Alamofire.request(.GET, "https://rwt.to/api/v1/options")
+        
+        return request
     }
     
     /**
