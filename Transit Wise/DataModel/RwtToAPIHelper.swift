@@ -37,7 +37,7 @@ class RwtToAPIHelper{
                             ["loc": [endLat,endLong], "name": endName],
                          "options":
                             ["exclude":
-                                ["agencies": ["52ca9f657d327c6b04000010", "529751763ca4da973400000d"], "cats": []]],
+                                ["agencies": [], "cats": []]],
                          "time": 900,
                          "_csrf": "Unathi Xcode"]
 
@@ -86,37 +86,69 @@ class RwtToAPIHelper{
     func attachPathToMapView(trip: Trip, mapView: GMSMapView){
         
         for leg in trip.legs!{
-            let path = GMSMutablePath()
-            
-            if leg.pathType == "Walk"{
-                //TODO: Get Walking path from Google Walking API
-                for point in (leg.path?.points)!{
-                    path.addLatitude(point.lat!, longitude: point.long!)
-                }//FIXME: Remove this for
-            }else{
-                for point in (leg.path?.points)!{
-                    path.addLatitude(point.lat!, longitude: point.long!)
-                }
-            }
 
-            let polyline = GMSPolyline(path: path)
+            let polyline = GMSPolyline()
             
             switch leg.pathType!{
                 case "Walk":
                     polyline.strokeColor = UIColor.greenColor()
+                    var path: GMSPath = GMSPath()
+                    
+                    let request = self.getWalkingPath((leg.path?.points![0])!, end: (leg.path?.points![1])!)
+                    
+                    request.validate().responseJSON { response in
+                        switch response.result {
+                        case .Success:
+                            if let value = response.result.value {
+                                let json = JSON(value)
+                                let encodedRoute = json["routes"][0]["overview_polyline"]["points"].stringValue
+                                path = GMSPath(fromEncodedPath: encodedRoute)
+                                polyline.path = path
+                                polyline.strokeWidth = 3.5
+                                polyline.tappable = true
+                                polyline.map = mapView
+                            }
+                        case .Failure(let error):
+                            print(error)
+                        }
+                    }
                 case "Bus":
+                    let path = GMSMutablePath()
                     polyline.strokeColor = UIColor.blueColor()
+                    for point in (leg.path?.points)!{
+                        path.addLatitude(point.lat!, longitude: point.long!)
+                    }
+                    polyline.path = path
                 case "Rail":
+                    let path = GMSMutablePath()
                     polyline.strokeColor = UIColor.yellowColor()
+                    for point in (leg.path?.points)!{
+                        path.addLatitude(point.lat!, longitude: point.long!)
+                    }
+                    polyline.path = path
                 default:
+                    let path = GMSMutablePath()
                     polyline.strokeColor = UIColor.blueColor()
-                
+                    for point in (leg.path?.points)!{
+                        path.addLatitude(point.lat!, longitude: point.long!)
+                    }
+                    polyline.path = path
             }
             
             polyline.strokeWidth = 3.5
+            polyline.tappable = true
             polyline.map = mapView
         }
         
+    }
+    
+//MARK: External API calls
+    func getWalkingPath(start: Path.Coordinates, end: Path.Coordinates) -> Alamofire.Request{
+        //let headers    = ["app": "testing", "Content-Type": "application/json"]
+        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(start.lat!),\(start.long!)&destination=\(end.lat!),\(end.long!)&mode=walking&key=AIzaSyDleSjXuhdbMEO4-yGlrnNkvWu1chkotsI"
+        
+        let request = Alamofire.request(.GET, url)
+        return request
     }
 
 }
