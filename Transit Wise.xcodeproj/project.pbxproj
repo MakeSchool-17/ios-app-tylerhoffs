@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		215379E71C161B5D0069500B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215379E61C161B5D0069500B /* HomeViewController.swift */; };
+		21E1AA751C1B570C00B0BCF5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E1AA741C1B570C00B0BCF5 /* MapViewController.swift */; };
 		21FF435E1C18AD0A00AC48CD /* CustomView.h in Headers */ = {isa = PBXBuildFile; fileRef = 21FF435D1C18AD0A00AC48CD /* CustomView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		21FF43651C18AD0A00AC48CD /* CustomView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21FF435B1C18AD0A00AC48CD /* CustomView.framework */; };
 		21FF436C1C18AD0A00AC48CD /* CustomViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FF436B1C18AD0A00AC48CD /* CustomViewTests.swift */; };
@@ -89,6 +90,7 @@
 
 /* Begin PBXFileReference section */
 		215379E61C161B5D0069500B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		21E1AA741C1B570C00B0BCF5 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		21FF435B1C18AD0A00AC48CD /* CustomView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CustomView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21FF435D1C18AD0A00AC48CD /* CustomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomView.h; sourceTree = "<group>"; };
 		21FF435F1C18AD0A00AC48CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				215379E61C161B5D0069500B /* HomeViewController.swift */,
+				21E1AA741C1B570C00B0BCF5 /* MapViewController.swift */,
 			);
 			name = ViewControllers;
 			path = "Transit Wise/ViewControllers";
@@ -410,7 +413,7 @@
 				TargetAttributes = {
 					21FF435A1C18AD0A00AC48CD = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = T9AT2A746N;
+						DevelopmentTeam = LNLLAPA3HJ;
 					};
 					21FF43631C18AD0A00AC48CD = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -418,7 +421,7 @@
 					};
 					652B95131C03E8DD00E0260C = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = T9AT2A746N;
+						DevelopmentTeam = LNLLAPA3HJ;
 					};
 					652B952A1C03E8DD00E0260C = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -575,6 +578,7 @@
 				652841E91C06425D0073F60E /* Leg.swift in Sources */,
 				652841EB1C0642850073F60E /* Path.swift in Sources */,
 				215379E71C161B5D0069500B /* HomeViewController.swift in Sources */,
+				21E1AA751C1B570C00B0BCF5 /* MapViewController.swift in Sources */,
 				652B95181C03E8DD00E0260C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

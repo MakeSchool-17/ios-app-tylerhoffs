@@ -1,9 +1,9 @@
 PODS:
   - Alamofire (3.1.3)
-  - GoogleMaps (1.10.5)
+  - GoogleMaps (1.11.1)
   - ModelMapper (1.0.1)
-  - MXParallaxHeader (0.4.0)
-  - SwiftyJSON (2.3.1)
+  - MXParallaxHeader (0.4.2)
+  - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
   - Alamofire (~> 3.0)
@@ -18,14 +18,14 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwiftyJSON:
-    :commit: a4cce2ec0bf31bfec2cf4cc7f1030a59a7bc95d2
+    :commit: 8e618c8baf6323a5079c6549bb38d48357b31630
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
   Alamofire: 9f93b56389e48def9220dd57d1f44b1927229a5a
-  GoogleMaps: da51c62c338c2d9c47cdad470a0d1e0e4b8544e4
+  GoogleMaps: c947160008f414c66707a5ea60f35e92055c7670
   ModelMapper: 724dba38a40af2f23b6512a3e729ac7f5a7fde5c
-  MXParallaxHeader: 9d916109838f61adda9aceed2a9af34482797f74
-  SwiftyJSON: 592b53bee5ef3dd9b3bebc6b9cb7ee35426ae8c3
+  MXParallaxHeader: 330ced0acbf60841b4753c9149228bb5a0f00bac
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
 COCOAPODS: 0.39.0

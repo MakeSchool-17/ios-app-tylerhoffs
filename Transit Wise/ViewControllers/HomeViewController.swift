@@ -36,8 +36,8 @@ class HomeViewController: UIViewController {
         mainTableView.parallaxHeader.minimumHeight = 200
         
         //Looks for single or multiple taps.
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        view.addGestureRecognizer(tap)
+        //let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        //view.addGestureRecognizer(tap)
 
     }
     
@@ -61,7 +61,9 @@ class HomeViewController: UIViewController {
     // MARK: - Table view delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        mainTableView.parallaxHeader.height = CGFloat(indexPath.row * 10)
+        //selectedWaypoint = waypoints[indexPath.row]
+        
+        self.performSegueWithIdentifier("ShowTrip", sender: self)
     }
     
     // MARK: - Scroll view delegate
@@ -165,7 +167,20 @@ class HomeViewController: UIViewController {
                 print("View Moved!")
             })
         }
-
+    
+    @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
+        
+        if let identifier = segue.identifier{
+            switch identifier {
+            case "Add":
+                print("ADD")
+            case "Cancel":
+                print("No Trip")
+            default:
+                print("No Trip")
+            }
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
