@@ -54,6 +54,29 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func testAPI(mapView: GMSMapView){
+        let apiClient = RwtToAPIHelper()
+        let startName = "Menlyn Park Shopping Centre, Pretoria, South Africa"
+        let endName = "Pretoria Central, Pretoria, Gauteng, South Africa"
+        
+        let request = apiClient.getDirectionRequest(-25.7826769, startLong: 28.2761908, startName: startName, endLat: -25.7500498, endLong: 28.1688913, endName: endName)
+        let myTrip = Trip()
+        print("Sending Request")
+        request.validate().responseJSON { response in
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    apiClient.sendJSONtoTrip(json, trip: myTrip)
+                    apiClient.attachPathToMapView(myTrip, mapView: mapView)
+                }
+            case .Failure(let error):
+                print(error)
+            }
+        }
+        
+    }
 
 
 }
