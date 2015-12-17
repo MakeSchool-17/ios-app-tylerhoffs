@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         
         let camera = GMSCameraPosition.cameraWithLatitude(-25.7561672,
             longitude:28.2289275, zoom:12, bearing: 30, viewingAngle:60)
-        let mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
+        let mapView = GMSMapViewWithPolyHistory.mapWithFrame(CGRectZero, camera:camera)
         
         
         self.view = mapView
@@ -55,7 +55,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func testAPI(mapView: GMSMapView){
+    func testAPI(mapView: GMSMapViewWithPolyHistory){
         let apiClient = RwtToAPIHelper()
         let startName = "Menlyn Park Shopping Centre, Pretoria, South Africa"
         let endName = "Pretoria Central, Pretoria, Gauteng, South Africa"

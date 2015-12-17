@@ -73,6 +73,11 @@ class Trip {
             if leg.1["pathtype"] == "Walk"{
                 let newLeg = Leg(path: path, instruction: leg.1["instructions"].stringValue, pathType: leg.1["pathtype"].stringValue, station: leg.1["station"].stringValue, distance: leg.1["distance"].floatValue, time: legTime)
                 legs.append(newLeg)
+            }else if leg.1["pathtype"] == "Group"{
+                let innerLegs = extractLegsFromJSON(leg.1["legs"])
+                let newLeg = Leg(group: true, pathType: leg.1["pathtype"].stringValue, start: leg.1["start"].stringValue, end: leg.1["end"].stringValue, cost: leg.1["cost"].floatValue, discount: leg.1["discounted"].boolValue, time: legTime, legs: innerLegs)
+                
+                legs.append(newLeg!)
             }else{
                 let _stations = extractStationsFromJSON(leg.1["_stations"])
                 let agency = extractAgencyFromJSON(leg.1["agency"])

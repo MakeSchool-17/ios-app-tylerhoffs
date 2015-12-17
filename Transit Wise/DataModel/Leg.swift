@@ -53,6 +53,8 @@ class Leg {
     var agency: Agency?         ///Agency providing service, for attribution
     var cost: Float?            ///cost of leg in ZAR
     var discounted: Bool?       ///whether there are discounts applicable
+    var legs: [Leg]?            ///Array of legs if this is a grouped leg
+    var group: Bool?            ///Whether this is a group leg or not
 
     
 //MARK: Initializers
@@ -87,6 +89,22 @@ class Leg {
         self.cost         = cost
         self.discounted   = discounted
 
+    }
+    
+    /**
+    Grouped Leg initializer 
+     
+     */
+    init?(group: Bool, pathType: String, start: String, end: String, cost: Float, discount: Bool, time: Time, legs: [Leg]){
+        self.group = group
+        self.pathType = pathType
+        self.fromName = start
+        self.toName = end
+        self.cost = cost
+        self.discounted = discount
+        self.time = time
+        self.legs = legs
+        
     }
 
 }

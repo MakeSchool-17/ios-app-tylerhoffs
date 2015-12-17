@@ -19,9 +19,9 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let camera = GMSCameraPosition.cameraWithLatitude(-25.7561672,
-            longitude:28.2289275, zoom:12)
-        let mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
+        let camera = GMSCameraPosition.cameraWithLatitude(-26.15041,
+            longitude:28.01562, zoom:12)
+        let mapView = GMSMapViewWithPolyHistory.mapWithFrame(CGRectZero, camera:camera)
         
         // Parallax Header Setup
         //let header = mapView
@@ -34,10 +34,10 @@ class MapViewController: UIViewController {
         
         // Do any additional setup after loading the view, typically from a nib.
         
-        let startName = "University of Pretoria - Hatfield Campus Main Entrance, Pretoria, Gauteng, South Africa"
-        let endName = "Pretoria Central, Pretoria, Gauteng, South Africa"
+        let startName = "11 Greenfield Rd, Randburg"
+        let endName = "9 Florence Ave, Germiston"
         
-        let request = apiClient.getDirectionRequest(-25.7561672, startLong: 28.2289275, startName: startName, endLat: -25.7500498, endLong: 28.1688913, endName: endName)
+        let request = apiClient.getDirectionRequest(-26.15041, startLong: 28.01562, startName: startName, endLat: -26.1696916, endLong: 28.138237, endName: endName)
         let myTrip = Trip()
         print("Sending Request")
         request.validate().responseJSON { response in
