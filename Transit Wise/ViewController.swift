@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         
         let camera = GMSCameraPosition.cameraWithLatitude(-25.7561672,
             longitude:28.2289275, zoom:12, bearing: 30, viewingAngle:60)
-        let mapView = GMSMapViewWithPolyHistory.mapWithFrame(CGRectZero, camera:camera)
+        let mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
         
         
         self.view = mapView
@@ -38,8 +38,8 @@ class ViewController: UIViewController {
                 case .Success:
                     if let value = response.result.value {
                         let json = JSON(value)
-                        self.apiClient.sendJSONtoTrip(json, trip: myTrip)
-                        self.apiClient.attachPathToMapView(myTrip, mapView: mapView)
+                        myTrip.JSONinit(json)
+                        //myTrip.createPolylines(mapView)
                         print(myTrip.cost)
                     }
                 case .Failure(let error):
@@ -55,7 +55,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func testAPI(mapView: GMSMapViewWithPolyHistory){
+    func testAPI(mapView: GMSMapView){
         let apiClient = RwtToAPIHelper()
         let startName = "Menlyn Park Shopping Centre, Pretoria, South Africa"
         let endName = "Pretoria Central, Pretoria, Gauteng, South Africa"
@@ -68,8 +68,8 @@ class ViewController: UIViewController {
             case .Success:
                 if let value = response.result.value {
                     let json = JSON(value)
-                    apiClient.sendJSONtoTrip(json, trip: myTrip)
-                    apiClient.attachPathToMapView(myTrip, mapView: mapView)
+                    myTrip.JSONinit(json)
+                    //myTrip.createPolylines(mapView)
                 }
             case .Failure(let error):
                 print(error)

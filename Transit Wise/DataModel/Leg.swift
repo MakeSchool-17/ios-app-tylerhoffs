@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import GoogleMaps
 
 /// A single leg of the trip
 class Leg {
@@ -55,6 +56,7 @@ class Leg {
     var discounted: Bool?       ///whether there are discounts applicable
     var legs: [Leg]?            ///Array of legs if this is a grouped leg
     var group: Bool?            ///Whether this is a group leg or not
+    var polyline: GMSPolyline?   ///Polyline to be displayed on map
 
     
 //MARK: Initializers

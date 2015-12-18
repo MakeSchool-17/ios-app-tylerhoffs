@@ -21,7 +21,7 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         let camera = GMSCameraPosition.cameraWithLatitude(-26.15041,
             longitude:28.01562, zoom:12)
-        let mapView = GMSMapViewWithPolyHistory.mapWithFrame(CGRectZero, camera:camera)
+        let mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
         
         // Parallax Header Setup
         //let header = mapView
@@ -45,8 +45,8 @@ class MapViewController: UIViewController {
             case .Success:
                 if let value = response.result.value {
                     let json = JSON(value)
-                    self.apiClient.sendJSONtoTrip(json, trip: myTrip)
-                    self.apiClient.attachPathToMapView(myTrip, mapView: mapView)
+                    myTrip.JSONinit(json)
+                    myTrip.createPolylines(mapView)
                     print(myTrip.cost)
                 }
             case .Failure(let error):

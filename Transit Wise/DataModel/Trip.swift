@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import GoogleMaps
 
 /// Contains all details of a trip from one point to final destination.
 class Trip {
@@ -17,6 +18,7 @@ class Trip {
     var time: Time?
     var legs: [Leg]?
     
+//MARK: Initializers
     init(){
         
     }
@@ -37,10 +39,10 @@ class Trip {
 //MARK: JSON Extracters
     
     /**
-     Create TravelDetails object from JSON data
-     
-     - parameter json: JSON data containing a single
-     */
+    Create TravelDetails object from JSON data
+    
+    - parameter json: JSON data containing a single
+    */
     func extractTravelDetailsFromJSON(json: JSON) -> TravelDetails{
         return TravelDetails(transit_distance: json["transit"]["distance"].floatValue, transit_time: json["transit"]["time"].intValue, walk_distance: json["walk"]["distance"].floatValue, walk_time: json["walk"]["time"].intValue, wait_time: json["wait"]["time"].intValue)
     }
@@ -150,5 +152,102 @@ class Trip {
      */
     func extractBgFromJSON(bg: JSON) -> Leg.BgColour{
         return Leg.BgColour(json: bg)
+    }
+    
+//MARK: Map Interactions
+    /**
+    Create the polylines and add them to each leg of the trip
+    
+    - parameter mapView: Map that they will be placed on
+    */
+    func createPolylines(mapView: GMSMapView){
+        
+        for leg in self.legs!{
+            if leg.pathType! == "Group"{
+                for innerLeg in leg.legs!{
+                    workWithLeg(innerLeg, mapview: mapView)
+                }
+            }else{
+                workWithLeg(leg, mapview: mapView)
+            }
+        }
+
+    }
+
+    /**
+     Draw Polylines on GMSMapView
+     
+     - parameter trip:    Trip object reference to the trip that contains the path
+     - parameter mapView: MapView that the path should be drawn on.
+     */
+    func showPolylinesOnMapView(mapView: GMSMapView){
+        
+        for leg in self.legs!{
+            if leg.pathType! == "Group"{
+                for innerLeg in leg.legs!{
+                    innerLeg.polyline?.map = mapView
+                }
+            }else{
+                leg.polyline?.map = mapView
+            }
+        }
+        
+    }
+    
+    /**
+     Add path of single leg onto map
+     
+     - parameter leg:     Leg object containing leg to be addded to map
+     - parameter mapView: GMSMapViewWithPolyHistory object that leg should be placed on
+     */
+    func workWithLeg(leg: Leg, mapview: GMSMapView){
+        
+        let polyline = GMSPolyline()
+        
+        if leg.pathType == "Walk"{
+            polyline.strokeColor = UIColor.greenColor()
+            var path: GMSPath = GMSPath()
+            
+            let request = RwtToAPIHelper().getWalkingPath((leg.path?.points![0])!, end: (leg.path?.points![1])!)
+            
+            request.validate().responseJSON { response in
+                switch response.result {
+                case .Success:
+                    if let value = response.result.value {
+                        let json = JSON(value)
+                        let encodedRoute = json["routes"][0]["overview_polyline"]["points"].stringValue
+                        path = GMSPath(fromEncodedPath: encodedRoute)
+                        polyline.path = path
+                        polyline.strokeWidth = 4
+                        polyline.map = mapview
+                        leg.polyline = polyline
+                    }
+                case .Failure(let error):
+                    print(error)
+                }
+            }
+        }else{
+            let path = GMSMutablePath()
+            
+            switch leg.pathType!{
+            case "Bus":
+                polyline.strokeColor = UIColor.blueColor()
+            case "Rail":
+                polyline.strokeColor = UIColor.yellowColor()
+            default:
+                polyline.strokeColor = UIColor.blueColor()
+            }
+            
+            for point in (leg.path?.points)!{
+                path.addLatitude(point.lat!, longitude: point.long!)
+            }
+            polyline.path = path
+            polyline.strokeWidth = 4
+            polyline.map = mapview
+            leg.polyline = polyline
+        }
+        
+        //TODO: Add marker for legs to decribe?
+        
     }
 }
