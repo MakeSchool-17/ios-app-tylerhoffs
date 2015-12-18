@@ -208,24 +208,21 @@ class Trip {
             polyline.strokeColor = UIColor.greenColor()
             var path: GMSPath = GMSPath()
             
-            let request = RwtToAPIHelper().getWalkingPath((leg.path?.points![0])!, end: (leg.path?.points![1])!)
-            
-            request.validate().responseJSON { response in
-                switch response.result {
-                case .Success:
-                    if let value = response.result.value {
-                        let json = JSON(value)
-                        let encodedRoute = json["routes"][0]["overview_polyline"]["points"].stringValue
-                        path = GMSPath(fromEncodedPath: encodedRoute)
-                        polyline.path = path
-                        polyline.strokeWidth = 4
-                        polyline.map = mapview
-                        leg.polyline = polyline
-                    }
-                case .Failure(let error):
-                    print(error)
+            RwtToAPIHelper().getWalkingPath((leg.path?.points![0])!, end: (leg.path?.points![1])!){response in
+                
+                if response.error == nil{
+                    let encodedRoute = response.json!["routes"][0]["overview_polyline"]["points"].stringValue
+                    path = GMSPath(fromEncodedPath: encodedRoute)
+                    polyline.path = path
+                    polyline.strokeWidth = 4
+                    polyline.map = mapview
+                    leg.polyline = polyline
+                }else{
+                    print(response.error)
                 }
+                
             }
+
         }else{
             let path = GMSMutablePath()
             

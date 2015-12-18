@@ -13,10 +13,12 @@ import GoogleMaps
 
 class RwtToAPIHelper{
     
+    typealias ApiCallback = (json: JSON?, error: NSError?) -> Void
+    
     //MARK: API Calls
     
     /**
-    Get Request object which will get JSON response containing direction details from start to end
+    Will get the directions from API
     
     - parameter startLat:  Latitdue of Starting point
     - parameter startLong: Longitude of Starting point
@@ -25,10 +27,8 @@ class RwtToAPIHelper{
     - parameter endLong:   Longitude of Ending point
     - parameter endName:   Name of Ending point
     
-    - returns: Alomofire request which will be used to complete the request action where it is being called
     */
-    func getDirectionRequest(startLat: Float, startLong: Float, startName: String, endLat: Float, endLong: Float, endName: String) -> Alamofire.Request{
-        
+    func getDirectionsCallback(startLat: Float, startLong: Float, startName: String, endLat: Float, endLong: Float, endName: String, callback: ApiCallback){
         
         let headers    = ["app": "testing", "Content-Type": "application/json"]
         let parameters = ["start":
@@ -43,14 +43,37 @@ class RwtToAPIHelper{
         
         let request    = Alamofire.request(.POST, "https://rwt.to/api/site/directions", parameters: parameters, encoding: .JSON, headers: headers)
         
-        return request
+        request.validate().responseJSON { response in
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    callback(json: json, error: nil)
+                }
+            case .Failure(let error):
+                callback(json: nil, error: error)
+            }
+        }
     }
     
-    
-    func getOptions() -> Alamofire.Request{
+    /**
+     Get latest options data from Rwt.to
+     
+     - parameter callback: callback once response of options received from Rwt.To api
+     */
+    func getOptionsCallback(callback: ApiCallback) {
         let request = Alamofire.request(.GET, "https://rwt.to/api/v1/options")
-        
-        return request
+        request.validate().responseJSON { response in
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    callback(json: json, error: nil)
+                }
+            case .Failure(let error):
+                callback(json: nil, error: error)
+            }
+        }
     }
     
     /**
@@ -61,18 +84,50 @@ class RwtToAPIHelper{
      
      - returns: Array of Stations
      */
-    func getNearbyStation(lat: Float, long: Float) -> [Station]{
-        return []
+    func getNearbyStation(lat: Float, long: Float, callback: ApiCallback){
+        //TODO: Get correct URL for nearest stations
+        let request = Alamofire.request(.GET, "https://rwt.to/api/v1/stations")
+        request.validate().responseJSON { response in
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    callback(json: json, error: nil)
+                }
+            case .Failure(let error):
+                callback(json: nil, error: error)
+            }
+        }
     }
     
     
     //MARK: External API calls
-    func getWalkingPath(start: Path.Coordinates, end: Path.Coordinates) -> Alamofire.Request{
+    
+    /**
+    Get Google's walking directions
+    
+    - parameter start:    starting coordinates
+    - parameter end:      destination coordinates
+    - parameter callback: Callback once response received from Google API
+    */
+    func getWalkingPath(start: Path.Coordinates, end: Path.Coordinates, callback: ApiCallback){
         //let headers    = ["app": "testing", "Content-Type": "application/json"]
         let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(start.lat!),\(start.long!)&destination=\(end.lat!),\(end.long!)&mode=walking&key=AIzaSyDleSjXuhdbMEO4-yGlrnNkvWu1chkotsI"
         
         let request = Alamofire.request(.GET, url)
-        return request
+        
+        request.validate().responseJSON { response in
+            switch response.result {
+            case .Success:
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    callback(json: json, error: nil)
+                }
+            case .Failure(let error):
+                callback(json: nil, error: error)
+            }
+        }
+        
     }
     
 }

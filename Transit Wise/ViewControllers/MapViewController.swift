@@ -36,23 +36,17 @@ class MapViewController: UIViewController {
         
         let startName = "11 Greenfield Rd, Randburg"
         let endName = "9 Florence Ave, Germiston"
-        
-        let request = apiClient.getDirectionRequest(-26.15041, startLong: 28.01562, startName: startName, endLat: -26.1696916, endLong: 28.138237, endName: endName)
         let myTrip = Trip()
-        print("Sending Request")
-        request.validate().responseJSON { response in
-            switch response.result {
-            case .Success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    myTrip.JSONinit(json)
-                    myTrip.createPolylines(mapView)
-                    print(myTrip.cost)
-                }
-            case .Failure(let error):
-                print(error)
+        
+        apiClient.getDirectionsCallback(-26.15041, startLong: 28.01562, startName: startName, endLat: -26.1696916, endLong: 28.138237, endName: endName){ response in
+            if response.error == nil{
+                myTrip.JSONinit(response.json!)
+                myTrip.createPolylines(mapView)
+            }else{
+                print(response.error)
             }
         }
+
     }
 
     override func didReceiveMemoryWarning() {
