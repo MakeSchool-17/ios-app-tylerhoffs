@@ -18,6 +18,9 @@ class Trip {
     var time: Time?
     var legs: [Leg]?
     
+    let styles = [GMSStrokeStyle .solidColor(UIColor.greenColor()), GMSStrokeStyle .solidColor(UIColor.clearColor())] //Colours for stroke of walking path
+    let lengths = [10, 7]// Length of styles. Colour and clear
+    
 //MARK: Initializers
     init(){
         
@@ -214,7 +217,8 @@ class Trip {
                     let encodedRoute = response.json!["routes"][0]["overview_polyline"]["points"].stringValue
                     path = GMSPath(fromEncodedPath: encodedRoute)
                     polyline.path = path
-                    polyline.strokeWidth = 4
+                    polyline.strokeWidth = 5
+                    polyline.spans = GMSStyleSpans(polyline.path, self.styles, self.lengths, kGMSLengthRhumb)
                     polyline.map = mapview
                     leg.polyline = polyline
                 }else{
