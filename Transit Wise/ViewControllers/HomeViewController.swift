@@ -9,8 +9,9 @@
 import UIKit
 import MXParallaxHeader
 import GoogleMaps
+import CoreLocation
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController,CLLocationManagerDelegate {
     
     
     @IBOutlet var mainView: UIView!
@@ -18,15 +19,31 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var mainTableView: UITableView!
     @IBOutlet weak var directionButton: UIButton!
     var viewDown: Bool = false
+    var locationManager = CLLocationManager()
+    var mapView : GMSMapView?
+    var didFindMyLocation: Bool = true
     @IBOutlet weak var tripPlannerBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var searchButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mainTableView.rowHeight = 100
+        mainTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        mainTableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
+        
         let camera = GMSCameraPosition.cameraWithLatitude(-25.7561672,
             longitude:28.2289275, zoom:12)
-        let mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
+        mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
+        
+        //Locaition Manager setup
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        //mapView!.addObserver(self, forKeyPath: "myLocation", options: NSKeyValueObservingOptions.New, context: nil)
         
         // Parallax Header Setup
         let header = mapView
@@ -36,10 +53,28 @@ class HomeViewController: UIViewController {
         mainTableView.parallaxHeader.minimumHeight = 200
         
         //Looks for single or multiple taps.
-        //let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        //view.addGestureRecognizer(tap)
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        tripPlannerView.addGestureRecognizer(tap)
+        //mapView?.addGestureRecognizer(tap)
+
 
     }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
+            mapView!.myLocationEnabled = true
+        }
+    }
+    
+   /* func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+        if !didFindMyLocation {
+            let myLocation: CLLocation = change[NSKeyValueChangeNewKey] as CLLocation
+            mapView.camera = GMSCameraPosition.cameraWithTarget(myLocation.coordinate, zoom: 10.0)
+            mapView.settings.myLocationButton = true
+            
+            didFindMyLocation = true
+        }
+    } */
     
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
@@ -52,9 +87,10 @@ class HomeViewController: UIViewController {
         return 50
     }
     
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.textLabel!.text = String(format: "Height %ld", indexPath.row * 10)
+        let cell = tableView.dequeueReusableCellWithIdentifier("busStopCell", forIndexPath: indexPath)
+        //cell.textLabel!.text = String(format: "Height %ld", indexPath.row * 10)
         return cell
     }
     
@@ -75,32 +111,14 @@ class HomeViewController: UIViewController {
     // MARK: - Button Actions
     
     @IBAction func directionButtonTap(sender: UIButton) {
-        print("Button!")
         if(!self.viewDown){
-            
-            
             UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-            
-            /*var tripPlannerFrame = self.tripPlannerView.frame
-            tripPlannerFrame.origin.y = 0
-            self.tripPlannerView.frame = tripPlannerFrame
-                
-            var tableViewFrame = self.mainTableView.frame
-            tableViewFrame.origin.y = tripPlannerFrame.height
-            self.mainTableView.frame = tableViewFrame */
                 var tripPlannerFrame = self.tripPlannerView.frame
                 tripPlannerFrame.origin.y = 0
-                
-                
-                
-                
                 self.tripPlannerView.frame = tripPlannerFrame
-
-            
                 
   
                 }, completion: { finished in
-                    print("View Moved!")
                     //self.viewDown = true
                     self.tripPlannerBottomConstraint.constant = -156.00
                     UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
@@ -112,7 +130,7 @@ class HomeViewController: UIViewController {
                         
                         
                         }, completion: { finished in
-                            print("View Moved2!")
+                            print("View Moved!")
                     })
             })
         }
@@ -120,9 +138,7 @@ class HomeViewController: UIViewController {
     
     
     @IBAction func cancelButtonTap(sender: AnyObject) {
-        print("Button!")
         if(!self.viewDown){
-            
             
             UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                 
@@ -134,7 +150,6 @@ class HomeViewController: UIViewController {
                 
                 
                 }, completion: { finished in
-                    print("View Moved!")
                     self.tripPlannerBottomConstraint.constant = 19
                     UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                         var tripPlannerFrame = self.tripPlannerView.frame
@@ -148,11 +163,14 @@ class HomeViewController: UIViewController {
                             print("View Moved2!")
                     })
             })
+            
+            mainTableView.bounces = true
         }
 
     }
     
     @IBAction func searchButtonTap(sender: AnyObject) {
+        self.view.endEditing(true)
         
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
             
@@ -165,8 +183,10 @@ class HomeViewController: UIViewController {
             
             }, completion: { finished in
                 print("View Moved!")
-            })
-        }
+        })
+        
+        mainTableView.bounces = false
+    }
     
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
         
