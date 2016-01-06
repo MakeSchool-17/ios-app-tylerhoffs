@@ -61,7 +61,7 @@ class MapViewController: UIViewController {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("directionCell", forIndexPath: indexPath)
-        cell.textLabel!.text = String(format: "Height %ld", indexPath.row * 10)
+        
         return cell
     }
     
@@ -74,7 +74,7 @@ class MapViewController: UIViewController {
     // MARK: - Scroll view delegate
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        NSLog("progress %f", scrollView.parallaxHeader.progress)
+        //NSLog("progress %f", scrollView.parallaxHeader.progress)
     }
 
     deinit {
