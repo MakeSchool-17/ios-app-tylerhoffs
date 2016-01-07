@@ -14,6 +14,7 @@ import GoogleMaps
 class RwtToAPIHelper{
     
     typealias ApiCallback = (json: JSON?, error: NSError?) -> Void
+    typealias CoordinatesCallback = (place: GMSPlace?, error: NSError?) -> Void
     
     //MARK: API Calls
     
@@ -127,6 +128,25 @@ class RwtToAPIHelper{
                 callback(json: nil, error: error)
             }
         }
+        
+    }
+    
+    
+    func getPlaceDetailsFromID(placeID: String, callback: CoordinatesCallback){
+        let placesClient = GMSPlacesClient()
+        placesClient.lookUpPlaceID(placeID, callback: { (place: GMSPlace?, error: NSError?) -> Void in
+            if let error = error {
+                print("lookup place id query error: \(error.localizedDescription)")
+                callback(place: nil, error: error)
+                return
+            }
+            
+            if let place = place {
+                callback(place: place, error: nil)
+            } else {
+                print("No place details for \(placeID)")
+            }
+        })
         
     }
     

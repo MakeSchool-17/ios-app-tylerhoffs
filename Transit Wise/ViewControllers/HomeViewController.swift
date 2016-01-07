@@ -11,7 +11,7 @@ import MXParallaxHeader
 import GoogleMaps
 import CoreLocation
 
-class HomeViewController: UIViewController,CLLocationManagerDelegate, UISearchBarDelegate, UITextFieldDelegate {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     
     
     @IBOutlet var mainView: UIView!
@@ -38,6 +38,13 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate, UISearchBa
     var predictions: [GMSAutocompletePrediction]?
     let regularFont = UIFont.systemFontOfSize(UIFont.labelFontSize())
     let boldFont = UIFont.boldSystemFontOfSize(UIFont.labelFontSize())
+    let saBounds = GMSCoordinateBounds(coordinate: CLLocationCoordinate2D(latitude: -24.940233, longitude: 27.000579), coordinate: CLLocationCoordinate2D(latitude: -26.955361, longitude: 29.098968))
+    
+    var startLocation: SearchLocation?
+    var endLocation: SearchLocation?
+    var currentLocation: SearchLocation?
+    let apiHelper = RwtToAPIHelper()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +52,9 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate, UISearchBa
         self.setNeedsStatusBarAppearanceUpdate()
         
         placesClient = GMSPlacesClient()
+        startLocation = SearchLocation()
+        endLocation = SearchLocation()
+        currentLocation = SearchLocation()
         
         mainTableView.rowHeight = 100
         mainTableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -243,6 +253,22 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate, UISearchBa
         tableViewStatus = 1
         mainTableView.reloadData()
         
+        let myTrip = Trip()
+        startLocation?.lat = -26.15041
+        startLocation?.long = 28.01562
+        startLocation?.name = "11 Greenfield Rd, Randburg"
+        endLocation?.lat = -26.1696916
+        endLocation?.long = 28.138237
+        endLocation?.name = "9 Florence Ave, Germiston"
+        
+        apiHelper.getDirectionsCallback((startLocation?.lat)!, startLong: (startLocation?.long)!, startName: (startLocation?.name)!, endLat: (endLocation?.lat)!, endLong: (endLocation?.long)!, endName: (endLocation?.name)!){ response in
+            if response.error == nil{
+                myTrip.JSONinit(response.json!)
+            }else{
+                print(response.error)
+            }
+        }
+        
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
             
             
@@ -304,6 +330,11 @@ extension HomeViewController{
                 print("View Moved!")
         })
         }
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        dismissKeyboard()
+        // TODO: Bring back map
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
@@ -376,7 +407,7 @@ extension HomeViewController{
         
         let filter = GMSAutocompleteFilter()
         filter.type = GMSPlacesAutocompleteTypeFilter.NoFilter
-        placesClient?.autocompleteQuery(searchText, bounds: nil, filter: filter, callback: { (results, error: NSError?) -> Void in
+        placesClient?.autocompleteQuery(searchText, bounds: saBounds, filter: filter, callback: { (results, error: NSError?) -> Void in
             if let error = error {
                 print("Autocomplete error \(error)")
             }
@@ -389,4 +420,8 @@ extension HomeViewController{
             self.mainTableView.reloadData()
         })
     }
+}
+
+extension HomeViewController: CLLocationManagerDelegate{
+
 }
