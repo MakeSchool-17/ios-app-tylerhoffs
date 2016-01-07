@@ -174,6 +174,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate, UISearchBa
     
     @IBAction func directionButtonTap(sender: UIButton) {
         if(!self.viewDown){
+            self.view.endEditing(true)
             UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                 var tripPlannerFrame = self.tripPlannerView.frame
                 tripPlannerFrame.origin.y = 0
@@ -295,7 +296,8 @@ extension HomeViewController{
             self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
             self.mainTableView.parallaxHeader.view?.hidden = true
             
-            self.searchBarLeftConstraint.constant = -40
+            print(self.searchBarLeftConstraint.constant)
+            self.searchBarLeftConstraint.constant -= 40
             self.searchBarRightConstraint.constant += 40
             
             }, completion: { finished in
@@ -306,14 +308,20 @@ extension HomeViewController{
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         searchActive = false
+        self.searchBarLeftConstraint.constant += 40
+        self.searchBarRightConstraint.constant -= 40
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchActive = false
+        self.searchBarLeftConstraint.constant += 40
+        self.searchBarRightConstraint.constant -= 40
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchActive = false
+        self.searchBarLeftConstraint.constant += 40
+        self.searchBarRightConstraint.constant -= 40
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
