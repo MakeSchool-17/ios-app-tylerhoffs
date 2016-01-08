@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2121EC811C3F74EA00F674EB /* DirectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2121EC801C3F74EA00F674EB /* DirectionCell.swift */; };
 		215379E71C161B5D0069500B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215379E61C161B5D0069500B /* HomeViewController.swift */; };
 		215EB07B1C3CE6B900347122 /* BusStopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215EB07A1C3CE6B900347122 /* BusStopCell.swift */; };
 		215EB07D1C3D988E00347122 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215EB07C1C3D988E00347122 /* SearchCell.swift */; };
@@ -92,6 +93,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2121EC801C3F74EA00F674EB /* DirectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionCell.swift; sourceTree = "<group>"; };
 		215379E61C161B5D0069500B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		215EB07A1C3CE6B900347122 /* BusStopCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusStopCell.swift; sourceTree = "<group>"; };
 		215EB07C1C3D988E00347122 /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			children = (
 				215EB07A1C3CE6B900347122 /* BusStopCell.swift */,
 				215EB07C1C3D988E00347122 /* SearchCell.swift */,
+				2121EC801C3F74EA00F674EB /* DirectionCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -430,7 +433,7 @@
 				TargetAttributes = {
 					21FF435A1C18AD0A00AC48CD = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = T9AT2A746N;
+						DevelopmentTeam = LNLLAPA3HJ;
 					};
 					21FF43631C18AD0A00AC48CD = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -438,7 +441,7 @@
 					};
 					652B95131C03E8DD00E0260C = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = T9AT2A746N;
+						DevelopmentTeam = LNLLAPA3HJ;
 					};
 					652B952A1C03E8DD00E0260C = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -597,6 +600,7 @@
 				652841EB1C0642850073F60E /* Path.swift in Sources */,
 				215EB07B1C3CE6B900347122 /* BusStopCell.swift in Sources */,
 				215379E71C161B5D0069500B /* HomeViewController.swift in Sources */,
+				2121EC811C3F74EA00F674EB /* DirectionCell.swift in Sources */,
 				21E1AA751C1B570C00B0BCF5 /* MapViewController.swift in Sources */,
 				215EB07D1C3D988E00347122 /* SearchCell.swift in Sources */,
 				652B95181C03E8DD00E0260C /* AppDelegate.swift in Sources */,

@@ -13,6 +13,7 @@ import Alamofire
 import SwiftyJSON
 
 class MapViewController: UIViewController {
+    let myTrip = Trip()
 
     @IBOutlet weak var directionsTableView: UITableView!
     let apiClient = RwtToAPIHelper()
@@ -36,12 +37,13 @@ class MapViewController: UIViewController {
         
         let startName = "11 Greenfield Rd, Randburg"
         let endName = "9 Florence Ave, Germiston"
-        let myTrip = Trip()
+        
         
         apiClient.getDirectionsCallback(-26.15041, startLong: 28.01562, startName: startName, endLat: -26.1696916, endLong: 28.138237, endName: endName){ response in
             if response.error == nil{
-                myTrip.JSONinit(response.json!)
-                myTrip.createPolylines(mapView)
+                self.myTrip.JSONinit(response.json!)
+                self.myTrip.createPolylines(mapView)
+                self.directionsTableView.reloadData()
             }else{
                 print(response.error)
             }
@@ -56,11 +58,18 @@ class MapViewController: UIViewController {
     // MARK: - Table view data source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 50
+        if let count = self.myTrip.legs?.count{
+            return count
+        }
+        else{
+            return 0
+        }
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("directionCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("directionCell", forIndexPath: indexPath) as! DirectionCell
+        cell.legNameLabel.text = self.myTrip.legs![indexPath.row].instructions
         
         return cell
     }
@@ -68,7 +77,7 @@ class MapViewController: UIViewController {
     // MARK: - Table view delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        directionsTableView.parallaxHeader.height = CGFloat(indexPath.row * 10)
+        //directionsTableView.parallaxHeader.height = CGFloat(indexPath.row * 10)
     }
     
     // MARK: - Scroll view delegate

@@ -26,6 +26,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     @IBOutlet weak var searchBarRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var startTextField: UITextField!
     @IBOutlet weak var endTextField: UITextField!
+    @IBOutlet weak var slideCancelButton: UIButton!
     
     var viewDown: Bool = false
     var locationManager = CLLocationManager()
@@ -83,6 +84,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tripPlannerView.addGestureRecognizer(tap)
         //mapView?.addGestureRecognizer(tap)
+        
+        if #available(iOS 9.1, *) {
+            let shortcut = UIApplicationShortcutItem(type: "com.transitwise.takemehome", localizedTitle: "Take Me Home", localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .Home), userInfo: nil)
+            UIApplication.sharedApplication().shortcutItems = [shortcut]
+        } else {
+            // Fallback on earlier versions
+        }
+        
 
 
     }
@@ -133,6 +142,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         if (tableViewStatus == 0){
             identifier = "busStopCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! BusStopCell
+            cell.contentView.backgroundColor = getRandomColor()
             return cell
         }
         else if(tableViewStatus == 1){
@@ -166,6 +176,20 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         
     }
     
+    
+    ///http://classictutorials.com/2014/08/generate-a-random-color-in-swift/
+    func getRandomColor() -> UIColor{
+        
+        let randomRed:CGFloat = CGFloat(drand48())
+        
+        let randomGreen:CGFloat = CGFloat(drand48())
+        
+        let randomBlue:CGFloat = CGFloat(drand48())
+        
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+        
+    }
+    
     // MARK: - Table view delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -181,9 +205,33 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     }
     
     // MARK: - Button Actions
+    @IBAction func slideCacelTap(sender: AnyObject) {
+            self.view.endEditing(true)
+            directionButton.hidden = false
+            searchActive = false
+            tableViewStatus = 0
+            mainTableView.rowHeight = 100
+            mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
+        
+            
+            UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
+                let tableHeader = self.mainTableView.parallaxHeader
+                tableHeader.height = 400
+                self.mainTableView.parallaxHeader.height = tableHeader.height
+                self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
+                self.mainTableView.parallaxHeader.view?.hidden = false
+                
+                
+                
+                }, completion: { finished in
+                    print("View Moved!")
+            })
+        
+    }
     
     @IBAction func directionButtonTap(sender: UIButton) {
         if(!self.viewDown){
+            self.viewDown = true
             self.view.endEditing(true)
             UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                 var tripPlannerFrame = self.tripPlannerView.frame
@@ -211,11 +259,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     
     @IBAction func cancelButtonTap(sender: AnyObject) {
-        if(!self.viewDown){
-            
+        if(self.viewDown){
+            self.viewDown = false
             tableViewStatus = 0
-            mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
             mainTableView.rowHeight = 100
+            mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
+            
             //mainTableView.reloadData()
             
             UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
@@ -310,6 +359,7 @@ extension HomeViewController{
     //Search Bar Delegate Functions
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         if(!searchActive){
+        directionButton.hidden = true
         searchActive = true
         tableViewStatus = 1
         mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
@@ -326,6 +376,8 @@ extension HomeViewController{
             self.searchBarLeftConstraint.constant -= 40
             self.searchBarRightConstraint.constant += 40
             
+            self.slideCancelButton.transform = CGAffineTransformMakeTranslation(-70, 0)
+            
             }, completion: { finished in
                 print("View Moved!")
         })
@@ -339,20 +391,26 @@ extension HomeViewController{
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         searchActive = false
+        directionButton.hidden = false
         self.searchBarLeftConstraint.constant += 40
         self.searchBarRightConstraint.constant -= 40
+        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+70, 0)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchActive = false
+        directionButton.hidden = false
         self.searchBarLeftConstraint.constant += 40
         self.searchBarRightConstraint.constant -= 40
+        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+70, 0)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchActive = false
+        directionButton.hidden = false
         self.searchBarLeftConstraint.constant += 40
         self.searchBarRightConstraint.constant -= 40
+        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+70, 0)
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
