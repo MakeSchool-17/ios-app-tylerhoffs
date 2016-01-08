@@ -13,7 +13,8 @@ import Alamofire
 import SwiftyJSON
 
 class MapViewController: UIViewController {
-    let myTrip = Trip()
+    var myTrip = Trip()
+    let myRoute = Routes()
 
     @IBOutlet weak var directionsTableView: UITableView!
     let apiClient = RwtToAPIHelper()
@@ -56,7 +57,8 @@ class MapViewController: UIViewController {
         
         apiClient.getDirectionsCallback(-25.782677, startLong: 28.276191, startName: startName, endLat: -25.7500498, endLong: 28.1688913, endName: endName){ response in
             if response.error == nil{
-                self.myTrip.JSONinit(response.json!)
+                self.myRoute.JSONinit(response.json!)
+                self.myTrip = self.myRoute.trips![0]
                 self.myTrip.createPolylines(mapView)
                 self.directionsTableView.reloadData()
             }else{

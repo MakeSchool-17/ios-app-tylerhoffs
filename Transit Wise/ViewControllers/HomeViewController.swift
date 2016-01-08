@@ -46,6 +46,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     var currentLocation: SearchLocation?
     let apiHelper = RwtToAPIHelper()
     var nearbyStations: [Stop]?
+    var availableRoutes: Routes?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -288,7 +289,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         tableViewStatus = 1
         mainTableView.reloadData()
         
-        let myTrip = Trip()
+        availableRoutes = Routes()
         startLocation?.lat = -26.15041
         startLocation?.long = 28.01562
         startLocation?.name = "11 Greenfield Rd, Randburg"
@@ -298,7 +299,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         
         apiHelper.getDirectionsCallback((startLocation?.lat)!, startLong: (startLocation?.long)!, startName: (startLocation?.name)!, endLat: (endLocation?.lat)!, endLong: (endLocation?.long)!, endName: (endLocation?.name)!){ response in
             if response.error == nil{
-                myTrip.JSONinit(response.json!)
+                self.availableRoutes!.JSONinit(response.json!)
             }else{
                 print(response.error)
             }
@@ -488,6 +489,9 @@ extension HomeViewController: CLLocationManagerDelegate{
                     self.nearbyStations = []
                     for stop in response.json!["stops"]{
                         self.nearbyStations?.append(Stop(json: stop.1))
+                    }
+                    for stops in self.nearbyStations!{
+                        stops.addMarker(self.mapView!)
                     }
                     //TODO: Show the stops on the TableView
                 }else{
