@@ -36,6 +36,7 @@
 		652B953B1C03E8DD00E0260C /* Transit_WiseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B953A1C03E8DD00E0260C /* Transit_WiseUITests.swift */; };
 		658695011C3E4025008A4DD1 /* SearchLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658695001C3E4025008A4DD1 /* SearchLocation.swift */; };
 		65A872C21C1A3A660010D964 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A872C11C1A3A660010D964 /* Options.swift */; };
+		65FE1C791C3EFDAE00CBACCF /* Stops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FE1C781C3EFDAE00CBACCF /* Stops.swift */; };
 		F7913DA1FC6013CC2396FD62 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDCA809ED0904DE324696911 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +129,7 @@
 		652B953C1C03E8DD00E0260C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		658695001C3E4025008A4DD1 /* SearchLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLocation.swift; sourceTree = "<group>"; };
 		65A872C11C1A3A660010D964 /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
+		65FE1C781C3EFDAE00CBACCF /* Stops.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stops.swift; sourceTree = "<group>"; };
 		BDCA809ED0904DE324696911 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E421AE51979370E378DE434E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F2496C59D79244E7767BBC87 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				652841F01C0644150073F60E /* Agency.swift */,
 				65A872C11C1A3A660010D964 /* Options.swift */,
 				658695001C3E4025008A4DD1 /* SearchLocation.swift */,
+				65FE1C781C3EFDAE00CBACCF /* Stops.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				652841EF1C0643A20073F60E /* _Stations.swift in Sources */,
 				65A872C21C1A3A660010D964 /* Options.swift in Sources */,
 				652841E51C0641DF0073F60E /* TravelDetails.swift in Sources */,
+				65FE1C791C3EFDAE00CBACCF /* Stops.swift in Sources */,
 				652841ED1C0643920073F60E /* Station.swift in Sources */,
 				652AF3471C067ED000FE6B15 /* RwtToAPIHelper.swift in Sources */,
 				658695011C3E4025008A4DD1 /* SearchLocation.swift in Sources */,

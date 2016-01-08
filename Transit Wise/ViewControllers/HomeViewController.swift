@@ -44,7 +44,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     var endLocation: SearchLocation?
     var currentLocation: SearchLocation?
     let apiHelper = RwtToAPIHelper()
-    
+    var nearbyStations: [Stop]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,13 +55,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         startLocation = SearchLocation()
         endLocation = SearchLocation()
         currentLocation = SearchLocation()
+        nearbyStations = []
         
         mainTableView.rowHeight = 100
         mainTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         mainTableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
         
         let camera = GMSCameraPosition.cameraWithLatitude(-25.7561672,
-            longitude:28.2289275, zoom:12)
+            longitude:28.2289275, zoom:14)
         mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
         
         //Locaition Manager setup
@@ -83,28 +84,22 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tripPlannerView.addGestureRecognizer(tap)
         //mapView?.addGestureRecognizer(tap)
-
-
+        
+        
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
-            mapView!.myLocationEnabled = true
-        }
-    }
+    /* func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    if !didFindMyLocation {
+    let myLocation: CLLocation = change[NSKeyValueChangeNewKey] as CLLocation
+    mapView.camera = GMSCameraPosition.cameraWithTarget(myLocation.coordinate, zoom: 10.0)
+    mapView.settings.myLocationButton = true
     
-   /* func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        if !didFindMyLocation {
-            let myLocation: CLLocation = change[NSKeyValueChangeNewKey] as CLLocation
-            mapView.camera = GMSCameraPosition.cameraWithTarget(myLocation.coordinate, zoom: 10.0)
-            mapView.settings.myLocationButton = true
-            
-            didFindMyLocation = true
-        }
+    didFindMyLocation = true
+    }
     } */
     
     func dismissKeyboard() {
@@ -154,7 +149,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             
             cell.addressLabel?.attributedText = bolded
             cell.cityLabel?.attributedText = city
-
+            
             return cell
             
         }
@@ -190,7 +185,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 tripPlannerFrame.origin.y = 0
                 self.tripPlannerView.frame = tripPlannerFrame
                 
-  
+                
                 }, completion: { finished in
                     //self.viewDown = true
                     self.tripPlannerBottomConstraint.constant = -156.00
@@ -232,7 +227,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                     UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                         var tripPlannerFrame = self.tripPlannerView.frame
                         tripPlannerFrame.origin.y = -156
-
+                        
                         self.tripPlannerView.frame = tripPlannerFrame
                         
                         
@@ -244,7 +239,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             
             self.mainTableView.parallaxHeader.view?.hidden = false
         }
-
+        
     }
     
     @IBAction func searchButtonTap(sender: AnyObject) {
@@ -298,7 +293,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             }
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -310,31 +305,31 @@ extension HomeViewController{
     //Search Bar Delegate Functions
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         if(!searchActive){
-        searchActive = true
-        tableViewStatus = 1
-        mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
-        mainTableView.rowHeight = 70
-        
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-            let tableHeader = self.mainTableView.parallaxHeader
-            tableHeader.height = 0
-            self.mainTableView.parallaxHeader.height = tableHeader.height
-            self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
-            self.mainTableView.parallaxHeader.view?.hidden = true
+            searchActive = true
+            tableViewStatus = 1
+            mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
+            mainTableView.rowHeight = 70
             
-            print(self.searchBarLeftConstraint.constant)
-            self.searchBarLeftConstraint.constant -= 40
-            self.searchBarRightConstraint.constant += 40
-            
-            }, completion: { finished in
-                print("View Moved!")
-        })
+            UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
+                let tableHeader = self.mainTableView.parallaxHeader
+                tableHeader.height = 0
+                self.mainTableView.parallaxHeader.height = tableHeader.height
+                self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
+                self.mainTableView.parallaxHeader.view?.hidden = true
+                
+                print(self.searchBarLeftConstraint.constant)
+                self.searchBarLeftConstraint.constant -= 40
+                self.searchBarRightConstraint.constant += 40
+                
+                }, completion: { finished in
+                    print("View Moved!")
+            })
         }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         dismissKeyboard()
-        // TODO: Bring back map
+        //TODO: Bring back map
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
@@ -391,7 +386,7 @@ extension HomeViewController{
         print("Change Called")
         var txtAfterUpdate:NSString = textField.text! as NSString
         txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
-
+        
         if txtAfterUpdate.length > 0 {
             print("TEXTFIELD TEXT_" + (txtAfterUpdate as String)+"_END")
             placeAutocomplete(txtAfterUpdate as String)
@@ -423,5 +418,38 @@ extension HomeViewController{
 }
 
 extension HomeViewController: CLLocationManagerDelegate{
-
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
+            mapView!.myLocationEnabled = true
+            
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let _ = currentLocation?.lat{
+            return
+        }
+        if let location = locations.first {
+            
+            mapView!.camera = GMSCameraPosition(target: location.coordinate, zoom: 14, bearing: 0, viewingAngle: 0)
+            currentLocation?.lat = Float(location.coordinate.latitude)
+            currentLocation?.long = Float(location.coordinate.longitude)
+            apiHelper.getNearbyStation((currentLocation?.lat)!, long: (currentLocation?.long)!){response in
+                if response.error == nil{
+                    self.nearbyStations = []
+                    for stop in response.json!["stops"]{
+                        self.nearbyStations?.append(Stop(json: stop.1))
+                    }
+                    
+                    //TODO: Show the stops on the TableView
+                }else{
+                    print(response.error)
+                }
+                
+            }
+            
+            locationManager.stopUpdatingLocation()
+        }
+    }
+    
 }

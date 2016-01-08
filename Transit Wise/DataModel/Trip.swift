@@ -248,7 +248,5 @@ class Trip {
             leg.polyline = polyline
         }
         
-        //TODO: Add marker for legs to decribe?
-        
     }
 }

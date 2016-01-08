@@ -86,8 +86,9 @@ class RwtToAPIHelper{
      - returns: Array of Stations
      */
     func getNearbyStation(lat: Float, long: Float, callback: ApiCallback){
-        //TODO: Get correct URL for nearest stations
-        let request = Alamofire.request(.GET, "https://rwt.to/api/v1/stations")
+        
+        //let params = ["loc": [lat,long]]
+        let request = Alamofire.request(.GET, "https://rwt.to/api/v1/nearby/stops?loc=[\(lat),\(long)]")
         request.validate().responseJSON { response in
             switch response.result {
             case .Success:
