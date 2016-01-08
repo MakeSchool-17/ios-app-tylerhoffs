@@ -40,7 +40,8 @@ class RwtToAPIHelper{
                 ["exclude":
                     ["agencies": [], "cats": []]],
             "time": 900,
-            "_csrf": "Unathi Xcode"]
+            "_csrf": "Unathi Xcode",
+            "multiple": true]
         
         let request    = Alamofire.request(.POST, "https://rwt.to/api/site/directions", parameters: parameters, encoding: .JSON, headers: headers)
         

@@ -8,6 +8,9 @@
 
 import Foundation
 import Mapper
+/**
+ *  Structures to store available options from RwtTo Api. 
+ */
 
 struct Options: Mappable{
     var agencies: [Agencies]?

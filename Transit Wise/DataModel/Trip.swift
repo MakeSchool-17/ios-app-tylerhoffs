@@ -32,11 +32,11 @@ class Trip {
      - parameter json: JSON data containing result for directions from API
      */
     func JSONinit(json: JSON){
-        self.cost          = json["result"]["cost"].floatValue
-        self.shortCode     = json["result"]["short"].stringValue
-        self.travelDetails = extractTravelDetailsFromJSON(json["result"])
-        self.time          = extractTimeDetailsFromJSON(json["result"]["time"])
-        self.legs          = extractLegsFromJSON(json["result"]["legs"])
+        self.cost          = json["cost"].floatValue
+        self.shortCode     = json["short"].stringValue
+        self.travelDetails = extractTravelDetailsFromJSON(json)
+        self.time          = extractTimeDetailsFromJSON(json["time"])
+        self.legs          = extractLegsFromJSON(json["legs"])
     }
     
 //MARK: JSON Extracters
