@@ -20,6 +20,7 @@ class Trip {
     
     let styles = [GMSStrokeStyle .solidColor(UIColor.greenColor()), GMSStrokeStyle .solidColor(UIColor.clearColor())] //Colours for stroke of walking path
     let lengths = [10, 7]// Length of styles. Colour and clear
+    var fullPath: GMSMutablePath?
     
 //MARK: Initializers
     init(){
@@ -164,7 +165,7 @@ class Trip {
     - parameter mapView: Map that they will be placed on
     */
     func createPolylines(mapView: GMSMapView){
-        
+        self.fullPath = GMSMutablePath()
         for leg in self.legs!{
             if leg.pathType! == "Group"{
                 for innerLeg in leg.legs!{
@@ -174,6 +175,9 @@ class Trip {
                 workWithLeg(leg, mapview: mapView)
             }
         }
+        
+        addLegMarkers(mapView)
+        focusCameraOnTrip(mapView)
 
     }
 
@@ -184,7 +188,6 @@ class Trip {
      - parameter mapView: MapView that the path should be drawn on.
      */
     func showPolylinesOnMapView(mapView: GMSMapView){
-        
         for leg in self.legs!{
             if leg.pathType! == "Group"{
                 for innerLeg in leg.legs!{
@@ -195,13 +198,15 @@ class Trip {
             }
         }
         
+        addLegMarkers(mapView)
+        
     }
     
     /**
      Add path of single leg onto map
      
      - parameter leg:     Leg object containing leg to be addded to map
-     - parameter mapView: GMSMapViewWithPolyHistory object that leg should be placed on
+     - parameter mapView: GMSMapView object that leg should be placed on
      */
     func workWithLeg(leg: Leg, mapview: GMSMapView){
         
@@ -216,6 +221,11 @@ class Trip {
                 if response.error == nil{
                     let encodedRoute = response.json!["routes"][0]["overview_polyline"]["points"].stringValue
                     path = GMSPath(fromEncodedPath: encodedRoute)
+                    
+                    for (var index: UInt = 0; index < path.count(); ++index){
+                        self.fullPath?.addCoordinate(path.coordinateAtIndex(index))
+                    }
+                    
                     polyline.path = path
                     polyline.strokeWidth = 5
                     polyline.spans = GMSStyleSpans(polyline.path, self.styles, self.lengths, kGMSLengthRhumb)
@@ -242,11 +252,51 @@ class Trip {
             for point in (leg.path?.points)!{
                 path.addLatitude(point.lat!, longitude: point.long!)
             }
+            
+            for (var index: UInt = 0; index < path.count(); ++index){
+                self.fullPath?.addCoordinate(path.coordinateAtIndex(index))
+            }
+            
             polyline.path = path
             polyline.strokeWidth = 4
             polyline.map = mapview
             leg.polyline = polyline
         }
         
+    }
+    
+    /**
+     Add markers showing ends of each leg on the map
+     
+     - parameter mapView: GMSMapView where markers should be placed on
+     */
+    func addLegMarkers(mapView: GMSMapView){
+        var marker: GMSMarker
+        for leg in self.legs!{
+            if leg.pathType! == "Group"{
+                for innerLeg in leg.legs!{
+                    marker = GMSMarker()
+                    marker.position = CLLocationCoordinate2DMake((innerLeg.path!.points!.last!.lat)!, (innerLeg.path!.points!.last!.long)!)
+                    marker.icon = GMSMarker.markerImageWithColor(UIColor.greenColor())
+                    marker.map = mapView
+                }
+            }else{
+                marker = GMSMarker()
+                marker.position = CLLocationCoordinate2DMake((leg.path!.points!.last!.lat)!, (leg.path!.points!.last!.long)!)
+                marker.icon = GMSMarker.markerImageWithColor(UIColor.greenColor())
+                marker.map = mapView
+            }
+        }
+    }
+   
+    /**
+     Move camera to focus on the polyline drawn of the trip
+     
+     - parameter mapView: GSMMapView where camera should be updated
+     */
+    func focusCameraOnTrip(mapView: GMSMapView){
+        let mapBounds = GMSCoordinateBounds(path: self.fullPath)
+        let update = GMSCameraUpdate.fitBounds(mapBounds, withPadding: 50)
+        mapView.moveCamera(update)
     }
 }
