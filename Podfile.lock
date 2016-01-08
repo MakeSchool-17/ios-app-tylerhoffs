@@ -3,6 +3,11 @@ PODS:
   - GoogleMaps (1.11.1)
   - ModelMapper (1.0.1)
   - MXParallaxHeader (0.4.3)
+  - Realm (0.97.0):
+    - Realm/Headers (= 0.97.0)
+  - Realm/Headers (0.97.0)
+  - RealmSwift (0.97.0):
+    - Realm (= 0.97.0)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
@@ -10,6 +15,7 @@ DEPENDENCIES:
   - GoogleMaps
   - ModelMapper
   - MXParallaxHeader
+  - RealmSwift
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
 EXTERNAL SOURCES:
@@ -26,6 +32,8 @@ SPEC CHECKSUMS:
   GoogleMaps: c947160008f414c66707a5ea60f35e92055c7670
   ModelMapper: 724dba38a40af2f23b6512a3e729ac7f5a7fde5c
   MXParallaxHeader: 96d9e7c392a26b29b97ddc34bff904a9c0baef27
+  Realm: b498a6fb9d288b171ff98d0e2d4384c295be8990
+  RealmSwift: d014810dec75c9a3f1a33926d2dabfed855c582c
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
 COCOAPODS: 0.39.0

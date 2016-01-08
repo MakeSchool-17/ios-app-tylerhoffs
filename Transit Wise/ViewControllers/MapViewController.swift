@@ -24,6 +24,7 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setNeedsStatusBarAppearanceUpdate()
         let camera = GMSCameraPosition.cameraWithLatitude(-26.15041,
             longitude:28.01562, zoom:12)
         let mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
@@ -71,6 +72,10 @@ class MapViewController: UIViewController {
             }
         }
 
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
 
     override func didReceiveMemoryWarning() {

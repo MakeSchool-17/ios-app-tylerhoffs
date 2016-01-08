@@ -11,3 +11,5 @@ pod 'GoogleMaps'
 xcodeproj 'Transit Wise.xcodeproj'
 
 pod 'MXParallaxHeader'
+
+pod 'RealmSwift'
