@@ -114,8 +114,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             return predictions.count
         }else if (tableViewStatus == 1){
             return 0
-        }else{
-            return 20 // TODO: Get Stations List
+        }else if (tableViewStatus == 0){
+            return (nearbyStations?.count)! // TODO: Get Stations List
+        }
+        else{
+            return 0
         }
     }
     
@@ -128,6 +131,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             identifier = "busStopCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! BusStopCell
             cell.contentView.backgroundColor = getRandomColor()
+            cell.stopNameLabel.text = nearbyStations![indexPath.row].name! + " Stop"
+            if(nearbyStations![indexPath.row].distance! > 1){
+                cell.stopDistanceLabel.text = "\(nearbyStations![indexPath.row].distance!)km"
+            }
+            else{
+                let metres = Int(nearbyStations![indexPath.row].distance! * 1000)
+                cell.stopDistanceLabel.text = "\(metres)m"
+            }
             return cell
         }
         else if(tableViewStatus == 1){
@@ -493,6 +504,7 @@ extension HomeViewController: CLLocationManagerDelegate{
                     for stops in self.nearbyStations!{
                         stops.addMarker(self.mapView!)
                     }
+                    self.mainTableView.reloadData()
                     //TODO: Show the stops on the TableView
                 }else{
                     print(response.error)

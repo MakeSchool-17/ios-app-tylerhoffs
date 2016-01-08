@@ -15,9 +15,12 @@ import SwiftyJSON
 class MapViewController: UIViewController {
     var myTrip = Trip()
     let myRoute = Routes()
+    let apiClient = RwtToAPIHelper()
 
     @IBOutlet weak var directionsTableView: UITableView!
-    let apiClient = RwtToAPIHelper()
+    @IBOutlet weak var departTimeLabel: UILabel!
+    @IBOutlet weak var arriveTimeLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +64,8 @@ class MapViewController: UIViewController {
                 self.myTrip = self.myRoute.trips![0]
                 self.myTrip.createPolylines(mapView)
                 self.directionsTableView.reloadData()
+                self.departTimeLabel.text = "Depart at: " + self.calcTime((self.myTrip.time?.start)!)
+                self.arriveTimeLabel.text = "Arrive at: " + self.calcTime((self.myTrip.time?.end)!)
             }else{
                 print(response.error)
             }
@@ -76,7 +81,7 @@ class MapViewController: UIViewController {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let count = self.myTrip.legs?.count{
-            return count
+            return count + 2
         }
         else{
             return 0
@@ -84,26 +89,62 @@ class MapViewController: UIViewController {
         
     }
     
+    //Function to calculate time from minutes from Monday 00:00
+    func calcTime(minutes: Int) -> String{
+        let timeToday = minutes % 1440
+        let minutes = timeToday % 60
+        let hours = Int(timeToday/60)
+        var timeString = ""
+        if(minutes < 10){
+            timeString = "\(hours)" + ":0" + "\(minutes)"
+        }else{
+            timeString = "\(hours)" + ":" + "\(minutes)"
+        }
+        
+        return timeString
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if (self.myTrip.legs![indexPath.row].pathType == "Walk"){
+        if(indexPath.row == 0){
             let cell = tableView.dequeueReusableCellWithIdentifier("directionCell", forIndexPath: indexPath) as! DirectionCell
-            cell.legNameLabel.text = self.myTrip.legs![indexPath.row].pathType! + " for  \(self.myTrip.legs![indexPath.row].distance!)km"
-            cell.legTimeLabel.text = "\((self.myTrip.legs![indexPath.row].time?.duration)!)" + " mins"
+            cell.legNameLabel.text = "Depart"
+            cell.legTimeLabel.text = calcTime((self.myTrip.time?.start)!)
+            return cell
+            
+        }
+        else if(indexPath.row == ((self.myTrip.legs?.count)! + 1)){
+            let cell = tableView.dequeueReusableCellWithIdentifier("directionCell", forIndexPath: indexPath) as! DirectionCell
+            cell.legNameLabel.text = "Arrive"
+            cell.legTimeLabel.text = calcTime((self.myTrip.time?.end)!)
+            return cell
+        }
+        else if (self.myTrip.legs![indexPath.row-1].pathType == "Walk"){
+            let cell = tableView.dequeueReusableCellWithIdentifier("directionCell", forIndexPath: indexPath) as! DirectionCell
+            cell.legNameLabel.text = self.myTrip.legs![indexPath.row-1].pathType! + " for  \(self.myTrip.legs![indexPath.row-1].distance!)km"
+            cell.legTimeLabel.text = "\((self.myTrip.legs![indexPath.row-1].time?.duration)!)" + " mins"
             return cell
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("busDirectionCell", forIndexPath: indexPath) as! BusDirectionCell
-            cell.busNameLabel.text = self.myTrip.legs![indexPath.row].route
-            cell.busStopStart.text = self.myTrip.legs![indexPath.row].fromName
-            cell.busStopEnd.text = self.myTrip.legs![indexPath.row].toName
-            cell.legStartTimeLabel.text = "\((self.myTrip.legs![indexPath.row].time?.start)!)"
-            cell.legArriveTimeLabel.text = "\((self.myTrip.legs![indexPath.row].time?.end)!)"
+            cell.busNameLabel.text = self.myTrip.legs![indexPath.row-1].route
+            cell.busStopStart.text = self.myTrip.legs![indexPath.row-1].fromName
+            cell.busStopEnd.text = self.myTrip.legs![indexPath.row-1].toName
+            cell.legStartTimeLabel.text = calcTime((self.myTrip.legs![indexPath.row-1].time?.start)!)
+            print((self.myTrip.legs![indexPath.row-1].time?.start)!)
+            cell.legArriveTimeLabel.text = calcTime((self.myTrip.legs![indexPath.row-1].time?.end)!)
             return cell
         }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        if (self.myTrip.legs![indexPath.row].pathType == "Walk"){
+        print((self.myTrip.legs?.count)!)
+        if(indexPath.row == 0){
+            return 40
+        }
+        else if(indexPath.row == ((self.myTrip.legs?.count)! + 1)){
+            return 40
+        }
+        else if (self.myTrip.legs![indexPath.row-1].pathType == "Walk"){
             return 40
         }else{
             return 93
