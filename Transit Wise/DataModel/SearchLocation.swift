@@ -8,12 +8,18 @@
 
 import Foundation
 
+/// Structure to store information that will be required when making API call to search for directions
 class SearchLocation{
     var lat: Float?
     var long: Float?
     var name: String? = "blank"
     let apiHelper = RwtToAPIHelper()
     
+    /**
+     set the values of location use a placeID
+     
+     - parameter placeID: GMSPlace.placeID of location
+     */
     func setFromID(placeID: String){
         apiHelper.getPlaceDetailsFromID(placeID){ response in
             if response.error == nil{
