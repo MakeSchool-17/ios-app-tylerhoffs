@@ -12,6 +12,7 @@
 		215EB07B1C3CE6B900347122 /* BusStopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215EB07A1C3CE6B900347122 /* BusStopCell.swift */; };
 		215EB07D1C3D988E00347122 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215EB07C1C3D988E00347122 /* SearchCell.swift */; };
 		21E1AA751C1B570C00B0BCF5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E1AA741C1B570C00B0BCF5 /* MapViewController.swift */; };
+		21E559C51C404858004AC365 /* BusDirectonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E559C41C404858004AC365 /* BusDirectonCell.swift */; };
 		21FF435E1C18AD0A00AC48CD /* CustomView.h in Headers */ = {isa = PBXBuildFile; fileRef = 21FF435D1C18AD0A00AC48CD /* CustomView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		21FF43651C18AD0A00AC48CD /* CustomView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21FF435B1C18AD0A00AC48CD /* CustomView.framework */; };
 		21FF436C1C18AD0A00AC48CD /* CustomViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FF436B1C18AD0A00AC48CD /* CustomViewTests.swift */; };
@@ -99,6 +100,7 @@
 		215EB07A1C3CE6B900347122 /* BusStopCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusStopCell.swift; sourceTree = "<group>"; };
 		215EB07C1C3D988E00347122 /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		21E1AA741C1B570C00B0BCF5 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		21E559C41C404858004AC365 /* BusDirectonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusDirectonCell.swift; sourceTree = "<group>"; };
 		21FF435B1C18AD0A00AC48CD /* CustomView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CustomView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21FF435D1C18AD0A00AC48CD /* CustomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomView.h; sourceTree = "<group>"; };
 		21FF435F1C18AD0A00AC48CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				215EB07A1C3CE6B900347122 /* BusStopCell.swift */,
 				215EB07C1C3D988E00347122 /* SearchCell.swift */,
 				2121EC801C3F74EA00F674EB /* DirectionCell.swift */,
+				21E559C41C404858004AC365 /* BusDirectonCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -592,6 +595,7 @@
 				652841E31C06417C0073F60E /* Time.swift in Sources */,
 				652841DF1C063EE30073F60E /* Trip.swift in Sources */,
 				652B95201C03E8DD00E0260C /* Transit_Wise.xcdatamodeld in Sources */,
+				21E559C51C404858004AC365 /* BusDirectonCell.swift in Sources */,
 				652B951A1C03E8DD00E0260C /* ViewController.swift in Sources */,
 				652841EF1C0643A20073F60E /* _Stations.swift in Sources */,
 				65A872C21C1A3A660010D964 /* Options.swift in Sources */,

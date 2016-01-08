@@ -35,11 +35,26 @@ class MapViewController: UIViewController {
         
         // Do any additional setup after loading the view, typically from a nib.
         
+        /* EDGE CASE
         let startName = "11 Greenfield Rd, Randburg"
         let endName = "9 Florence Ave, Germiston"
         
         
         apiClient.getDirectionsCallback(-26.15041, startLong: 28.01562, startName: startName, endLat: -26.1696916, endLong: 28.138237, endName: endName){ response in
+            if response.error == nil{
+                self.myTrip.JSONinit(response.json!)
+                self.myTrip.createPolylines(mapView)
+                self.directionsTableView.reloadData()
+            }else{
+                print(response.error)
+            }
+        } */
+        
+        let startName = "Menlyn Park Shopping Centre, Pretoria, South Africa"
+        let endName = "Pretoria Central, Pretoria, Gauteng, South Africa"
+        
+        
+        apiClient.getDirectionsCallback(-25.782677, startLong: 28.276191, startName: startName, endLat: -25.7500498, endLong: 28.1688913, endName: endName){ response in
             if response.error == nil{
                 self.myTrip.JSONinit(response.json!)
                 self.myTrip.createPolylines(mapView)
@@ -68,10 +83,29 @@ class MapViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("directionCell", forIndexPath: indexPath) as! DirectionCell
-        cell.legNameLabel.text = self.myTrip.legs![indexPath.row].instructions
-        
-        return cell
+        if (self.myTrip.legs![indexPath.row].pathType == "Walk"){
+            let cell = tableView.dequeueReusableCellWithIdentifier("directionCell", forIndexPath: indexPath) as! DirectionCell
+            cell.legNameLabel.text = self.myTrip.legs![indexPath.row].pathType! + " for  \(self.myTrip.legs![indexPath.row].distance!)km"
+            cell.legTimeLabel.text = "\((self.myTrip.legs![indexPath.row].time?.duration)!)" + " mins"
+            return cell
+        }else{
+            let cell = tableView.dequeueReusableCellWithIdentifier("busDirectionCell", forIndexPath: indexPath) as! BusDirectionCell
+            cell.busNameLabel.text = self.myTrip.legs![indexPath.row].route
+            cell.busStopStart.text = self.myTrip.legs![indexPath.row].fromName
+            cell.busStopEnd.text = self.myTrip.legs![indexPath.row].toName
+            cell.legStartTimeLabel.text = "\((self.myTrip.legs![indexPath.row].time?.start)!)"
+            cell.legArriveTimeLabel.text = "\((self.myTrip.legs![indexPath.row].time?.end)!)"
+            return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        if (self.myTrip.legs![indexPath.row].pathType == "Walk"){
+            return 40
+        }else{
+            return 93
+        }
     }
     
     // MARK: - Table view delegate

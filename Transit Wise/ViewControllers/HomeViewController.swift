@@ -122,7 +122,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var identifier = ""
-        //var cell: UITableViewCell
         
         if (tableViewStatus == 0){
             identifier = "busStopCell"
@@ -160,6 +159,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         }
         
     }
+    
+    
     
     
     ///http://classictutorials.com/2014/08/generate-a-random-color-in-swift/
@@ -366,25 +367,6 @@ extension HomeViewController{
             }, completion: { finished in
                 print("View Moved!")
         })
-            searchActive = true
-            tableViewStatus = 1
-            mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
-            mainTableView.rowHeight = 70
-            
-            UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-                let tableHeader = self.mainTableView.parallaxHeader
-                tableHeader.height = 0
-                self.mainTableView.parallaxHeader.height = tableHeader.height
-                self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
-                self.mainTableView.parallaxHeader.view?.hidden = true
-                
-                print(self.searchBarLeftConstraint.constant)
-                self.searchBarLeftConstraint.constant -= 40
-                self.searchBarRightConstraint.constant += 40
-                
-                }, completion: { finished in
-                    print("View Moved!")
-            })
         }
     }
     
