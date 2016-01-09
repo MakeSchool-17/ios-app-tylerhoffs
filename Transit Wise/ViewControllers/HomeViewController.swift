@@ -110,12 +110,18 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     // MARK: - Table view data source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let predictions = predictions{
-            return predictions.count
-        }else if (tableViewStatus == 1){
-            return 0
+        
+        if (tableViewStatus == 1){
+            if let predictions = predictions{
+                return predictions.count
+            }else{
+                return 0
+            }
         }else if (tableViewStatus == 0){
             return (nearbyStations?.count)! // TODO: Get Stations List
+        }else if (tableViewStatus == 2){
+            print("AVAILABLE ROUTES \(self.availableRoutes?.trips?.count)")
+            return (availableRoutes?.trips!.count)!
         }
         else{
             return 0
@@ -158,11 +164,22 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! SearchCell
             
+            
             cell.addressLabel?.attributedText = bolded
             cell.cityLabel?.attributedText = city
             
             return cell
             
+        }
+        else if(tableViewStatus == 2){
+            identifier = "searchCell"
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! SearchCell
+            print(indexPath.row)
+            
+            cell.addressLabel?.text = self.availableRoutes?.trips![indexPath.row].shortCode
+            
+            //cell.cityLabel?.text = self.availableRoutes?.trips![indexPath.row].
+            return cell
         }
         else{
             identifier = "recentCell"
@@ -193,7 +210,21 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //selectedWaypoint = waypoints[indexPath.row]
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        self.performSegueWithIdentifier("ShowTrip", sender: self)
+        //self.performSegueWithIdentifier("ShowTrip", sender: self)
+        if(tableViewStatus == 0){
+            startLocation?.name = nearbyStations![indexPath.row].name!
+            startLocation?.long = Float((nearbyStations![indexPath.row].loc?.long)!)
+            startLocation?.lat = Float((nearbyStations![indexPath.row].loc?.lat)!)
+            startTextField.text = startLocation?.name
+            dropTripPlanner()
+        }
+        else if(tableViewStatus == 1){
+            endLocation?.setFromID(predictions![indexPath.row].placeID)
+            print("endLocation SET")
+        }
+        else{
+            self.performSegueWithIdentifier("ShowTrip", sender: self)
+        }
     }
     
     // MARK: - Scroll view delegate
@@ -228,6 +259,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     }
     
     @IBAction func directionButtonTap(sender: UIButton) {
+        dropTripPlanner()
+    }
+    
+    func dropTripPlanner(){
         if(!self.viewDown){
             self.viewDown = true
             self.view.endEditing(true)
@@ -294,23 +329,28 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         
     }
     
-    @IBAction func searchButtonTap(sender: AnyObject) {
-        self.view.endEditing(true)
-        
+    func tripSearch(){
         tableViewStatus = 1
         mainTableView.reloadData()
         
+        
         availableRoutes = Routes()
+        
+        /*
         startLocation?.lat = -26.15041
         startLocation?.long = 28.01562
         startLocation?.name = "11 Greenfield Rd, Randburg"
         endLocation?.lat = -26.1696916
         endLocation?.long = 28.138237
         endLocation?.name = "9 Florence Ave, Germiston"
+        */
         
         apiHelper.getDirectionsCallback((startLocation?.lat)!, startLong: (startLocation?.long)!, startName: (startLocation?.name)!, endLat: (endLocation?.lat)!, endLong: (endLocation?.long)!, endName: (endLocation?.name)!){ response in
             if response.error == nil{
                 self.availableRoutes!.JSONinit(response.json!)
+                
+                self.tableViewStatus = 2
+                self.mainTableView.reloadData()
             }else{
                 print(response.error)
             }
@@ -329,7 +369,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             }, completion: { finished in
                 print("View Moved!")
         })
-        
+    }
+    
+    @IBAction func searchButtonTap(sender: AnyObject) {
+        self.view.endEditing(true)
+        tripSearch()
     }
     
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
