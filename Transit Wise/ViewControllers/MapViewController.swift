@@ -182,5 +182,4 @@ class MapViewController: UIViewController {
         // self.directionsTableView.removeObserver(self.directionsTableView, forKeyPath: "contentInset")
     }
     
-
 }

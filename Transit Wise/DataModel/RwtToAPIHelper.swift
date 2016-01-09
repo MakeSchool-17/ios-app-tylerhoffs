@@ -29,7 +29,7 @@ class RwtToAPIHelper{
     - parameter endName:   Name of Ending point
     
     */
-    func getDirectionsCallback(startLat: Float, startLong: Float, startName: String, endLat: Float, endLong: Float, endName: String, callback: ApiCallback){
+    func getDirectionsCallback(startLat: Double, startLong: Double, startName: String, endLat: Double, endLong: Double, endName: String, callback: ApiCallback){
         
         let headers    = ["app": "testing", "Content-Type": "application/json"]
         let parameters = ["start":
@@ -86,7 +86,7 @@ class RwtToAPIHelper{
      
      - returns: Array of Stations
      */
-    func getNearbyStation(lat: Float, long: Float, callback: ApiCallback){
+    func getNearbyStation(lat: Double, long: Double, callback: ApiCallback){
         
         //let params = ["loc": [lat,long]]
         let request = Alamofire.request(.GET, "https://rwt.to/api/v1/nearby/stops?loc=[\(lat),\(long)]")
