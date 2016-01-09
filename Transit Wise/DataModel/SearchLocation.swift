@@ -10,8 +10,8 @@ import Foundation
 
 /// Structure to store information that will be required when making API call to search for directions
 class SearchLocation{
-    var lat: Float?
-    var long: Float?
+    var lat: Double?
+    var long: Double?
     var name: String? = "blank"
     let apiHelper = RwtToAPIHelper()
     
@@ -23,8 +23,8 @@ class SearchLocation{
     func setFromID(placeID: String){
         apiHelper.getPlaceDetailsFromID(placeID){ response in
             if response.error == nil{
-                self.lat = Float((response.place?.coordinate.latitude)!)
-                self.long = Float((response.place?.coordinate.longitude)!)
+                self.lat = (response.place?.coordinate.latitude)!
+                self.long = (response.place?.coordinate.longitude)!
                 self.name = (response.place?.name)!
             }else{
                 print(response.error)

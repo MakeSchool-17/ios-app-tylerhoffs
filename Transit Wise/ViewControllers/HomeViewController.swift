@@ -11,7 +11,7 @@ import MXParallaxHeader
 import GoogleMaps
 import CoreLocation
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, GMSMapViewDelegate {
     
     
     @IBOutlet var mainView: UIView!
@@ -47,6 +47,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     let apiHelper = RwtToAPIHelper()
     var nearbyStations: [Stop]?
     var availableRoutes: Routes?
+    var centerMarker: GMSMarker?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +67,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         let camera = GMSCameraPosition.cameraWithLatitude(-25.7561672,
             longitude:28.2289275, zoom:14)
         mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
+        mapView!.delegate = self
+        mapView!.settings.myLocationButton = true
+        
+        centerMarker = GMSMarker()
+        centerMarker!.appearAnimation = kGMSMarkerAnimationPop
+        centerMarker!.icon = GMSMarker.markerImageWithColor(UIColor.blueColor())
+        centerMarker?.title = "Current Location"
+        centerMarker!.map = mapView
         
         //Locaition Manager setup
         locationManager.delegate = self
@@ -520,6 +529,22 @@ extension HomeViewController{
             self.mainTableView.reloadData()
         })
     }
+    
+//MARK: MapViewDelegate
+    func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
+        if marker.hash == centerMarker?.hash{
+            startLocation?.lat = marker.position.latitude
+            startLocation?.long = marker.position.longitude
+            print("starting at \(startLocation?.lat) and \(startLocation?.long)")
+            return true
+        }
+        return false
+    }
+    
+    func mapView(mapView: GMSMapView!, didChangeCameraPosition position: GMSCameraPosition!) {
+        centerMarker?.position = position.target
+    }
+    
 }
 
 extension HomeViewController: CLLocationManagerDelegate{
@@ -537,8 +562,8 @@ extension HomeViewController: CLLocationManagerDelegate{
         if let location = locations.first {
             
             mapView!.camera = GMSCameraPosition(target: location.coordinate, zoom: 14, bearing: 0, viewingAngle: 0)
-            currentLocation?.lat = Float(location.coordinate.latitude)
-            currentLocation?.long = Float(location.coordinate.longitude)
+            currentLocation?.lat = location.coordinate.latitude
+            currentLocation?.long = location.coordinate.longitude
             apiHelper.getNearbyStation((currentLocation?.lat)!, long: (currentLocation?.long)!){response in
                 if response.error == nil{
                     self.nearbyStations = []
