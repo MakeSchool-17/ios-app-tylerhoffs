@@ -14,20 +14,23 @@ class SearchLocation{
     var long: Double?
     var name: String? = "blank"
     let apiHelper = RwtToAPIHelper()
+    typealias SearchCallback = (error: NSError?) -> Void
     
     /**
      set the values of location use a placeID
      
      - parameter placeID: GMSPlace.placeID of location
      */
-    func setFromID(placeID: String){
+    func setFromID(placeID: String, callback: SearchCallback){
         apiHelper.getPlaceDetailsFromID(placeID){ response in
             if response.error == nil{
                 self.lat = (response.place?.coordinate.latitude)!
                 self.long = (response.place?.coordinate.longitude)!
                 self.name = (response.place?.name)!
+                callback(error: nil)
             }else{
                 print(response.error)
+                callback(error: response.error)
             }
         }
     }

@@ -12,7 +12,7 @@ class BusStopCell: UITableViewCell {
     
     @IBOutlet weak var stopNameLabel: UILabel!
     @IBOutlet weak var stopDistanceLabel: UILabel!
-    @IBOutlet weak var minutesLabel: UILabel!
+
 
     
 }

@@ -132,6 +132,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             print("AVAILABLE ROUTES \(self.availableRoutes?.trips?.count)")
             return (availableRoutes?.trips!.count)!
         }
+        else if (tableViewStatus == 3){
+            if let predictions = predictions{
+                return predictions.count
+            }else{
+                return 0
+            }
+        }
         else{
             return 0
         }
@@ -139,6 +146,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        // Table View Statuses:
+        // 0: Display bus stops
+        // 1: Display search results on trip planner page
+        // 2: Display trips available
+        // 3: Display search results on main page
         
         var identifier = ""
         
@@ -186,9 +199,32 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             print(indexPath.row)
             
             cell.addressLabel?.text = self.availableRoutes?.trips![indexPath.row].shortCode
-            
-            //cell.cityLabel?.text = self.availableRoutes?.trips![indexPath.row].
+            cell.cityLabel?.text = ""
             return cell
+        }
+        else if(tableViewStatus == 3){
+            identifier = "searchCell"
+            
+            let bolded = predictions![indexPath.row].attributedPrimaryText.mutableCopy() as! NSMutableAttributedString
+            bolded.enumerateAttribute(kGMSAutocompleteMatchAttribute, inRange: NSMakeRange(0, bolded.length), options: []) { (value, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+                let font = (value == nil) ? self.regularFont : self.boldFont
+                bolded.addAttribute(NSFontAttributeName, value: font, range: range)
+            }
+            
+            let city = predictions![indexPath.row].attributedSecondaryText.mutableCopy() as! NSMutableAttributedString
+            city.enumerateAttribute(kGMSAutocompleteMatchAttribute, inRange: NSMakeRange(0, city.length), options: []) { (value, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+                let font = (value == nil) ? self.regularFont : self.boldFont
+                city.addAttribute(NSFontAttributeName, value: font, range: range)
+            }
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! SearchCell
+            
+            
+            cell.addressLabel?.attributedText = bolded
+            cell.cityLabel?.attributedText = city
+            
+            return cell
+            
         }
         else{
             identifier = "recentCell"
@@ -228,8 +264,32 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             dropTripPlanner()
         }
         else if(tableViewStatus == 1){
-            endLocation?.setFromID(predictions![indexPath.row].placeID)
-            print("endLocation SET")
+            endLocation?.setFromID(predictions![indexPath.row].placeID){response in
+                if response == nil{
+                    self.endTextField.text = self.endLocation?.name
+                    self.tripSearch()
+                    print("endLocation SET")
+                }else{
+                    // There is an error
+                }
+                
+            }
+        
+        }
+        else if(tableViewStatus == 3){
+            endLocation?.setFromID(predictions![indexPath.row].placeID){response in
+                if response == nil{
+                    self.dropTripPlanner()
+                    self.startLocation = self.currentLocation
+                    self.startTextField.text = "Current Location"
+                    self.endTextField.text = self.endLocation?.name
+                    self.tripSearch()
+                }else{
+                    // There is an error
+                }
+            }
+
+            
         }
         else{
             self.performSegueWithIdentifier("ShowTrip", sender: self)
@@ -339,8 +399,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     }
     
     func tripSearch(){
-        tableViewStatus = 1
-        mainTableView.reloadData()
+        //tableViewStatus = 1
+        //mainTableView.reloadData()
         
         
         availableRoutes = Routes()
@@ -349,10 +409,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         startLocation?.lat = -26.15041
         startLocation?.long = 28.01562
         startLocation?.name = "11 Greenfield Rd, Randburg"
+
         endLocation?.lat = -26.1696916
         endLocation?.long = 28.138237
         endLocation?.name = "9 Florence Ave, Germiston"
         */
+        
         
         apiHelper.getDirectionsCallback((startLocation?.lat)!, startLong: (startLocation?.long)!, startName: (startLocation?.name)!, endLat: (endLocation?.lat)!, endLong: (endLocation?.long)!, endName: (endLocation?.name)!){ response in
             if response.error == nil{
@@ -410,28 +472,28 @@ extension HomeViewController{
     //Search Bar Delegate Functions
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         if(!searchActive){
-        directionButton.hidden = true
-        searchActive = true
-        tableViewStatus = 1
-        mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
-        mainTableView.rowHeight = 70
+            directionButton.hidden = true
+            searchActive = true
+            tableViewStatus = 3
+            mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
+            mainTableView.rowHeight = 70
         
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-            let tableHeader = self.mainTableView.parallaxHeader
-            tableHeader.height = 0
-            self.mainTableView.parallaxHeader.height = tableHeader.height
-            self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
-            self.mainTableView.parallaxHeader.view?.hidden = true
+            UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
+                let tableHeader = self.mainTableView.parallaxHeader
+                tableHeader.height = 0
+                self.mainTableView.parallaxHeader.height = tableHeader.height
+                self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
+                self.mainTableView.parallaxHeader.view?.hidden = true
             
-            print(self.searchBarLeftConstraint.constant)
-            self.searchBarLeftConstraint.constant -= 40
-            self.searchBarRightConstraint.constant += 40
+                print(self.searchBarLeftConstraint.constant)
+                self.searchBarLeftConstraint.constant -= 40
+                self.searchBarRightConstraint.constant += 40
             
-            self.slideCancelButton.transform = CGAffineTransformMakeTranslation(-70, 0)
+                self.slideCancelButton.transform = CGAffineTransformMakeTranslation(-70, 0)
             
-            }, completion: { finished in
+                }, completion: { finished in
                 print("View Moved!")
-        })
+            })
         }
     }
     
@@ -497,12 +559,11 @@ extension HomeViewController{
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        print("Change Called")
         var txtAfterUpdate:NSString = textField.text! as NSString
         txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
         
         if txtAfterUpdate.length > 0 {
-            print("TEXTFIELD TEXT_" + (txtAfterUpdate as String)+"_END")
+
             placeAutocomplete(txtAfterUpdate as String)
         }else{
             self.predictions = []
@@ -567,6 +628,8 @@ extension HomeViewController: CLLocationManagerDelegate{
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let _ = currentLocation?.lat{
+            print("WHAT IS THIS EVEN")
+            //TODO: What?
             return
         }
         if let location = locations.first {
