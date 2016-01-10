@@ -19,9 +19,7 @@ struct Options: Mappable{
     init(map: Mapper) throws {
         agencies = map.optionalFrom("agencies") ?? []
         categories = map.optionalFrom("categories") ?? []
-        
-        print(agencies![0].name)
-    }
+        }
 }
     struct Agencies: Mappable{
         let _id: String

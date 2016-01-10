@@ -28,6 +28,8 @@
 		652841EF1C0643A20073F60E /* _Stations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841EE1C0643A20073F60E /* _Stations.swift */; };
 		652841F11C0644150073F60E /* Agency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652841F01C0644150073F60E /* Agency.swift */; };
 		652AF3471C067ED000FE6B15 /* RwtToAPIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AF3461C067ED000FE6B15 /* RwtToAPIHelper.swift */; };
+		652B14841C422D8F00F69503 /* RealmModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B14831C422D8F00F69503 /* RealmModels.swift */; };
+		652B14861C4238CB00F69503 /* RealmHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B14851C4238CB00F69503 /* RealmHelper.swift */; };
 		652B95181C03E8DD00E0260C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B95171C03E8DD00E0260C /* AppDelegate.swift */; };
 		652B951A1C03E8DD00E0260C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B95191C03E8DD00E0260C /* ViewController.swift */; };
 		652B951D1C03E8DD00E0260C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 652B951B1C03E8DD00E0260C /* Main.storyboard */; };
@@ -120,6 +122,8 @@
 		652841EE1C0643A20073F60E /* _Stations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Stations.swift; sourceTree = "<group>"; };
 		652841F01C0644150073F60E /* Agency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Agency.swift; sourceTree = "<group>"; };
 		652AF3461C067ED000FE6B15 /* RwtToAPIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RwtToAPIHelper.swift; path = DataModel/RwtToAPIHelper.swift; sourceTree = "<group>"; };
+		652B14831C422D8F00F69503 /* RealmModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmModels.swift; sourceTree = "<group>"; };
+		652B14851C4238CB00F69503 /* RealmHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmHelper.swift; sourceTree = "<group>"; };
 		652B95141C03E8DD00E0260C /* Transit Wise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Transit Wise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		652B95171C03E8DD00E0260C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		652B95191C03E8DD00E0260C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -253,6 +257,7 @@
 				652841E21C06417C0073F60E /* Time.swift */,
 				652841E41C0641DF0073F60E /* TravelDetails.swift */,
 				652841E81C06425D0073F60E /* Leg.swift */,
+				652B14831C422D8F00F69503 /* RealmModels.swift */,
 				652841EA1C0642850073F60E /* Path.swift */,
 				652841EC1C0643920073F60E /* Station.swift */,
 				652841EE1C0643A20073F60E /* _Stations.swift */,
@@ -295,6 +300,7 @@
 			children = (
 				215EB0791C3CE6A600347122 /* Cells */,
 				652AF3461C067ED000FE6B15 /* RwtToAPIHelper.swift */,
+				652B14851C4238CB00F69503 /* RealmHelper.swift */,
 				652B95191C03E8DD00E0260C /* ViewController.swift */,
 				215379E11C161AC00069500B /* ViewControllers */,
 				652841D71C063E650073F60E /* DataModel */,
@@ -610,7 +616,9 @@
 				652B951A1C03E8DD00E0260C /* ViewController.swift in Sources */,
 				652841EF1C0643A20073F60E /* _Stations.swift in Sources */,
 				652ED9971C41DAF600AC6541 /* CustomInfoWindowView.swift in Sources */,
+				652B14841C422D8F00F69503 /* RealmModels.swift in Sources */,
 				65A872C21C1A3A660010D964 /* Options.swift in Sources */,
+				652B14861C4238CB00F69503 /* RealmHelper.swift in Sources */,
 				652841E51C0641DF0073F60E /* TravelDetails.swift in Sources */,
 				65FE1C791C3EFDAE00CBACCF /* Stops.swift in Sources */,
 				652841ED1C0643920073F60E /* Station.swift in Sources */,
