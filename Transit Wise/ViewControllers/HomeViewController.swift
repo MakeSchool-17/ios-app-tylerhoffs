@@ -65,7 +65,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         mainTableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
         
         let camera = GMSCameraPosition.cameraWithLatitude(-25.7561672,
-            longitude:28.2289275, zoom:14)
+            longitude:28.2289275, zoom:16)
         mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
         mapView!.delegate = self
         mapView!.settings.myLocationButton = true
@@ -222,8 +222,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         //self.performSegueWithIdentifier("ShowTrip", sender: self)
         if(tableViewStatus == 0){
             startLocation?.name = nearbyStations![indexPath.row].name!
-            startLocation?.long = Float((nearbyStations![indexPath.row].loc?.long)!)
-            startLocation?.lat = Float((nearbyStations![indexPath.row].loc?.lat)!)
+            startLocation?.long = (nearbyStations![indexPath.row].loc?.long)!
+            startLocation?.lat = (nearbyStations![indexPath.row].loc?.lat)!
             startTextField.text = startLocation?.name
             dropTripPlanner()
         }
@@ -532,13 +532,23 @@ extension HomeViewController{
     
 //MARK: MapViewDelegate
     func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
-        if marker.hash == centerMarker?.hash{
-            startLocation?.lat = marker.position.latitude
-            startLocation?.long = marker.position.longitude
-            print("starting at \(startLocation?.lat) and \(startLocation?.long)")
-            return true
-        }
+        endLocation?.lat = marker.position.latitude
+        endLocation?.long = marker.position.longitude
         return false
+    }
+    
+    func mapView(mapView: GMSMapView!, markerInfoWindow marker: GMSMarker!) -> UIView! {
+        let customInfoWindow = NSBundle.mainBundle().loadNibNamed("CustomInfoWindow", owner: self, options: nil)[0] as! UIView
+        if marker.hash == centerMarker?.hash{
+            
+        }else{
+            
+        }
+        return customInfoWindow
+    }
+    
+    func mapView(mapView: GMSMapView!, didTapInfoWindowOfMarker marker: GMSMarker!) {
+        print("Start Search")
     }
     
     func mapView(mapView: GMSMapView!, didChangeCameraPosition position: GMSCameraPosition!) {
@@ -561,7 +571,7 @@ extension HomeViewController: CLLocationManagerDelegate{
         }
         if let location = locations.first {
             
-            mapView!.camera = GMSCameraPosition(target: location.coordinate, zoom: 14, bearing: 0, viewingAngle: 0)
+            mapView!.camera = GMSCameraPosition(target: location.coordinate, zoom: 16, bearing: 0, viewingAngle: 0)
             currentLocation?.lat = location.coordinate.latitude
             currentLocation?.long = location.coordinate.longitude
             apiHelper.getNearbyStation((currentLocation?.lat)!, long: (currentLocation?.long)!){response in

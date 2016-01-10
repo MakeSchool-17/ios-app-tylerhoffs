@@ -37,6 +37,8 @@
 		652B95301C03E8DD00E0260C /* Transit_WiseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B952F1C03E8DD00E0260C /* Transit_WiseTests.swift */; };
 		652B953B1C03E8DD00E0260C /* Transit_WiseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B953A1C03E8DD00E0260C /* Transit_WiseUITests.swift */; };
 		652ED98F1C4045C300AC6541 /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ED98E1C4045C300AC6541 /* Routes.swift */; };
+		652ED9951C41D9E200AC6541 /* CustomInfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 652ED9941C41D9E200AC6541 /* CustomInfoWindow.xib */; };
+		652ED9971C41DAF600AC6541 /* CustomInfoWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ED9961C41DAF600AC6541 /* CustomInfoWindowView.swift */; };
 		658695011C3E4025008A4DD1 /* SearchLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658695001C3E4025008A4DD1 /* SearchLocation.swift */; };
 		65A872C21C1A3A660010D964 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A872C11C1A3A660010D964 /* Options.swift */; };
 		65FE1C791C3EFDAE00CBACCF /* Stops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FE1C781C3EFDAE00CBACCF /* Stops.swift */; };
@@ -133,6 +135,8 @@
 		652B953A1C03E8DD00E0260C /* Transit_WiseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transit_WiseUITests.swift; sourceTree = "<group>"; };
 		652B953C1C03E8DD00E0260C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		652ED98E1C4045C300AC6541 /* Routes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
+		652ED9941C41D9E200AC6541 /* CustomInfoWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomInfoWindow.xib; sourceTree = "<group>"; };
+		652ED9961C41DAF600AC6541 /* CustomInfoWindowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomInfoWindowView.swift; sourceTree = "<group>"; };
 		658695001C3E4025008A4DD1 /* SearchLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLocation.swift; sourceTree = "<group>"; };
 		65A872C11C1A3A660010D964 /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		65FE1C781C3EFDAE00CBACCF /* Stops.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stops.swift; sourceTree = "<group>"; };
@@ -196,6 +200,7 @@
 			children = (
 				215379E61C161B5D0069500B /* HomeViewController.swift */,
 				21E1AA741C1B570C00B0BCF5 /* MapViewController.swift */,
+				652ED9961C41DAF600AC6541 /* CustomInfoWindowView.swift */,
 			);
 			name = ViewControllers;
 			path = "Transit Wise/ViewControllers";
@@ -294,6 +299,7 @@
 				215379E11C161AC00069500B /* ViewControllers */,
 				652841D71C063E650073F60E /* DataModel */,
 				652B95171C03E8DD00E0260C /* AppDelegate.swift */,
+				652ED9941C41D9E200AC6541 /* CustomInfoWindow.xib */,
 				652B951B1C03E8DD00E0260C /* Main.storyboard */,
 				652B95211C03E8DD00E0260C /* Assets.xcassets */,
 				652B95231C03E8DD00E0260C /* LaunchScreen.storyboard */,
@@ -442,7 +448,7 @@
 				TargetAttributes = {
 					21FF435A1C18AD0A00AC48CD = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = LNLLAPA3HJ;
+						DevelopmentTeam = T9AT2A746N;
 					};
 					21FF43631C18AD0A00AC48CD = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -450,7 +456,7 @@
 					};
 					652B95131C03E8DD00E0260C = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = LNLLAPA3HJ;
+						DevelopmentTeam = T9AT2A746N;
 					};
 					652B952A1C03E8DD00E0260C = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -503,6 +509,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				652ED9951C41D9E200AC6541 /* CustomInfoWindow.xib in Resources */,
 				652B95251C03E8DD00E0260C /* LaunchScreen.storyboard in Resources */,
 				652B95221C03E8DD00E0260C /* Assets.xcassets in Resources */,
 				652B951D1C03E8DD00E0260C /* Main.storyboard in Resources */,
@@ -602,6 +609,7 @@
 				21E559C51C404858004AC365 /* BusDirectonCell.swift in Sources */,
 				652B951A1C03E8DD00E0260C /* ViewController.swift in Sources */,
 				652841EF1C0643A20073F60E /* _Stations.swift in Sources */,
+				652ED9971C41DAF600AC6541 /* CustomInfoWindowView.swift in Sources */,
 				65A872C21C1A3A660010D964 /* Options.swift in Sources */,
 				652841E51C0641DF0073F60E /* TravelDetails.swift in Sources */,
 				65FE1C791C3EFDAE00CBACCF /* Stops.swift in Sources */,
