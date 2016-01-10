@@ -53,7 +53,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         super.viewDidLoad()
         
         self.setNeedsStatusBarAppearanceUpdate()
-        
+        self.getOptions()
         placesClient = GMSPlacesClient()
         startLocation = SearchLocation()
         endLocation = SearchLocation()
@@ -595,4 +595,19 @@ extension HomeViewController: CLLocationManagerDelegate{
         }
     }
     
+}
+
+extension HomeViewController{
+    func getOptions(){
+        apiHelper.getOptionsCallback(){response in
+            if response.error == nil{
+                let apiOptions = Options.from((response.json?.dictionaryObject)!)
+                let realmHelper = RealmHelper()
+                realmHelper.persistOptions(apiOptions!)
+                
+            }else{
+                print(response.error)
+            }
+    }
+    }
 }
