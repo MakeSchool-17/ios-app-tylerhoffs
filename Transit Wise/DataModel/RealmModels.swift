@@ -46,3 +46,9 @@ class RealmCategories: Object{
 class UserData: Object{
     var home: CLLocationCoordinate2D? = nil
 }
+
+class RecentSearches: Object{
+    let lat = RealmOptional<Double>()
+    let long = RealmOptional<Double>()
+    dynamic var name: String? = nil
+}

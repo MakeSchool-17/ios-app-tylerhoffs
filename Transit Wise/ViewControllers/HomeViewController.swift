@@ -103,8 +103,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             // Fallback on earlier versions
         }
         
-
-
+        
+        
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -274,7 +274,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 }
                 
             }
-        
+            
         }
         else if(tableViewStatus == 3){
             endLocation?.setFromID(predictions![indexPath.row].placeID){response in
@@ -288,7 +288,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                     // There is an error
                 }
             }
-
+            
             
         }
         else{
@@ -304,26 +304,26 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     // MARK: - Button Actions
     @IBAction func slideCacelTap(sender: AnyObject) {
-            self.view.endEditing(true)
-            directionButton.hidden = false
-            searchActive = false
-            tableViewStatus = 0
-            mainTableView.rowHeight = 100
-            mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
+        self.view.endEditing(true)
+        directionButton.hidden = false
+        searchActive = false
+        tableViewStatus = 0
+        mainTableView.rowHeight = 100
+        mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
         
+        
+        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
+            let tableHeader = self.mainTableView.parallaxHeader
+            tableHeader.height = 400
+            self.mainTableView.parallaxHeader.height = tableHeader.height
+            self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
+            self.mainTableView.parallaxHeader.view?.hidden = false
             
-            UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-                let tableHeader = self.mainTableView.parallaxHeader
-                tableHeader.height = 400
-                self.mainTableView.parallaxHeader.height = tableHeader.height
-                self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
-                self.mainTableView.parallaxHeader.view?.hidden = false
-                
-                
-                
-                }, completion: { finished in
-                    print("View Moved!")
-            })
+            
+            
+            }, completion: { finished in
+                print("View Moved!")
+        })
         
     }
     
@@ -409,7 +409,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         startLocation?.lat = -26.15041
         startLocation?.long = 28.01562
         startLocation?.name = "11 Greenfield Rd, Randburg"
-
+        
         endLocation?.lat = -26.1696916
         endLocation?.long = 28.138237
         endLocation?.name = "9 Florence Ave, Germiston"
@@ -477,22 +477,22 @@ extension HomeViewController{
             tableViewStatus = 3
             mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
             mainTableView.rowHeight = 70
-        
+            
             UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                 let tableHeader = self.mainTableView.parallaxHeader
                 tableHeader.height = 0
                 self.mainTableView.parallaxHeader.height = tableHeader.height
                 self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
                 self.mainTableView.parallaxHeader.view?.hidden = true
-            
+                
                 print(self.searchBarLeftConstraint.constant)
                 self.searchBarLeftConstraint.constant -= 40
                 self.searchBarRightConstraint.constant += 40
-            
+                
                 self.slideCancelButton.transform = CGAffineTransformMakeTranslation(-70, 0)
-            
+                
                 }, completion: { finished in
-                print("View Moved!")
+                    print("View Moved!")
             })
         }
     }
@@ -563,7 +563,7 @@ extension HomeViewController{
         txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
         
         if txtAfterUpdate.length > 0 {
-
+            
             placeAutocomplete(txtAfterUpdate as String)
         }else{
             self.predictions = []
@@ -591,7 +591,7 @@ extension HomeViewController{
         })
     }
     
-//MARK: MapViewDelegate
+    //MARK: MapViewDelegate
     func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
         endLocation?.lat = marker.position.latitude
         endLocation?.long = marker.position.longitude
@@ -628,8 +628,6 @@ extension HomeViewController: CLLocationManagerDelegate{
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let _ = currentLocation?.lat{
-            print("WHAT IS THIS EVEN")
-            //TODO: What?
             return
         }
         if let location = locations.first {
@@ -647,7 +645,6 @@ extension HomeViewController: CLLocationManagerDelegate{
                         stops.addMarker(self.mapView!)
                     }
                     self.mainTableView.reloadData()
-                    //TODO: Show the stops on the TableView
                 }else{
                     print(response.error)
                 }
@@ -655,6 +652,7 @@ extension HomeViewController: CLLocationManagerDelegate{
             }
             
             locationManager.stopUpdatingLocation()
+//            locationManager.startMonitoringSignificantLocationChanges()
         }
     }
     
@@ -671,6 +669,6 @@ extension HomeViewController{
             }else{
                 print(response.error)
             }
-    }
+        }
     }
 }
