@@ -48,6 +48,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     var nearbyStations: [Stop]?
     var availableRoutes: Routes?
     var centerMarker: GMSMarker?
+    var currentTrip: Trip?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,8 +98,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         //mapView?.addGestureRecognizer(tap)
         
         if #available(iOS 9.1, *) {
-            let shortcut = UIApplicationShortcutItem(type: "com.transitwise.takemehome", localizedTitle: "Take Me Home", localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .Home), userInfo: nil)
-            UIApplication.sharedApplication().shortcutItems = [shortcut]
+            let homeShortcut = UIApplicationShortcutItem(type: "com.transitwise.takemehome", localizedTitle: "Take Me Home", localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .Home), userInfo: nil)
+            let workShortcut = UIApplicationShortcutItem(type: "com.transitwise.takemework", localizedTitle: "Take Me to Work", localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .Bookmark), userInfo: nil)
+            UIApplication.sharedApplication().shortcutItems = [homeShortcut, workShortcut]
         } else {
             // Fallback on earlier versions
         }
@@ -276,6 +278,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             }
             
         }
+        else if(tableViewStatus == 2){
+            currentTrip = availableRoutes?.trips![indexPath.row]
+            self.performSegueWithIdentifier("ShowTrip", sender: self)
+        }
         else if(tableViewStatus == 3){
             endLocation?.setFromID(predictions![indexPath.row].placeID){response in
                 if response == nil{
@@ -293,6 +299,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         }
         else{
             self.performSegueWithIdentifier("ShowTrip", sender: self)
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "ShowTrip") {
+            let mapViewController = segue.destinationViewController as! MapViewController
+            mapViewController.myTrip = currentTrip!
         }
     }
     

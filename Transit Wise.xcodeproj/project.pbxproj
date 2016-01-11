@@ -463,7 +463,7 @@
 				TargetAttributes = {
 					21FF435A1C18AD0A00AC48CD = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = T9AT2A746N;
+						DevelopmentTeam = LNLLAPA3HJ;
 					};
 					21FF43631C18AD0A00AC48CD = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -471,7 +471,7 @@
 					};
 					652B95131C03E8DD00E0260C = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = T9AT2A746N;
+						DevelopmentTeam = LNLLAPA3HJ;
 					};
 					652B952A1C03E8DD00E0260C = {
 						CreatedOnToolsVersion = 7.1.1;
