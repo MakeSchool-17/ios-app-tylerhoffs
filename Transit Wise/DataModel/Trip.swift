@@ -296,7 +296,9 @@ class Trip {
      */
     func focusCameraOnTrip(mapView: GMSMapView){
         let mapBounds = GMSCoordinateBounds(path: self.fullPath)
-        let update = GMSCameraUpdate.fitBounds(mapBounds, withPadding: 50)
-        mapView.moveCamera(update)
+        mapView.camera = mapView.cameraForBounds(mapBounds, insets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
+//        let update = GMSCameraUpdate.fitBounds(mapBounds, withPadding: 50)
+//        mapView.moveCamera(update)
+        //mapView.camera = GMSCameraPosition.cameraWithTarget(mapView.camera.target, zoom: 16)
     }
 }

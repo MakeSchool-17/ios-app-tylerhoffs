@@ -48,6 +48,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     var nearbyStations: [Stop]?
     var availableRoutes: Routes?
     var centerMarker: GMSMarker?
+    var currentTrip: Trip?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -268,7 +269,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 if response == nil{
                     self.endTextField.text = self.endLocation?.name
                     self.tripSearch()
-                    print("endLocation SET")
                 }else{
                     // There is an error
                 }
@@ -276,23 +276,35 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             }
         
         }
+        else if(tableViewStatus == 2){
+            currentTrip = availableRoutes?.trips![indexPath.row]
+            self.performSegueWithIdentifier("ShowTrip", sender: self)
+            
+        }
         else if(tableViewStatus == 3){
+            self.view.endEditing(true)
+            self.dropTripPlanner()
             endLocation?.setFromID(predictions![indexPath.row].placeID){response in
                 if response == nil{
-                    self.dropTripPlanner()
                     self.startLocation = self.currentLocation
                     self.startTextField.text = "Current Location"
                     self.endTextField.text = self.endLocation?.name
                     self.tripSearch()
+                    self.mainTableView.reloadData()
                 }else{
                     // There is an error
                 }
             }
-
-            
         }
         else{
             self.performSegueWithIdentifier("ShowTrip", sender: self)
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "ShowTrip") {
+            let mapViewController = segue.destinationViewController as! MapViewController
+            mapViewController.myTrip = currentTrip!
         }
     }
     
@@ -392,17 +404,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                             print("View Moved2!")
                     })
             })
-            
             self.mainTableView.parallaxHeader.view?.hidden = false
         }
         
     }
     
     func tripSearch(){
-        //tableViewStatus = 1
-        //mainTableView.reloadData()
-        
-        
         availableRoutes = Routes()
         
         /*
@@ -427,19 +434,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             }
         }
         
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-            
-            
-            let tableHeader = self.mainTableView.parallaxHeader
-            tableHeader.height = 110
-            self.mainTableView.parallaxHeader.height = tableHeader.height
-            self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
-            self.mainTableView.parallaxHeader.view?.hidden = true
-            
-            
-            }, completion: { finished in
-                print("View Moved!")
-        })
+        self.mainTableView.parallaxHeader.height = 110
+        self.mainTableView.parallaxHeader.minimumHeight = 110
+        self.mainTableView.parallaxHeader.view?.hidden = true
+
     }
     
     @IBAction func searchButtonTap(sender: AnyObject) {

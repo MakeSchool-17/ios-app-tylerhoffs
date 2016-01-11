@@ -26,7 +26,7 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         self.setNeedsStatusBarAppearanceUpdate()
         let camera = GMSCameraPosition.cameraWithLatitude(-26.15041,
-            longitude:28.01562, zoom:12)
+            longitude:28.01562, zoom:16)
         let mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
         
         // Parallax Header Setup
@@ -55,6 +55,7 @@ class MapViewController: UIViewController {
             }
         } */
         
+        /*
         let startName = "Menlyn Park Shopping Centre, Pretoria, South Africa"
         let endName = "Pretoria Central, Pretoria, Gauteng, South Africa"
         
@@ -71,6 +72,11 @@ class MapViewController: UIViewController {
                 print(response.error)
             }
         }
+        */
+        self.myTrip.createPolylines(mapView)
+        self.directionsTableView.reloadData()
+        self.departTimeLabel.text = "Depart at: " + self.calcTime((self.myTrip.time?.start)!)
+        self.arriveTimeLabel.text = "Arrive at: " + self.calcTime((self.myTrip.time?.end)!)
 
     }
     
