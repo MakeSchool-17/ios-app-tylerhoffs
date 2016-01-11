@@ -266,7 +266,6 @@
 				652841E21C06417C0073F60E /* Time.swift */,
 				652841E41C0641DF0073F60E /* TravelDetails.swift */,
 				652841E81C06425D0073F60E /* Leg.swift */,
-				652B14831C422D8F00F69503 /* RealmModels.swift */,
 				652841EA1C0642850073F60E /* Path.swift */,
 				652841EC1C0643920073F60E /* Station.swift */,
 				652841EE1C0643A20073F60E /* _Stations.swift */,
@@ -274,6 +273,7 @@
 				65A872C11C1A3A660010D964 /* Options.swift */,
 				658695001C3E4025008A4DD1 /* SearchLocation.swift */,
 				65FE1C781C3EFDAE00CBACCF /* Stops.swift */,
+				652B14831C422D8F00F69503 /* RealmModels.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
