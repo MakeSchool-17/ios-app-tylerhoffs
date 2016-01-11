@@ -20,6 +20,7 @@ class RealmHelper{
             realmAgency.email = agency.contact.email
             realmAgency.web = agency.contact.web
             realmAgency.address = agency.contact.address
+            realmAgency.filter_state = RealmOptional<Bool>(true)
             
             try! realm.write{
                 realm.add(realmAgency, update: true)
@@ -35,6 +36,30 @@ class RealmHelper{
             try! realm.write{
                 realm.add(realmCategory, update: true)
             }
+        }
+    }
+    
+    func getAgencies() -> [Agency]{
+        let agencies = realm.objects(RealmAgency)
+        var returnList: [Agency] = []
+        for agency in agencies{
+            returnList.append(Agency(name: agency.name, id: agency._id, url: agency.web, filter: agency.filter_state.value))
+        }
+        
+        return returnList
+    }
+    
+    func switchAgencyFilterState(id: String, state: Bool){
+        let agencies = realm.objects(RealmAgency).filter("_id = '\(id)'")
+        agencies[0].filter_state = RealmOptional<Bool>(state)
+        try! realm.write{
+            realm.add(agencies[0], update: true)
+        }
+    }
+    
+    func clearAllPersistance(){
+        try! realm.write {
+            realm.deleteAll()
         }
     }
 }

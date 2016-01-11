@@ -7,10 +7,18 @@
 //
 
 import UIKit
+import RealmSwift
 
 class AgencyOptionCell: UITableViewCell {
 
+    var id: String?
+    let realmHelper = RealmHelper()
     @IBOutlet weak var agencyNameLabel: UILabel!
     @IBOutlet weak var agencySelectedSwitch: UISwitch!
+    @IBAction func agencyFilterChange(sender: UISwitch) {
+        
+        realmHelper.switchAgencyFilterState(id!, state: self.agencySelectedSwitch.on)
+        
+    }
     
 }

@@ -7,24 +7,33 @@
 //
 
 import UIKit
+import RealmSwift
+
 class OptionsViewController: UIViewController {
     
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var optionsSegmentedControl: UISegmentedControl!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
-    var agencies: [String] = ["Gautrain","Reya Vaya","MetroRail","A Re Yeng","Joburg Metrobus"]
+    let realmHelper =  RealmHelper()
+    var agencies: [Agency]?
     var links: [String] = ["Rate us on the App Store", "Send Feedback", "Follow @transitwise", "Like TransitWise on Facebook", "Share"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setNeedsStatusBarAppearanceUpdate()
         
+        agencies = realmHelper.getAgencies()
+        
         // setup table view 
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.clearColor()
         
     }
+    
+//    override func viewDidAppear(animated: Bool) {
+//        agencies = realmHelper.getAgencies()
+//    }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
@@ -37,7 +46,7 @@ class OptionsViewController: UIViewController {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(optionsSegmentedControl.selectedSegmentIndex == 0){
-            return agencies.count
+            return agencies!.count
         }
         else{
             return links.count
@@ -47,7 +56,9 @@ class OptionsViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(optionsSegmentedControl.selectedSegmentIndex == 0){
             let cell = tableView.dequeueReusableCellWithIdentifier("agencyOptionCell", forIndexPath: indexPath) as! AgencyOptionCell
-            cell.agencyNameLabel.text = agencies[indexPath.row]
+            cell.agencyNameLabel.text = agencies![indexPath.row].name
+            cell.id = agencies![indexPath.row]._id
+            cell.agencySelectedSwitch.setOn(agencies![indexPath.row].filter_state!.boolValue, animated: false)
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
@@ -78,3 +89,4 @@ class OptionsViewController: UIViewController {
     }
     
 }
+

@@ -18,7 +18,7 @@ class RealmAgency: Object {
     dynamic var email: String? = nil
     dynamic var web: String? = nil
     dynamic var address: String? = nil
-    var filter_state: Bool? = true
+    var filter_state = RealmOptional<Bool>(false)
     
     override static func indexedProperties() -> [String] {
         return ["_id"]
@@ -50,7 +50,7 @@ class UserData: Object{
 }
 
 class RecentSearches: Object{
-    let lat = RealmOptional<Double>()
-    let long = RealmOptional<Double>()
+    var lat = RealmOptional<Double>()
+    var long = RealmOptional<Double>()
     dynamic var name: String? = nil
 }
