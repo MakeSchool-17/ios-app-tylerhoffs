@@ -18,6 +18,7 @@ class RealmAgency: Object {
     dynamic var email: String? = nil
     dynamic var web: String? = nil
     dynamic var address: String? = nil
+    var filter_state: Bool? = true
     
     override static func indexedProperties() -> [String] {
         return ["_id"]
@@ -45,6 +46,7 @@ class RealmCategories: Object{
 /// Realm object to store the users data
 class UserData: Object{
     var home: CLLocationCoordinate2D? = nil
+    
 }
 
 class RecentSearches: Object{
