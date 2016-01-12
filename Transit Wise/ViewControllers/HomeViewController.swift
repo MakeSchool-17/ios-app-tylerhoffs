@@ -27,6 +27,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     @IBOutlet weak var startTextField: UITextField!
     @IBOutlet weak var endTextField: UITextField!
     @IBOutlet weak var slideCancelButton: UIButton!
+    @IBOutlet weak var dropShadowImage: UIImageView!
+    @IBOutlet weak var dropShadowImage2: UIImageView!
     
     var viewDown: Bool = false
     var locationManager = CLLocationManager()
@@ -52,6 +54,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     var parallaxHeight: Int?
     var tableColors: [[Int]] = [[69,181,230],[69,230,131],[69,211,230],[230,147,69],[120,69,230],[230,69,72]]
     var previousColorIndex: Int = 0
+    var textFieldIndex: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -331,15 +334,36 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             dropTripPlanner()
         }
         else if(tableViewStatus == 1){
-            endLocation?.setFromID(predictions![indexPath.row].placeID){response in
-                if response == nil{
-                    self.endTextField.text = self.endLocation?.name
-                    self.tripSearch()
-                    print("endLocation SET")
-                }else{
+            if(textFieldIndex == 1){
+                endLocation?.setFromID(predictions![indexPath.row].placeID){response in
+                    if response == nil{
+                        self.endTextField.text = self.endLocation?.name
+                        if let _ = self.endLocation?.lat {
+                            if let _ = self.startLocation?.lat{
+                                 self.tripSearch()
+                            }
+                        }
+                       
+                        print("endLocation SET")
+                    }else{
                     // There is an error
+                    }
                 }
-                
+            }
+            else{
+                startLocation?.setFromID(predictions![indexPath.row].placeID){response in
+                    if response == nil{
+                        self.startTextField.text = self.startLocation?.name
+                        if let _ = self.endLocation?.lat {
+                            if let _ = self.startLocation?.lat{
+                                self.tripSearch()
+                            }
+                        }
+                        print("startLocation SET")
+                    }else{
+                        // There is an error
+                    }
+                }
             }
             
         }
@@ -417,28 +441,22 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             self.view.endEditing(true)
             
             UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-                var tripPlannerFrame = self.tripPlannerView.frame
-                tripPlannerFrame.origin.y = -10
-                self.tripPlannerView.frame = tripPlannerFrame
+                //var tripPlannerFrame = self.tripPlannerView.frame
+                //tripPlannerFrame.origin.y = -10
+                //self.tripPlannerView.frame = tripPlannerFrame
+                self.tripPlannerView.transform = CGAffineTransformMakeTranslation(0,148)
+                self.dropShadowImage2.transform = CGAffineTransformMakeTranslation(0,157)
+                let tableHeader = self.mainTableView.parallaxHeader
+                tableHeader.height = self.mainView.frame.height - 55
+                self.mainTableView.parallaxHeader.height = tableHeader.height
+                self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
                 
                 
                 }, completion: { finished in
                     if self.tableViewStatus == 0 {
                         self.startTextField.text = self.startLocation?.name
                     }
-                    self.tripPlannerBottomConstraint.constant = -130
-                    UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-                        
-                        let tableHeader = self.mainTableView.parallaxHeader
-                        tableHeader.height = self.mainView.frame.height - 55
-                        self.mainTableView.parallaxHeader.height = tableHeader.height
-                        self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
-                        
-                        
-                        }, completion: { finished in
-                            print("View Moved!")
-                            
-                    })
+                    //self.tripPlannerBottomConstraint.constant = -130
             })
         }
     }
@@ -461,10 +479,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 self.mainTableView.parallaxHeader.height = tableHeader.height
                 self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
                 self.mainTableView.parallaxHeader.minimumHeight = 200
+                self.tripPlannerView.transform = CGAffineTransformMakeTranslation(0,0)
+                self.dropShadowImage2.transform = CGAffineTransformMakeTranslation(0,0)
                 
                 
                 }, completion: { finished in
-                    self.tripPlannerBottomConstraint.constant = 19
+                   /* self.tripPlannerBottomConstraint.constant = 19
                     UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                         var tripPlannerFrame = self.tripPlannerView.frame
                         tripPlannerFrame.origin.y = -156
@@ -475,7 +495,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                         
                         }, completion: { finished in
                             print("View Moved2!")
-                    })
+                    }) */
             })
             
             self.mainTableView.parallaxHeader.view?.hidden = false
@@ -619,12 +639,26 @@ extension HomeViewController{
             }, completion: { finished in
                 print("View Moved!")
         })
+        if(textField == startTextField!){
+            self.textFieldIndex = 0
+        }
+        else{
+            self.textFieldIndex = 1
+        }
+        if textField.text?.characters.count > 0 {
+            
+            placeAutocomplete(textField.text!)
+        }else{
+            self.predictions = []
+            self.mainTableView.reloadData()
+        }
+
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         var txtAfterUpdate:NSString = textField.text! as NSString
-        txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
         
+        txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
         if txtAfterUpdate.length > 0 {
             
             placeAutocomplete(txtAfterUpdate as String)
