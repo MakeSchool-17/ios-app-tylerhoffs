@@ -51,9 +51,8 @@ class RealmHelper{
     
     func switchAgencyFilterState(id: String, state: Bool){
         let agencies = realm.objects(RealmAgency).filter("_id = '\(id)'")
-        agencies[0].filter_state = RealmOptional<Bool>(state)
         try! realm.write{
-            realm.add(agencies[0], update: true)
+            realm.create(RealmAgency.self, value: ["_id": agencies[0]._id!, "filter_state": state], update: true)
         }
     }
     
