@@ -34,7 +34,6 @@
 		652B14841C422D8F00F69503 /* RealmModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B14831C422D8F00F69503 /* RealmModels.swift */; };
 		652B14861C4238CB00F69503 /* RealmHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B14851C4238CB00F69503 /* RealmHelper.swift */; };
 		652B95181C03E8DD00E0260C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B95171C03E8DD00E0260C /* AppDelegate.swift */; };
-		652B951A1C03E8DD00E0260C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652B95191C03E8DD00E0260C /* ViewController.swift */; };
 		652B951D1C03E8DD00E0260C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 652B951B1C03E8DD00E0260C /* Main.storyboard */; };
 		652B95201C03E8DD00E0260C /* Transit_Wise.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 652B951E1C03E8DD00E0260C /* Transit_Wise.xcdatamodeld */; };
 		652B95221C03E8DD00E0260C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 652B95211C03E8DD00E0260C /* Assets.xcassets */; };
@@ -132,7 +131,6 @@
 		652B14851C4238CB00F69503 /* RealmHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmHelper.swift; sourceTree = "<group>"; };
 		652B95141C03E8DD00E0260C /* Transit Wise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Transit Wise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		652B95171C03E8DD00E0260C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		652B95191C03E8DD00E0260C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		652B951C1C03E8DD00E0260C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		652B951F1C03E8DD00E0260C /* Transit_Wise.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Transit_Wise.xcdatamodel; sourceTree = "<group>"; };
 		652B95211C03E8DD00E0260C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -310,7 +308,6 @@
 				215EB0791C3CE6A600347122 /* Cells */,
 				652AF3461C067ED000FE6B15 /* RwtToAPIHelper.swift */,
 				652B14851C4238CB00F69503 /* RealmHelper.swift */,
-				652B95191C03E8DD00E0260C /* ViewController.swift */,
 				215379E11C161AC00069500B /* ViewControllers */,
 				652841D71C063E650073F60E /* DataModel */,
 				652B95171C03E8DD00E0260C /* AppDelegate.swift */,
@@ -463,7 +460,7 @@
 				TargetAttributes = {
 					21FF435A1C18AD0A00AC48CD = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = LNLLAPA3HJ;
+						DevelopmentTeam = T9AT2A746N;
 					};
 					21FF43631C18AD0A00AC48CD = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -471,7 +468,7 @@
 					};
 					652B95131C03E8DD00E0260C = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = LNLLAPA3HJ;
+						DevelopmentTeam = T9AT2A746N;
 					};
 					652B952A1C03E8DD00E0260C = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -622,7 +619,6 @@
 				652841DF1C063EE30073F60E /* Trip.swift in Sources */,
 				652B95201C03E8DD00E0260C /* Transit_Wise.xcdatamodeld in Sources */,
 				21E559C51C404858004AC365 /* BusDirectonCell.swift in Sources */,
-				652B951A1C03E8DD00E0260C /* ViewController.swift in Sources */,
 				652841EF1C0643A20073F60E /* _Stations.swift in Sources */,
 				652ED9971C41DAF600AC6541 /* CustomInfoWindowView.swift in Sources */,
 				21A2D3291C42EDB500603470 /* AgencyOptionCell.swift in Sources */,

@@ -169,7 +169,15 @@ class MapViewController: UIViewController {
     // MARK: - Table view delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //directionsTableView.parallaxHeader.height = CGFloat(indexPath.row * 10)
+        if indexPath.row > 0 && indexPath.row < (myTrip.legs?.count)!+1{
+            myTrip.focusOnLeg(mapView!, leg: myTrip.legs![indexPath.row-1], depart: nil, arrive:  nil)
+        }
+        else if indexPath.row == 0{
+            myTrip.focusOnLeg(mapView!, leg: myTrip.legs![indexPath.row], depart: true, arrive:  nil)
+        }
+        else{
+            myTrip.focusOnLeg(mapView!, leg: myTrip.legs![indexPath.row-2], depart: nil, arrive:  true)
+        }
     }
     
     // MARK: - Scroll view delegate

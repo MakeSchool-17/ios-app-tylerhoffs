@@ -9,6 +9,7 @@
 import Foundation
 import SwiftyJSON
 import GoogleMaps
+import UIKit
 
 /// Contains all details of a trip from one point to final destination.
 class Trip {
@@ -182,23 +183,30 @@ class Trip {
     }
 
     /**
-     Draw Polylines on GMSMapView
+     Focus map camera on specific legs of trip
      
-     - parameter trip:    Trip object reference to the trip that contains the path
-     - parameter mapView: MapView that the path should be drawn on.
+     - parameter mapView: GMSMapView that camera is on
+     - parameter leg:     leg that needs focus
+     - parameter depart:  Whether focus should be placed on departure point
+     - parameter arrive:  Whetehr focus should be placed on arrival destination point
      */
-    func showPolylinesOnMapView(mapView: GMSMapView){
-        for leg in self.legs!{
-            if leg.pathType! == "Group"{
-                for innerLeg in leg.legs!{
-                    innerLeg.polyline?.map = mapView
-                }
-            }else{
-                leg.polyline?.map = mapView
+    func focusOnLeg(mapView: GMSMapView, leg: Leg, depart: Bool?, arrive: Bool?){
+
+        let mapBounds = GMSCoordinateBounds(path: leg.polyline!.path)
+        let update = GMSCameraUpdate.fitBounds(mapBounds, withPadding: 20)
+        mapView.animateWithCameraUpdate(update)
+        
+        if let depart = depart{
+            if depart == true{
+                mapView.animateToLocation((leg.polyline?.path.coordinateAtIndex(0))!)
             }
         }
         
-        addLegMarkers(mapView)
+        if let arrive = arrive{
+            if arrive == true{
+                mapView.animateToLocation((leg.polyline?.path.coordinateAtIndex((leg.polyline?.path.count())!-1))!)
+            }
+        }
         
     }
     
@@ -272,6 +280,12 @@ class Trip {
      */
     func addLegMarkers(mapView: GMSMapView){
         var marker: GMSMarker
+        
+        marker = GMSMarker()
+        marker.position = CLLocationCoordinate2DMake((legs![0].path!.points!.first!.lat)!, (legs![0].path!.points!.first!.long)!)
+        marker.icon = GMSMarker.markerImageWithColor(UIColor.greenColor())
+        marker.map = mapView
+        
         for leg in self.legs!{
             if leg.pathType! == "Group"{
                 for innerLeg in leg.legs!{
@@ -296,9 +310,9 @@ class Trip {
      */
     func focusCameraOnTrip(mapView: GMSMapView){
         let mapBounds = GMSCoordinateBounds(path: self.fullPath)
-        mapView.camera = mapView.cameraForBounds(mapBounds, insets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
-//        let update = GMSCameraUpdate.fitBounds(mapBounds, withPadding: 50)
-//        mapView.moveCamera(update)
+        //mapView.camera = mapView.cameraForBounds(mapBounds, insets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
+        let update = GMSCameraUpdate.fitBounds(mapBounds, withPadding: 30)
+        mapView.moveCamera(update)
         //mapView.camera = GMSCameraPosition.cameraWithTarget(mapView.camera.target, zoom: 16)
     }
 }
