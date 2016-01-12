@@ -49,10 +49,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     var availableRoutes: Routes?
     var centerMarker: GMSMarker?
     var currentTrip: Trip?
+    var parallaxHeight: Int?
+    var tableColors: [[Int]] = [[69,181,230],[69,230,131],[69,211,230],[230,147,69],[120,69,230],[230,69,72]]
+    var previousColorIndex: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        parallaxHeight = Int(self.view.frame.height) - 250
         self.setNeedsStatusBarAppearanceUpdate()
         self.getOptions()
         placesClient = GMSPlacesClient()
@@ -88,7 +91,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         // Parallax Header Setup
         let header = mapView
         mainTableView.parallaxHeader.view = header
-        mainTableView.parallaxHeader.height = 400
+        mainTableView.parallaxHeader.height = CGFloat(self.parallaxHeight!)
         mainTableView.parallaxHeader.mode = MXParallaxHeaderMode.Fill
         mainTableView.parallaxHeader.minimumHeight = 200
         
@@ -238,17 +241,70 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     
     
-    
-    ///http://classictutorials.com/2014/08/generate-a-random-color-in-swift/
+    //Generate random colours!
+    ///http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
+    func hsvToRgb(h: Double, s: Double, v: Double) -> [Int]{
+        var r = 0.0
+        var g = 0.0
+        var b = 0.0
+        
+        let h_i = Int(h*6)
+        let f = h*6 - Double(h_i)
+        let p = v * (1 - s)
+        let q = v * (1 - f*s)
+        let t = v * (1 - (1 - f) * s)
+        
+        if(h_i==0){
+            r = v
+            g = t
+            b = p
+        }
+        else if(h_i==1){
+            r = q
+            g = v
+            b = p
+        }
+        else if(h_i==2){
+            r = p
+            g = v
+            b = t
+        }
+        else if(h_i==3){
+            r = p
+            g = q
+            b = v
+        }
+        else if(h_i==4){
+            r = t
+            g = p
+            b = v
+        }
+        else if(h_i==5){
+            r = v
+            g = p
+            b = q
+        }
+        return [Int(r*256),Int(g*256),Int(b*256)]
+    }
     func getRandomColor() -> UIColor{
+        /*
+        var h = CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+        h += 0.618033988749895
+        h %= 1
+
+        let rgb = hsvToRgb(Double(h),s: 0.7,v: 0.90)
         
-        let randomRed:CGFloat = CGFloat(drand48())
+        let color = UIColor(red: CGFloat(rgb[0])/255.0, green: CGFloat(rgb[1])/255.0, blue: CGFloat(rgb[2])/255.0, alpha: 1.0)
+        */
         
-        let randomGreen:CGFloat = CGFloat(drand48())
-        
-        let randomBlue:CGFloat = CGFloat(drand48())
-        
-        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+        var randomNumber = Int(arc4random_uniform(6))
+        while(randomNumber == previousColorIndex){
+            randomNumber = Int(arc4random_uniform(6))
+        }
+        previousColorIndex = randomNumber
+        let rgb = tableColors[randomNumber]
+        let color = UIColor(red: CGFloat(rgb[0])/255.0, green: CGFloat(rgb[1])/255.0, blue: CGFloat(rgb[2])/255.0, alpha: 1.0)
+        return color
         
     }
     
@@ -262,7 +318,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             startLocation?.name = nearbyStations![indexPath.row].name!
             startLocation?.long = (nearbyStations![indexPath.row].loc?.long)!
             startLocation?.lat = (nearbyStations![indexPath.row].loc?.lat)!
-            startTextField.text = startLocation?.name
+            
             dropTripPlanner()
         }
         else if(tableViewStatus == 1){
@@ -327,10 +383,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
             let tableHeader = self.mainTableView.parallaxHeader
-            tableHeader.height = 400
+            tableHeader.height = CGFloat(self.parallaxHeight!)
             self.mainTableView.parallaxHeader.height = tableHeader.height
             self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
             self.mainTableView.parallaxHeader.view?.hidden = false
+            self.mainTableView.parallaxHeader.minimumHeight = 200
             
             
             
@@ -347,16 +404,20 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     func dropTripPlanner(){
         if(!self.viewDown){
             self.viewDown = true
+            
             self.view.endEditing(true)
+            
             UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                 var tripPlannerFrame = self.tripPlannerView.frame
-                tripPlannerFrame.origin.y = 0
+                tripPlannerFrame.origin.y = -10
                 self.tripPlannerView.frame = tripPlannerFrame
                 
                 
                 }, completion: { finished in
-                    //self.viewDown = true
-                    self.tripPlannerBottomConstraint.constant = -156.00
+                    if self.tableViewStatus == 0 {
+                        self.startTextField.text = self.startLocation?.name
+                    }
+                    self.tripPlannerBottomConstraint.constant = -130
                     UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                         
                         let tableHeader = self.mainTableView.parallaxHeader
@@ -367,6 +428,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                         
                         }, completion: { finished in
                             print("View Moved!")
+                            
                     })
             })
         }
@@ -386,9 +448,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 
                 
                 let tableHeader = self.mainTableView.parallaxHeader
-                tableHeader.height = 400
+                tableHeader.height = CGFloat(self.parallaxHeight!)
                 self.mainTableView.parallaxHeader.height = tableHeader.height
                 self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
+                self.mainTableView.parallaxHeader.minimumHeight = 200
                 
                 
                 }, completion: { finished in
@@ -418,16 +481,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         
         availableRoutes = Routes()
         
-        /*
-        startLocation?.lat = -26.15041
-        startLocation?.long = 28.01562
-        startLocation?.name = "11 Greenfield Rd, Randburg"
-        
-        endLocation?.lat = -26.1696916
-        endLocation?.long = 28.138237
-        endLocation?.name = "9 Florence Ave, Germiston"
-        */
-        
         
         apiHelper.getDirectionsCallback((startLocation?.lat)!, startLong: (startLocation?.long)!, startName: (startLocation?.name)!, endLat: (endLocation?.lat)!, endLong: (endLocation?.long)!, endName: (endLocation?.name)!){ response in
             if response.error == nil{
@@ -435,24 +488,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 
                 self.tableViewStatus = 2
                 self.mainTableView.reloadData()
+                self.mainTableView.parallaxHeader.height = 110
+                self.mainTableView.parallaxHeader.minimumHeight = 110
+                self.mainTableView.parallaxHeader.view?.hidden = true
+                
             }else{
                 print(response.error)
             }
         }
-        
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-            
-            
-            let tableHeader = self.mainTableView.parallaxHeader
-            tableHeader.height = 110
-            self.mainTableView.parallaxHeader.height = tableHeader.height
-            self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
-            self.mainTableView.parallaxHeader.view?.hidden = true
-            
-            
-            }, completion: { finished in
-                print("View Moved!")
-        })
     }
     
     @IBAction func searchButtonTap(sender: AnyObject) {
@@ -498,11 +541,12 @@ extension HomeViewController{
                 self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
                 self.mainTableView.parallaxHeader.view?.hidden = true
                 
-                print(self.searchBarLeftConstraint.constant)
-                self.searchBarLeftConstraint.constant -= 40
-                self.searchBarRightConstraint.constant += 40
+                //self.searchBarLeftConstraint.constant -= 40
+                //self.searchBarRightConstraint.constant += 40
                 
-                self.slideCancelButton.transform = CGAffineTransformMakeTranslation(-70, 0)
+                self.searchBar.transform = CGAffineTransformMakeTranslation(-40, 0)
+                
+                self.slideCancelButton.transform = CGAffineTransformMakeTranslation(-80, 0)
                 
                 }, completion: { finished in
                     print("View Moved!")
@@ -518,25 +562,22 @@ extension HomeViewController{
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         searchActive = false
         directionButton.hidden = false
-        self.searchBarLeftConstraint.constant += 40
-        self.searchBarRightConstraint.constant -= 40
-        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+70, 0)
+        self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
+        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+80, 0)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchActive = false
         directionButton.hidden = false
-        self.searchBarLeftConstraint.constant += 40
-        self.searchBarRightConstraint.constant -= 40
-        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+70, 0)
+        self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
+        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+80, 0)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchActive = false
         directionButton.hidden = false
-        self.searchBarLeftConstraint.constant += 40
-        self.searchBarRightConstraint.constant -= 40
-        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+70, 0)
+        self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
+        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+80, 0)
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {

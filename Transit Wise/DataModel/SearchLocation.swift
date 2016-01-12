@@ -12,7 +12,7 @@ import Foundation
 class SearchLocation{
     var lat: Double?
     var long: Double?
-    var name: String? = "blank"
+    var name: String? = ""
     let apiHelper = RwtToAPIHelper()
     typealias SearchCallback = (error: NSError?) -> Void
     

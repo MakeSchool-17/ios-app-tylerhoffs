@@ -16,18 +16,25 @@ class MapViewController: UIViewController {
     var myTrip = Trip()
     let myRoute = Routes()
     let apiClient = RwtToAPIHelper()
-
+    var mapView: GMSMapView?
     @IBOutlet weak var directionsTableView: UITableView!
     @IBOutlet weak var departTimeLabel: UILabel!
     @IBOutlet weak var arriveTimeLabel: UILabel!
     
+    override func viewDidAppear(animated: Bool) {
+        
+        self.myTrip.createPolylines(mapView!)
+        self.directionsTableView.reloadData()
+        self.departTimeLabel.text = "Depart at: " + self.calcTime((self.myTrip.time?.start)!)
+        self.arriveTimeLabel.text = "Arrive at: " + self.calcTime((self.myTrip.time?.end)!)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setNeedsStatusBarAppearanceUpdate()
         let camera = GMSCameraPosition.cameraWithLatitude(-26.15041,
             longitude:28.01562, zoom:16)
-        let mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
+        mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
         
         // Parallax Header Setup
         //let header = mapView
@@ -73,10 +80,7 @@ class MapViewController: UIViewController {
             }
         }
         */
-        self.myTrip.createPolylines(mapView)
-        self.directionsTableView.reloadData()
-        self.departTimeLabel.text = "Depart at: " + self.calcTime((self.myTrip.time?.start)!)
-        self.arriveTimeLabel.text = "Arrive at: " + self.calcTime((self.myTrip.time?.end)!)
+
 
     }
     
