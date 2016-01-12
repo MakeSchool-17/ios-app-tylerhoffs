@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "searchimg.png",
+      "filename" : "BackButton.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "searchimg@2x.png",
+      "filename" : "BackButton@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "searchimg@3x.png",
+      "filename" : "BackButton@3x.png",
       "scale" : "3x"
     }
   ],

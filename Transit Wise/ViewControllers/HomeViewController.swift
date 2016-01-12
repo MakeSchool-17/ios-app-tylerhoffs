@@ -65,7 +65,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         nearbyStations = []
         
         mainTableView.rowHeight = 100
-        mainTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        //mainTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         mainTableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
         
         let camera = GMSCameraPosition.cameraWithLatitude(-25.7561672,
@@ -149,6 +149,15 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         }
     }
     
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if(tableViewStatus == 1){
+            return "Search Results"
+        }
+        else if(tableViewStatus == 3){
+            return "Search Results"
+        }
+        return nil
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -194,7 +203,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             
             cell.addressLabel?.attributedText = bolded
             cell.cityLabel?.attributedText = city
-            
+            //self.mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
             return cell
             
         }
@@ -421,7 +430,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                     UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                         
                         let tableHeader = self.mainTableView.parallaxHeader
-                        tableHeader.height = self.mainView.frame.height - 50
+                        tableHeader.height = self.mainView.frame.height - 55
                         self.mainTableView.parallaxHeader.height = tableHeader.height
                         self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
                         
@@ -488,8 +497,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 
                 self.tableViewStatus = 2
                 self.mainTableView.reloadData()
-                self.mainTableView.parallaxHeader.height = 110
-                self.mainTableView.parallaxHeader.minimumHeight = 110
+                self.mainTableView.parallaxHeader.height = 90
+                self.mainTableView.parallaxHeader.minimumHeight = 90
                 self.mainTableView.parallaxHeader.view?.hidden = true
                 
             }else{
@@ -532,7 +541,7 @@ extension HomeViewController{
             searchActive = true
             tableViewStatus = 3
             mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
-            mainTableView.rowHeight = 70
+            mainTableView.rowHeight = 50
             
             UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                 let tableHeader = self.mainTableView.parallaxHeader
@@ -595,13 +604,13 @@ extension HomeViewController{
         
         tableViewStatus = 1
         mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
-        mainTableView.rowHeight = 70
+        mainTableView.rowHeight = 50
         
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
             
             
             let tableHeader = self.mainTableView.parallaxHeader
-            tableHeader.height = 110
+            tableHeader.height = 90
             self.mainTableView.parallaxHeader.height = tableHeader.height
             self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
             self.mainTableView.parallaxHeader.view?.hidden = true
