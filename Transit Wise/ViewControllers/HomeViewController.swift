@@ -173,6 +173,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         var identifier = ""
         
         if (tableViewStatus == 0){
+            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.None
             identifier = "busStopCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! BusStopCell
             cell.contentView.backgroundColor = getRandomColor()
@@ -188,7 +189,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         }
         else if(tableViewStatus == 1){
             identifier = "searchCell"
-            
+            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
             let bolded = predictions![indexPath.row].attributedPrimaryText.mutableCopy() as! NSMutableAttributedString
             bolded.enumerateAttribute(kGMSAutocompleteMatchAttribute, inRange: NSMakeRange(0, bolded.length), options: []) { (value, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
                 let font = (value == nil) ? self.regularFont : self.boldFont
@@ -212,6 +213,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         }
         else if(tableViewStatus == 2){
             identifier = "searchCell"
+            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! SearchCell
             print(indexPath.row)
             
@@ -221,7 +223,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         }
         else if(tableViewStatus == 3){
             identifier = "searchCell"
-            
+            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
             let bolded = predictions![indexPath.row].attributedPrimaryText.mutableCopy() as! NSMutableAttributedString
             bolded.enumerateAttribute(kGMSAutocompleteMatchAttribute, inRange: NSMakeRange(0, bolded.length), options: []) { (value, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
                 let font = (value == nil) ? self.regularFont : self.boldFont
