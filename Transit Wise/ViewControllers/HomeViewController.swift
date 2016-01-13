@@ -691,24 +691,22 @@ extension HomeViewController{
     }
     
     //MARK: MapViewDelegate
-    func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
-        endLocation?.lat = marker.position.latitude
-        endLocation?.long = marker.position.longitude
-        return false
-    }
+//    func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
+//        endLocation?.lat = marker.position.latitude
+//        endLocation?.long = marker.position.longitude
+//        return false
+//    }
     
     func mapView(mapView: GMSMapView!, markerInfoWindow marker: GMSMarker!) -> UIView! {
         let customInfoWindow = NSBundle.mainBundle().loadNibNamed("CustomInfoWindow", owner: self, options: nil)[0] as! UIView
         if marker.hash == centerMarker?.hash{
-            
-        }else{
-            
+            return customInfoWindow
         }
-        return customInfoWindow
+        return nil
     }
     
     func mapView(mapView: GMSMapView!, didTapInfoWindowOfMarker marker: GMSMarker!) {
-        print("Start Search")
+        
     }
     
     func mapView(mapView: GMSMapView!, didChangeCameraPosition position: GMSCameraPosition!) {
