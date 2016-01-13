@@ -20,6 +20,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var directionsTableView: UITableView!
     @IBOutlet weak var departTimeLabel: UILabel!
     @IBOutlet weak var arriveTimeLabel: UILabel!
+    var locationManager = CLLocationManager()
     
     override func viewDidAppear(animated: Bool) {
         
@@ -42,6 +43,12 @@ class MapViewController: UIViewController {
         directionsTableView.parallaxHeader.height = 400
         directionsTableView.parallaxHeader.mode = MXParallaxHeaderMode.Fill
         directionsTableView.parallaxHeader.minimumHeight = 200
+        
+        //Locaition Manager setup
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
 
         // Do any additional setup after loading the view.
         
@@ -200,4 +207,13 @@ class MapViewController: UIViewController {
         // self.directionsTableView.removeObserver(self.directionsTableView, forKeyPath: "contentInset")
     }
     
+}
+
+extension MapViewController: CLLocationManagerDelegate{
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
+            mapView!.myLocationEnabled = true
+            
+        }
+    }
 }

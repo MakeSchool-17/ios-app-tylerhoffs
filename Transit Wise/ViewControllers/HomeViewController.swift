@@ -56,6 +56,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     var previousColorIndex: Int = 0
     var textFieldIndex: Int = 0
     
+    var foundCurrent = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         parallaxHeight = Int(self.view.frame.height) - 250
@@ -724,32 +726,18 @@ extension HomeViewController: CLLocationManagerDelegate{
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let _ = currentLocation?.lat{
-            return
-        }
         if let location = locations.first {
-            
-            mapView!.camera = GMSCameraPosition(target: location.coordinate, zoom: 16, bearing: 0, viewingAngle: 0)
             currentLocation?.lat = location.coordinate.latitude
             currentLocation?.long = location.coordinate.longitude
-            apiHelper.getNearbyStation((currentLocation?.lat)!, long: (currentLocation?.long)!){response in
-                if response.error == nil{
-                    self.nearbyStations = []
-                    for stop in response.json!["stops"]{
-                        self.nearbyStations?.append(Stop(json: stop.1))
-                    }
-                    for stops in self.nearbyStations!{
-                        stops.addMarker(self.mapView!)
-                    }
-                    self.mainTableView.reloadData()
-                }else{
-                    print(response.error)
-                }
-                
-            }
+        }
+        if foundCurrent == true{
+            return
+        }
+        foundCurrent = true
+        if let location = locations.first {
+            refreshCurrentLocation(location)
+            mapView!.camera = GMSCameraPosition(target: location.coordinate, zoom: 16, bearing: 0, viewingAngle: 0)
             
-            locationManager.stopUpdatingLocation()
-//            locationManager.startMonitoringSignificantLocationChanges()
         }
     }
     
@@ -766,6 +754,25 @@ extension HomeViewController{
             }else{
                 print(response.error)
             }
+        }
+    }
+    
+    func refreshCurrentLocation(location: CLLocation){
+        
+        apiHelper.getNearbyStation(location.coordinate.latitude, long: location.coordinate.longitude){response in
+            if response.error == nil{
+                self.nearbyStations = []
+                for stop in response.json!["stops"]{
+                    self.nearbyStations?.append(Stop(json: stop.1))
+                }
+                for stops in self.nearbyStations!{
+                    stops.addMarker(self.mapView!)
+                }
+                self.mainTableView.reloadData()
+            }else{
+                print(response.error)
+            }
+            
         }
     }
 }
