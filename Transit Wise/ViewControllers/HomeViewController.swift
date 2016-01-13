@@ -305,7 +305,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         var h = CGFloat(Float(arc4random()) / Float(UINT32_MAX))
         h += 0.618033988749895
         h %= 1
-
+        
         let rgb = hsvToRgb(Double(h),s: 0.7,v: 0.90)
         
         let color = UIColor(red: CGFloat(rgb[0])/255.0, green: CGFloat(rgb[1])/255.0, blue: CGFloat(rgb[2])/255.0, alpha: 1.0)
@@ -332,7 +332,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             startLocation?.name = nearbyStations![indexPath.row].name!
             startLocation?.long = (nearbyStations![indexPath.row].loc?.long)!
             startLocation?.lat = (nearbyStations![indexPath.row].loc?.lat)!
-            
+            mapView?.animateToLocation(CLLocationCoordinate2DMake(CLLocationDegrees((startLocation?.lat)!), CLLocationDegrees((startLocation?.long)!)))
             dropTripPlanner()
         }
         else if(tableViewStatus == 1){
@@ -342,13 +342,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                         self.endTextField.text = self.endLocation?.name
                         if let _ = self.endLocation?.lat {
                             if let _ = self.startLocation?.lat{
-                                 self.tripSearch()
+                                self.tripSearch()
                             }
                         }
-                       
+                        
                         print("endLocation SET")
                     }else{
-                    // There is an error
+                        // There is an error
                     }
                 }
             }
@@ -486,17 +486,17 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 
                 
                 }, completion: { finished in
-                   /* self.tripPlannerBottomConstraint.constant = 19
+                    /* self.tripPlannerBottomConstraint.constant = 19
                     UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-                        var tripPlannerFrame = self.tripPlannerView.frame
-                        tripPlannerFrame.origin.y = -156
-                        
-                        self.tripPlannerView.frame = tripPlannerFrame
-                        
-                        
-                        
-                        }, completion: { finished in
-                            print("View Moved2!")
+                    var tripPlannerFrame = self.tripPlannerView.frame
+                    tripPlannerFrame.origin.y = -156
+                    
+                    self.tripPlannerView.frame = tripPlannerFrame
+                    
+                    
+                    
+                    }, completion: { finished in
+                    print("View Moved2!")
                     }) */
             })
             
@@ -654,7 +654,7 @@ extension HomeViewController{
             self.predictions = []
             self.mainTableView.reloadData()
         }
-
+        
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
@@ -691,11 +691,11 @@ extension HomeViewController{
     }
     
     //MARK: MapViewDelegate
-//    func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
-//        endLocation?.lat = marker.position.latitude
-//        endLocation?.long = marker.position.longitude
-//        return false
-//    }
+    func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
+        //        endLocation?.lat = marker.position.latitude
+        //        endLocation?.long = marker.position.longitude
+        return false
+    }
     
     func mapView(mapView: GMSMapView!, markerInfoWindow marker: GMSMarker!) -> UIView! {
         let customInfoWindow = NSBundle.mainBundle().loadNibNamed("CustomInfoWindow", owner: self, options: nil)[0] as! UIView
@@ -712,6 +712,7 @@ extension HomeViewController{
     func mapView(mapView: GMSMapView!, didChangeCameraPosition position: GMSCameraPosition!) {
         centerMarker?.position = position.target
     }
+    
     
 }
 
