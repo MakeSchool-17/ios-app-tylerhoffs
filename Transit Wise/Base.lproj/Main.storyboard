@@ -25,25 +25,25 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="25" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="busStopCell" focusStyle="custom" rowHeight="100" id="I4W-fK-SQU" customClass="BusStopCell" customModule="Transit_Wise" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="100"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="busStopCell" focusStyle="custom" rowHeight="80" id="I4W-fK-SQU" customClass="BusStopCell" customModule="Transit_Wise" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I4W-fK-SQU" id="7fr-uT-DlR">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hatfield Stop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jKj-6V-rji" userLabel="stopName">
-                                                    <rect key="frame" x="21" y="15" width="560" height="34"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="25"/>
+                                                    <rect key="frame" x="21" y="10" width="560" height="34"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="22"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 Km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fsr-bL-XfK" userLabel="stopDistance">
-                                                    <rect key="frame" x="22" y="55" width="564" height="29"/>
+                                                    <rect key="frame" x="22" y="41" width="564" height="29"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="29" id="z1R-ep-uUi"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="25"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="22"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -53,11 +53,11 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="jKj-6V-rji" secondAttribute="trailing" constant="11" id="2dS-V8-4gc"/>
                                                 <constraint firstItem="Fsr-bL-XfK" firstAttribute="leading" secondItem="7fr-uT-DlR" secondAttribute="leadingMargin" constant="14" id="AhW-tK-95T"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Fsr-bL-XfK" secondAttribute="bottom" constant="7.5" id="LlP-FD-agd"/>
-                                                <constraint firstItem="Fsr-bL-XfK" firstAttribute="top" secondItem="jKj-6V-rji" secondAttribute="bottom" constant="6" id="kWv-Qo-wHw"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Fsr-bL-XfK" secondAttribute="bottom" constant="1.5" id="LlP-FD-agd"/>
+                                                <constraint firstItem="Fsr-bL-XfK" firstAttribute="top" secondItem="jKj-6V-rji" secondAttribute="bottom" constant="-3" id="kWv-Qo-wHw"/>
                                                 <constraint firstItem="jKj-6V-rji" firstAttribute="leading" secondItem="7fr-uT-DlR" secondAttribute="leadingMargin" constant="13" id="l1b-lk-faw"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Fsr-bL-XfK" secondAttribute="trailing" constant="6" id="lN4-0N-pbm"/>
-                                                <constraint firstItem="jKj-6V-rji" firstAttribute="top" secondItem="7fr-uT-DlR" secondAttribute="topMargin" constant="7" id="z9k-1T-cwg"/>
+                                                <constraint firstItem="jKj-6V-rji" firstAttribute="top" secondItem="7fr-uT-DlR" secondAttribute="topMargin" constant="2" id="z9k-1T-cwg"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -66,7 +66,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" rowHeight="50" id="RMV-Gv-wbN" customClass="SearchCell" customModule="Transit_Wise" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="128" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="108" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RMV-Gv-wbN" id="Jov-Ea-Skl">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
@@ -112,7 +112,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="recentCell" rowHeight="50" id="bni-Yc-nRJ" customClass="RecentCell" customModule="Transit_Wise" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="178" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="158" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bni-Yc-nRJ" id="qH7-wV-sit">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
@@ -157,7 +157,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tripCell" rowHeight="50" id="E8Z-0a-NSp" customClass="TripCell" customModule="Transit_Wise" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="228" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="208" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E8Z-0a-NSp" id="uFM-Le-8bp">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
@@ -324,7 +324,7 @@
                                     <constraint firstAttribute="height" constant="32" id="Ml8-zM-hgc"/>
                                     <constraint firstAttribute="width" constant="32" id="f0P-gi-nhC"/>
                                 </constraints>
-                                <state key="normal" image="SettingsButtonNoBack"/>
+                                <state key="normal" image="SettingsButton"/>
                                 <connections>
                                     <segue destination="ieU-Z7-8s5" kind="popoverPresentation" popoverAnchorView="7Ux-mH-WdY" id="MEE-xn-KrA">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -336,7 +336,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="sjs-No-94y"/>
                                 </constraints>
-                                <state key="normal" image="DirectionsButtonNoBack"/>
+                                <state key="normal" image="DirectionsButton"/>
                                 <connections>
                                     <action selector="directionButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pRB-va-A8d"/>
                                 </connections>
@@ -403,7 +403,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2x-r3-c2O">
-                                        <rect key="frame" x="237" y="37" width="127" height="21"/>
+                                        <rect key="frame" x="237" y="34" width="127" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="FbM-sY-nWE"/>
                                         </constraints>
@@ -430,7 +430,7 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="XcR-Fq-JeG" secondAttribute="bottom" constant="10" id="00B-da-Pd2"/>
                                     <constraint firstItem="XcR-Fq-JeG" firstAttribute="trailing" secondItem="43N-G1-Ure" secondAttribute="trailing" id="0qk-Zw-1NY"/>
-                                    <constraint firstItem="UWz-Qw-s2v" firstAttribute="centerY" secondItem="z2x-r3-c2O" secondAttribute="centerY" constant="1" id="4yB-rv-Sqh"/>
+                                    <constraint firstItem="UWz-Qw-s2v" firstAttribute="centerY" secondItem="z2x-r3-c2O" secondAttribute="centerY" constant="3.5" id="4yB-rv-Sqh"/>
                                     <constraint firstAttribute="trailing" secondItem="RHG-PZ-zbt" secondAttribute="trailing" constant="19" id="8MY-My-Gpe"/>
                                     <constraint firstItem="xid-ty-2TO" firstAttribute="top" secondItem="rdx-ZO-77r" secondAttribute="top" constant="33" id="DFm-pe-7XT"/>
                                     <constraint firstItem="UWz-Qw-s2v" firstAttribute="top" secondItem="xid-ty-2TO" secondAttribute="top" id="HLs-WF-BcD"/>
@@ -900,11 +900,11 @@
     <resources>
         <image name="BackArrow" width="25" height="25"/>
         <image name="CancelButton2" width="60" height="26"/>
-        <image name="DirectionsButtonNoBack" width="24" height="26"/>
+        <image name="DirectionsButton" width="22" height="24"/>
         <image name="DoneButton" width="60" height="29"/>
         <image name="DropShadow" width="600" height="10"/>
         <image name="SearchButton" width="80" height="30"/>
-        <image name="SettingsButtonNoBack" width="30" height="30"/>
+        <image name="SettingsButton" width="28" height="28"/>
         <image name="SwitchButton" width="28" height="25"/>
         <image name="barbck" width="100" height="100"/>
         <image name="chev" width="10" height="17"/>

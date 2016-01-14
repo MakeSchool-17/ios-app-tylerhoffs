@@ -180,7 +180,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if(tableViewStatus == 0){
-            return 100
+            return 80
         }
         else{
             return 50
@@ -228,7 +228,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             identifier = "busStopCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! BusStopCell
             cell.contentView.backgroundColor = getRandomColor()
-            cell.stopNameLabel.text = nearbyStations![indexPath.row].name! + " Stop"
+            cell.stopNameLabel.text = nearbyStations![indexPath.row].name! 
             if(nearbyStations![indexPath.row].distance! > 1){
                 cell.stopDistanceLabel.text = "\(nearbyStations![indexPath.row].distance!)km"
             }
