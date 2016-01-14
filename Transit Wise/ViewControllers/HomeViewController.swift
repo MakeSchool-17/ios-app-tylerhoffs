@@ -634,6 +634,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 }, completion: { finished in
                     self.startTextField.text = ""
                     self.endTextField.text = ""
+                    self.startLocation = SearchLocation()
+                    self.endLocation = SearchLocation()
             })
             
             self.mainTableView.parallaxHeader.view?.hidden = false
@@ -984,15 +986,28 @@ extension HomeViewController{
         startLocation = endLocation
         endLocation = temp
         
-        let temp2 = startTextField.text
-        startTextField.text = endTextField.text
-        endTextField.text = temp2
         
-        if let _ = self.endLocation?.lat {
-            if let _ = self.startLocation?.lat{
-                self.tripSearch()
+        
+        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
+            
+            self.startTextField.transform = CGAffineTransformMakeTranslation(0, 38)
+            
+            self.endTextField.transform = CGAffineTransformMakeTranslation(0, -38)
+            
+            }, completion: { finished in
+            self.startTextField.transform = CGAffineTransformMakeTranslation(0, 0)
+            self.endTextField.transform = CGAffineTransformMakeTranslation(0, 0)
+            let temp2 = self.startTextField.text
+            self.startTextField.text = self.endTextField.text
+            self.endTextField.text = temp2
+                
+            if let _ = self.endLocation?.lat {
+                if let _ = self.startLocation?.lat{
+                    self.tripSearch()
+                }
             }
-        }
+        })
+        
         
     }
     
