@@ -54,7 +54,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     var centerMarker: GMSMarker?
     var currentTrip: Trip?
     var parallaxHeight: Int?
-    var tableColors: [[Int]] = [[69,181,230],[69,230,131],[69,211,230],[230,147,69],[120,69,230],[230,69,72]]
+    var tableColors: [[Int]] = [[69,181,230],[69,230,131],[69,211,230],[254,196,9],[120,69,230],[230,69,72]]
     var previousColorIndex: Int = 0
     var textFieldIndex: Int = 0
     var realmHelper: RealmHelper?
@@ -306,7 +306,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 else{
                     images[i].hidden = true
                     if(i>0){
-                       chevron[i-1].hidden = true 
+                        chevron[i-1].hidden = true 
                     }
                 }
             }
@@ -340,7 +340,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             let numberRecent = recentSearches!.count - 1
             mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! RecentCell
-
+            
             
             cell.addressLabel?.text = self.recentSearches![numberRecent - indexPath.row].name
             cell.cityLabel?.text = self.recentSearches![numberRecent - indexPath.row].subtitle
@@ -878,8 +878,10 @@ extension HomeViewController{
                 if let address = response.firstResult(){
                     let lines = address.lines as! [String]
                     self.dropTripPlanner()
-                    self.startLocation = self.currentLocation
-                    self.startTextField.text = "Current Location"
+                    if(self.startTextField.text == ""){
+                        self.startLocation = self.currentLocation
+                        self.startTextField.text = "Current Location"
+                    }
                     self.endLocation?.lat = marker.position.latitude
                     self.endLocation?.long = marker.position.longitude
                     self.endLocation?.name = lines[0]
@@ -888,8 +890,10 @@ extension HomeViewController{
                     self.tripSearch()
                 }else{
                     self.dropTripPlanner()
-                    self.startLocation = self.currentLocation
-                    self.startTextField.text = "Current Location"
+                    if(self.startTextField.text == ""){
+                        self.startLocation = self.currentLocation
+                        self.startTextField.text = "Current Location"
+                    }
                     self.endLocation?.lat = marker.position.latitude
                     self.endLocation?.long = marker.position.longitude
                     self.endLocation?.name = "marker"
@@ -989,7 +993,7 @@ extension HomeViewController{
                 self.tripSearch()
             }
         }
-
+        
     }
     
     func calcTime(minutes: Int) -> String{

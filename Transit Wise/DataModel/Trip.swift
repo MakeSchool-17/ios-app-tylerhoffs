@@ -20,7 +20,7 @@ class Trip {
     var legs: [Leg]?
     
     let styles = [GMSStrokeStyle .solidColor(UIColor.greenColor()), GMSStrokeStyle .solidColor(UIColor.clearColor())] //Colours for stroke of walking path
-    let lengths = [10, 7]// Length of styles. Colour and clear
+    let lengths = [10, 8]// Length of styles. Colour and clear
     var fullPath: GMSMutablePath?
     
 //MARK: Initializers
@@ -221,7 +221,7 @@ class Trip {
         let polyline = GMSPolyline()
         
         if leg.pathType == "Walk"{
-            polyline.strokeColor = UIColor.greenColor()
+            polyline.strokeColor = UIColor(colorLiteralRed: 0.333, green: 0.855, blue: 0.471, alpha: 1.00)
             var path: GMSPath = GMSPath()
             
             RwtToAPIHelper().getWalkingPath((leg.path?.points![0])!, end: (leg.path?.points![1])!){response in
@@ -251,11 +251,11 @@ class Trip {
             
             switch leg.pathType!{
             case "Bus":
-                polyline.strokeColor = UIColor.blueColor()
+                polyline.strokeColor = UIColor(colorLiteralRed: 0.353, green: 0.522, blue: 0.984, alpha: 1.00)
             case "Rail":
-                polyline.strokeColor = UIColor.yellowColor()
+                polyline.strokeColor = UIColor(colorLiteralRed: 0.353, green: 0.522, blue: 0.984, alpha: 1.00)
             default:
-                polyline.strokeColor = UIColor.blueColor()
+                polyline.strokeColor = UIColor(colorLiteralRed: 0.353, green: 0.522, blue: 0.984, alpha: 1.00)
             }
             
             for point in (leg.path?.points)!{
