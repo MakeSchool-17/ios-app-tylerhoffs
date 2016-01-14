@@ -131,6 +131,7 @@ class MapViewController: UIViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier("directionCell", forIndexPath: indexPath) as! DirectionCell
             cell.legNameLabel.text = "Depart"
             cell.legTimeLabel.text = calcTime((self.myTrip.time?.start)!)
+            cell.mapKeyImage.image = UIImage(named: "start")
             return cell
             
         }
@@ -138,12 +139,14 @@ class MapViewController: UIViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier("directionCell", forIndexPath: indexPath) as! DirectionCell
             cell.legNameLabel.text = "Arrive"
             cell.legTimeLabel.text = calcTime((self.myTrip.time?.end)!)
+            cell.mapKeyImage.image = UIImage(named: "end")
             return cell
         }
         else if (self.myTrip.legs![indexPath.row-1].pathType == "Walk"){
             let cell = tableView.dequeueReusableCellWithIdentifier("directionCell", forIndexPath: indexPath) as! DirectionCell
             cell.legNameLabel.text = self.myTrip.legs![indexPath.row-1].pathType! + " for  \(self.myTrip.legs![indexPath.row-1].distance!)km"
             cell.legTimeLabel.text = "\((self.myTrip.legs![indexPath.row-1].time?.duration)!)" + " mins"
+            cell.mapKeyImage.image = UIImage(named: "walk")
             return cell
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("busDirectionCell", forIndexPath: indexPath) as! BusDirectionCell
@@ -153,6 +156,15 @@ class MapViewController: UIViewController {
             cell.legStartTimeLabel.text = calcTime((self.myTrip.legs![indexPath.row-1].time?.start)!)
             print((self.myTrip.legs![indexPath.row-1].time?.start)!)
             cell.legArriveTimeLabel.text = calcTime((self.myTrip.legs![indexPath.row-1].time?.end)!)
+            if((self.myTrip.legs![indexPath.row-1].agency?.name)! == "Gautrain"){
+                cell.mapKeyImage.image = UIImage(named: "train")
+            }
+            else if((self.myTrip.legs![indexPath.row-1].agency?.name)! == "Metrorail Gauteng"){
+                cell.mapKeyImage.image = UIImage(named: "train")
+            }
+            else{
+                cell.mapKeyImage.image = UIImage(named: "busicon")
+            }
             return cell
         }
     }

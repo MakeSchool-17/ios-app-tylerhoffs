@@ -11,7 +11,6 @@ import UIKit
 class DirectionCell: UITableViewCell {
     
     @IBOutlet weak var legNameLabel: UILabel!
-    @IBOutlet weak var legImage: UIImageView!
     @IBOutlet weak var mapKeyImage: UIImageView!
     @IBOutlet weak var legTimeLabel: UILabel!
     

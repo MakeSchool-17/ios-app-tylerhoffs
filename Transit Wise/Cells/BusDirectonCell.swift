@@ -9,11 +9,11 @@
 import UIKit
 
 class BusDirectionCell: UITableViewCell {
-    @IBOutlet weak var mapKeyImage: UIView!
     @IBOutlet weak var busNameLabel: UILabel!
     @IBOutlet weak var legStartTimeLabel: UILabel!
     @IBOutlet weak var legArriveTimeLabel: UILabel!
     @IBOutlet weak var busStopStart: UILabel!
     @IBOutlet weak var busStopEnd: UILabel!
+    @IBOutlet weak var mapKeyImage: UIImageView!
     
 }

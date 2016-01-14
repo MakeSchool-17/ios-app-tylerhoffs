@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		211D2AE41C47A83600B0923D /* TripCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211D2AE31C47A83600B0923D /* TripCell.swift */; };
 		2121EC811C3F74EA00F674EB /* DirectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2121EC801C3F74EA00F674EB /* DirectionCell.swift */; };
 		214B46F41C4725A4006A4223 /* RecentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214B46F31C4725A4006A4223 /* RecentCell.swift */; };
 		214F14CD1C434C3100069382 /* LinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F14CC1C434C3100069382 /* LinkCell.swift */; };
@@ -103,6 +104,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		211D2AE31C47A83600B0923D /* TripCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripCell.swift; sourceTree = "<group>"; };
 		2121EC801C3F74EA00F674EB /* DirectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionCell.swift; sourceTree = "<group>"; };
 		214B46F31C4725A4006A4223 /* RecentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentCell.swift; sourceTree = "<group>"; };
 		214F14CC1C434C3100069382 /* LinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCell.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				21A2D3281C42EDB500603470 /* AgencyOptionCell.swift */,
 				214F14CC1C434C3100069382 /* LinkCell.swift */,
 				214B46F31C4725A4006A4223 /* RecentCell.swift */,
+				211D2AE31C47A83600B0923D /* TripCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -463,7 +466,7 @@
 				TargetAttributes = {
 					21FF435A1C18AD0A00AC48CD = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = T9AT2A746N;
+						DevelopmentTeam = LNLLAPA3HJ;
 					};
 					21FF43631C18AD0A00AC48CD = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -471,7 +474,7 @@
 					};
 					652B95131C03E8DD00E0260C = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = T9AT2A746N;
+						DevelopmentTeam = LNLLAPA3HJ;
 					};
 					652B952A1C03E8DD00E0260C = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -635,6 +638,7 @@
 				652AF3471C067ED000FE6B15 /* RwtToAPIHelper.swift in Sources */,
 				658695011C3E4025008A4DD1 /* SearchLocation.swift in Sources */,
 				652841E91C06425D0073F60E /* Leg.swift in Sources */,
+				211D2AE41C47A83600B0923D /* TripCell.swift in Sources */,
 				214F14CD1C434C3100069382 /* LinkCell.swift in Sources */,
 				652841EB1C0642850073F60E /* Path.swift in Sources */,
 				215EB07B1C3CE6B900347122 /* BusStopCell.swift in Sources */,

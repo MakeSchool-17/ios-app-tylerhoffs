@@ -31,6 +31,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     @IBOutlet weak var dropShadowImage: UIImageView!
     @IBOutlet weak var dropShadowImage2: UIImageView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var spinnerBackground: UIImageView!
     
     var viewDown: Bool = false
     var locationManager = CLLocationManager()
@@ -63,7 +64,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadingIndicator.transform = CGAffineTransformMakeScale(1.5, 1.5)
+        loadingIndicator.transform = CGAffineTransformMakeScale(2, 2)
         realmHelper = RealmHelper()
         parallaxHeight = Int(self.view.frame.height) - 250
         self.setNeedsStatusBarAppearanceUpdate()
@@ -183,6 +184,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         if(tableViewStatus == 1){
             return "Search Results"
         }
+        else if(tableViewStatus == 2){
+            return "Available Trips"
+        }
         else if(tableViewStatus == 3){
             return "Search Results"
         }
@@ -247,11 +251,41 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             
         }
         else if(tableViewStatus == 2){
-            identifier = "searchCell"
+            identifier = "tripCell"
             mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! SearchCell
-            cell.addressLabel?.text = self.availableRoutes?.trips![indexPath.row].shortCode
-            cell.cityLabel?.text = ""
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! TripCell
+            cell.timeLabel?.text = String((self.availableRoutes?.trips![indexPath.row].time?.duration)!) + " mins"
+            cell.costLabel?.text = "R" + String((self.availableRoutes?.trips![indexPath.row].cost)!) + "0"
+            cell.leaveLabel?.text = "Leave at: " + calcTime((self.availableRoutes?.trips![indexPath.row].time?.start)!)
+            
+            let images = [cell.imageOne,cell.imageTwo,cell.imageThree,cell.imageFour,cell.imageFive,cell.imageSix]
+            let chevron = [cell.chevronOne,cell.chevronTwo,cell.chevronThree,cell.chevronFour,cell.chevronFive]
+            
+            for i in 0...5 {
+                
+                if(i < self.availableRoutes?.trips![indexPath.row].legs?.count){
+                    print(self.availableRoutes?.trips![indexPath.row].legs![i].agency?.name)
+                    if (self.availableRoutes?.trips![indexPath.row].legs![i].pathType == "Walk"){
+                        images[i].image = UIImage(named: "walk")
+                    }
+                    else if((self.availableRoutes?.trips![indexPath.row].legs![i].agency?.name)! == "Gautrain"){
+                        images[i].image = UIImage(named: "train")
+                    }
+                    else if((self.availableRoutes?.trips![indexPath.row].legs![i].agency?.name)! == "Metrorail Gauteng"){
+                        images[i].image = UIImage(named: "train")
+                    }
+                    else{
+                        images[i].image = UIImage(named: "busicon")
+                    }
+                }
+                else{
+                    images[i].hidden = true
+                    if(i>0){
+                       chevron[i-1].hidden = true 
+                    }
+                }
+            }
+            
             return cell
         }
         else if(tableViewStatus == 3){
@@ -572,6 +606,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 
                 
                 }, completion: { finished in
+                    self.startTextField.text = ""
+                    self.endTextField.text = ""
             })
             
             self.mainTableView.parallaxHeader.view?.hidden = false
@@ -582,7 +618,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     func tripSearch(){
         //tableViewStatus = 1
         //mainTableView.reloadData()
-        
+        self.spinnerBackground.hidden = false
         loadingIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         availableRoutes = Routes()
@@ -603,6 +639,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             }
             self.loadingIndicator.stopAnimating()
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
+            self.spinnerBackground.hidden = true
         }
     }
     
@@ -906,4 +943,36 @@ extension HomeViewController{
             
         }
     }
+    
+    @IBAction func switchButtonTap(sender: AnyObject) {
+        let temp = startLocation
+        startLocation = endLocation
+        endLocation = temp
+        
+        let temp2 = startTextField.text
+        startTextField.text = endTextField.text
+        endTextField.text = temp2
+        
+        if let _ = self.endLocation?.lat {
+            if let _ = self.startLocation?.lat{
+                self.tripSearch()
+            }
+        }
+
+    }
+    
+    func calcTime(minutes: Int) -> String{
+        let timeToday = minutes % 1440
+        let minutes = timeToday % 60
+        let hours = Int(timeToday/60)
+        var timeString = ""
+        if(minutes < 10){
+            timeString = "\(hours)" + ":0" + "\(minutes)"
+        }else{
+            timeString = "\(hours)" + ":" + "\(minutes)"
+        }
+        
+        return timeString
+    }
+    
 }
