@@ -239,6 +239,7 @@ class Trip {
                     polyline.spans = GMSStyleSpans(polyline.path, self.styles, self.lengths, kGMSLengthRhumb)
                     polyline.map = mapview
                     leg.polyline = polyline
+                    self.focusCameraOnTrip(mapview)
                 }else{
                     print(response.error)
                 }
@@ -311,7 +312,7 @@ class Trip {
     func focusCameraOnTrip(mapView: GMSMapView){
         let mapBounds = GMSCoordinateBounds(path: self.fullPath)
         //mapView.camera = mapView.cameraForBounds(mapBounds, insets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
-        let update = GMSCameraUpdate.fitBounds(mapBounds, withPadding: 30)
+        let update = GMSCameraUpdate.fitBounds(mapBounds, withPadding: 20)
         mapView.moveCamera(update)
         //mapView.camera = GMSCameraPosition.cameraWithTarget(mapView.camera.target, zoom: 16)
     }

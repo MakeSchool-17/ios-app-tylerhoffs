@@ -708,13 +708,44 @@ extension HomeViewController{
     }
     
     func mapView(mapView: GMSMapView!, didTapInfoWindowOfMarker marker: GMSMarker!) {
-        
+        GMSGeocoder().reverseGeocodeCoordinate(marker.position){ response, error in
+            if let address = response.firstResult(){
+                let lines = address.lines as! [String]
+                self.dropTripPlanner()
+                self.startLocation = self.currentLocation
+                self.startTextField.text = "Current Location"
+                self.endLocation?.lat = marker.position.latitude
+                self.endLocation?.long = marker.position.longitude
+                self.endLocation?.name = lines[0]
+                
+                self.endTextField.text = self.endLocation?.name
+                self.tripSearch()
+            }else{
+                self.dropTripPlanner()
+                self.startLocation = self.currentLocation
+                self.startTextField.text = "Current Location"
+                self.endLocation?.lat = marker.position.latitude
+                self.endLocation?.long = marker.position.longitude
+                self.endLocation?.name = "marker"
+                self.endTextField.text = self.endLocation?.name
+                self.tripSearch()
+
+            }
+        }
     }
     
     func mapView(mapView: GMSMapView!, didChangeCameraPosition position: GMSCameraPosition!) {
-        centerMarker?.position = position.target
+        if saBounds.containsCoordinate(position.target){
+            centerMarker?.position = position.target
+        }
     }
     
+    func mapView(mapView: GMSMapView!, didLongPressAtCoordinate coordinate: CLLocationCoordinate2D) {
+        if saBounds.containsCoordinate(coordinate){
+            mapView.animateToCameraPosition(GMSCameraPosition(target: coordinate, zoom: mapView.camera.zoom, bearing: mapView.camera.bearing, viewingAngle: mapView.camera.viewingAngle))
+        }
+        
+    }
     
 }
 
