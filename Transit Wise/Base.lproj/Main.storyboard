@@ -823,29 +823,48 @@
                                             <outlet property="delegate" destination="ieU-Z7-8s5" id="lxC-Sc-zx4"/>
                                         </connections>
                                     </tableView>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bordericon" translatesAutoresizingMaskIntoConstraints="NO" id="9J0-8T-1av">
+                                        <rect key="frame" x="216" y="36" width="128" height="128"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="128" id="g33-oA-Cnf"/>
+                                            <constraint firstAttribute="width" constant="128" id="isV-xd-ELo"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transit Wise" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tHb-bZ-74G">
+                                        <rect key="frame" x="224" y="172" width="113" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="Oog-6K-FIj"/>
+                                            <constraint firstAttribute="width" constant="113" id="q01-6B-SnM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbZ-G9-Y1f">
+                                        <rect key="frame" x="233" y="189" width="94" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="Eb5-h3-WTN"/>
+                                            <constraint firstAttribute="width" constant="94" id="Qx8-Wk-9d6"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="pSd-lF-Te7" secondAttribute="trailing" id="1dr-AY-Ut2"/>
+                                    <constraint firstItem="tHb-bZ-74G" firstAttribute="top" secondItem="9J0-8T-1av" secondAttribute="bottom" constant="8" symbolic="YES" id="7zz-z0-lkE"/>
                                     <constraint firstItem="pSd-lF-Te7" firstAttribute="top" secondItem="BvT-0P-mq9" secondAttribute="top" id="BN3-1a-aPl"/>
+                                    <constraint firstItem="tHb-bZ-74G" firstAttribute="centerX" secondItem="pSd-lF-Te7" secondAttribute="centerX" id="CKh-dI-Bwf"/>
+                                    <constraint firstItem="gbZ-G9-Y1f" firstAttribute="centerX" secondItem="tHb-bZ-74G" secondAttribute="centerX" id="F0Z-87-BEY"/>
                                     <constraint firstAttribute="bottom" secondItem="pSd-lF-Te7" secondAttribute="bottom" id="G1K-AE-pjV"/>
+                                    <constraint firstItem="9J0-8T-1av" firstAttribute="top" secondItem="BvT-0P-mq9" secondAttribute="top" constant="36" id="QIn-1R-yOM"/>
+                                    <constraint firstItem="gbZ-G9-Y1f" firstAttribute="top" secondItem="9J0-8T-1av" secondAttribute="bottom" constant="25" id="YzH-3d-sYl"/>
+                                    <constraint firstItem="9J0-8T-1av" firstAttribute="centerX" secondItem="tHb-bZ-74G" secondAttribute="centerX" id="Zrj-x5-gol"/>
                                     <constraint firstItem="pSd-lF-Te7" firstAttribute="leading" secondItem="BvT-0P-mq9" secondAttribute="leading" id="ghI-cB-vd6"/>
                                 </constraints>
                             </view>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9rF-G1-H9b">
-                                <rect key="frame" x="229" y="28" width="143" height="29"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="143" id="we3-yf-17l"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="Agencies"/>
-                                    <segment title="About"/>
-                                </segments>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <connections>
-                                    <action selector="segmentChange:" destination="ieU-Z7-8s5" eventType="valueChanged" id="zRc-lB-QFu"/>
-                                </connections>
-                            </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transport Agencies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0gU-08-DHm">
                                 <rect key="frame" x="20" y="44" width="263" height="21"/>
                                 <constraints>
@@ -868,6 +887,20 @@
                                     <segue destination="pdr-B2-sYM" kind="unwind" unwindAction="unwindToSegue:" id="Fsh-FP-0uG"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9rF-G1-H9b">
+                                <rect key="frame" x="229" y="28" width="143" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="143" id="we3-yf-17l"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Agencies"/>
+                                    <segment title="About"/>
+                                </segments>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="segmentChange:" destination="ieU-Z7-8s5" eventType="valueChanged" id="zRc-lB-QFu"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -885,10 +918,13 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="appIconImage" destination="9J0-8T-1av" id="oSs-7t-kxz"/>
                         <outlet property="doneButton" destination="qjy-XK-zKo" id="sKb-ty-4I5"/>
                         <outlet property="headerLabel" destination="0gU-08-DHm" id="FgS-xV-HRX"/>
+                        <outlet property="nameLabel" destination="tHb-bZ-74G" id="XEB-ke-odJ"/>
                         <outlet property="optionsSegmentedControl" destination="9rF-G1-H9b" id="aRk-UK-nDi"/>
                         <outlet property="tableView" destination="pSd-lF-Te7" id="4W2-kl-ASa"/>
+                        <outlet property="versionLabel" destination="gbZ-G9-Y1f" id="3Om-u7-bIH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UNd-Nb-0fB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -907,6 +943,7 @@
         <image name="SettingsButton" width="28" height="28"/>
         <image name="SwitchButton" width="28" height="25"/>
         <image name="barbck" width="100" height="100"/>
+        <image name="bordericon" width="128" height="128"/>
         <image name="chev" width="10" height="17"/>
         <image name="recentimg" width="24" height="24"/>
         <image name="searchimg" width="29" height="29"/>
