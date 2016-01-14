@@ -59,7 +59,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     var textFieldIndex: Int = 0
     var realmHelper: RealmHelper?
     var recentSearches: Results<RecentSearches>?
-    
+    var numberTrips: Int = 0
     var foundCurrent = false
     
     override func viewDidLoad() {
@@ -148,7 +148,15 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             return (nearbyStations?.count)! // TODO: Get Stations List
         }else if (tableViewStatus == 2){
             print("AVAILABLE ROUTES \(self.availableRoutes?.trips?.count)")
-            return (availableRoutes?.trips!.count)!
+            if let _ = availableRoutes?.trips {
+                numberTrips = (self.availableRoutes?.trips?.count)!
+                return numberTrips
+            }
+            else{
+                numberTrips = 0
+                return 0
+            }
+            
         }
         else if (tableViewStatus == 3){
             if let predictions = predictions{
@@ -185,7 +193,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             return "Search Results"
         }
         else if(tableViewStatus == 2){
-            return "Available Trips"
+            if (numberTrips == 0){
+                return "No Trips Found"
+            }else{
+                return "Available Trips"
+            }
         }
         else if(tableViewStatus == 3){
             return "Search Results"
@@ -254,7 +266,20 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             identifier = "tripCell"
             mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! TripCell
-            cell.timeLabel?.text = String((self.availableRoutes?.trips![indexPath.row].time?.duration)!) + " mins"
+            let duration = (self.availableRoutes?.trips![indexPath.row].time?.duration)!
+            let minutes = duration % 60
+            let hours = Int(duration/60)
+            var timeString = ""
+            if(hours == 0){
+                timeString = "\(minutes) mins"
+            }
+            else if(hours < 2){
+                timeString = "\(hours)" + "h " + "\(minutes)m"
+            }else{
+                timeString = "\(hours)" + "h " + "\(minutes)m"
+            }
+            
+            cell.timeLabel?.text = timeString
             cell.costLabel?.text = "R" + String((self.availableRoutes?.trips![indexPath.row].cost)!) + "0"
             cell.leaveLabel?.text = "Leave at: " + calcTime((self.availableRoutes?.trips![indexPath.row].time?.start)!)
             
@@ -585,6 +610,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     @IBAction func cancelButtonTap(sender: AnyObject) {
         if(self.viewDown){
+            self.view.endEditing(true)
             self.viewDown = false
             tableViewStatus = 0
             searchBar.text = ""
@@ -636,6 +662,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 
             }else{
                 print(response.error)
+                self.tableViewStatus = 2
+                self.mainTableView.reloadData()
+                self.mainTableView.parallaxHeader.height = 90
+                self.mainTableView.parallaxHeader.minimumHeight = 90
+                self.mainTableView.parallaxHeader.view?.hidden = true
             }
             self.loadingIndicator.stopAnimating()
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
