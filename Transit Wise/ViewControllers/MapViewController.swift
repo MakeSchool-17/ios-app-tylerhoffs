@@ -144,7 +144,13 @@ class MapViewController: UIViewController {
         }
         else if (self.myTrip.legs![indexPath.row-1].pathType == "Walk"){
             let cell = tableView.dequeueReusableCellWithIdentifier("directionCell", forIndexPath: indexPath) as! DirectionCell
-            cell.legNameLabel.text = self.myTrip.legs![indexPath.row-1].pathType! + " for  \(self.myTrip.legs![indexPath.row-1].distance!)km"
+            let distance = self.myTrip.legs![indexPath.row-1].distance!
+            if(distance > 1){
+                cell.legNameLabel.text = self.myTrip.legs![indexPath.row-1].pathType! + " for \(distance)km"
+            }
+            else{
+                cell.legNameLabel.text = self.myTrip.legs![indexPath.row-1].pathType! + " for \(Int(distance*1000))m"
+            }
             cell.legTimeLabel.text = "\((self.myTrip.legs![indexPath.row-1].time?.duration)!)" + " mins"
             cell.mapKeyImage.image = UIImage(named: "walk")
             return cell
