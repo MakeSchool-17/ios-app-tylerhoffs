@@ -36,7 +36,7 @@ class Stop{
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2DMake((loc?.lat)!, (loc?.long)!)
         marker.appearAnimation = kGMSMarkerAnimationPop
-        //marker.icon = UIImage(named: "flag_icon")
+        marker.icon = UIImage(named: "bus")
         marker.title = name
         //TODO: marker.snippet = agency and type
         marker.map = mapView

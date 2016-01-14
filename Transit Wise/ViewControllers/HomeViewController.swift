@@ -87,8 +87,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         
         centerMarker = GMSMarker()
         centerMarker!.appearAnimation = kGMSMarkerAnimationPop
-        centerMarker!.icon = GMSMarker.markerImageWithColor(UIColor.blueColor())
+        centerMarker!.icon = UIImage(named: "pin")
         centerMarker?.title = "Current Location"
+        centerMarker?.zIndex = 999
         centerMarker!.map = mapView
         
         //Locaition Manager setup
@@ -804,28 +805,30 @@ extension HomeViewController{
     }
     
     func mapView(mapView: GMSMapView!, didTapInfoWindowOfMarker marker: GMSMarker!) {
-        GMSGeocoder().reverseGeocodeCoordinate(marker.position){ response, error in
-            if let address = response.firstResult(){
-                let lines = address.lines as! [String]
-                self.dropTripPlanner()
-                self.startLocation = self.currentLocation
-                self.startTextField.text = "Current Location"
-                self.endLocation?.lat = marker.position.latitude
-                self.endLocation?.long = marker.position.longitude
-                self.endLocation?.name = lines[0]
-                
-                self.endTextField.text = self.endLocation?.name
-                self.tripSearch()
-            }else{
-                self.dropTripPlanner()
-                self.startLocation = self.currentLocation
-                self.startTextField.text = "Current Location"
-                self.endLocation?.lat = marker.position.latitude
-                self.endLocation?.long = marker.position.longitude
-                self.endLocation?.name = "marker"
-                self.endTextField.text = self.endLocation?.name
-                self.tripSearch()
-
+        if marker == centerMarker{
+            GMSGeocoder().reverseGeocodeCoordinate(marker.position){ response, error in
+                if let address = response.firstResult(){
+                    let lines = address.lines as! [String]
+                    self.dropTripPlanner()
+                    self.startLocation = self.currentLocation
+                    self.startTextField.text = "Current Location"
+                    self.endLocation?.lat = marker.position.latitude
+                    self.endLocation?.long = marker.position.longitude
+                    self.endLocation?.name = lines[0]
+                    
+                    self.endTextField.text = self.endLocation?.name
+                    self.tripSearch()
+                }else{
+                    self.dropTripPlanner()
+                    self.startLocation = self.currentLocation
+                    self.startTextField.text = "Current Location"
+                    self.endLocation?.lat = marker.position.latitude
+                    self.endLocation?.long = marker.position.longitude
+                    self.endLocation?.name = "marker"
+                    self.endTextField.text = self.endLocation?.name
+                    self.tripSearch()
+                    
+                }
             }
         }
     }

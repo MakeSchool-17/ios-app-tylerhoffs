@@ -284,7 +284,7 @@ class Trip {
         
         marker = GMSMarker()
         marker.position = CLLocationCoordinate2DMake((legs![0].path!.points!.first!.lat)!, (legs![0].path!.points!.first!.long)!)
-        marker.icon = GMSMarker.markerImageWithColor(UIColor.greenColor())
+        marker.icon = UIImage(named: "start")
         marker.map = mapView
         
         for leg in self.legs!{
@@ -292,16 +292,17 @@ class Trip {
                 for innerLeg in leg.legs!{
                     marker = GMSMarker()
                     marker.position = CLLocationCoordinate2DMake((innerLeg.path!.points!.last!.lat)!, (innerLeg.path!.points!.last!.long)!)
-                    marker.icon = GMSMarker.markerImageWithColor(UIColor.greenColor())
+                    marker.icon = UIImage(named: "mid")
                     marker.map = mapView
                 }
             }else{
                 marker = GMSMarker()
                 marker.position = CLLocationCoordinate2DMake((leg.path!.points!.last!.lat)!, (leg.path!.points!.last!.long)!)
-                marker.icon = GMSMarker.markerImageWithColor(UIColor.greenColor())
+                marker.icon = UIImage(named: "mid")
                 marker.map = mapView
             }
         }
+        marker.icon = UIImage(named: "end")
     }
    
     /**
