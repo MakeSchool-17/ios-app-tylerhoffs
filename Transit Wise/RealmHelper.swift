@@ -61,4 +61,22 @@ class RealmHelper{
             realm.deleteAll()
         }
     }
+    
+    func addRecentSearch(name: String, subtitle: String , lat: Double, long: Double){
+        let recentSearch = RecentSearches()
+        recentSearch.name = name
+        recentSearch.subtitle = subtitle
+        recentSearch.lat = RealmOptional<Double>(lat)
+        recentSearch.long = RealmOptional<Double>(long)
+        
+        try! realm.write{
+            realm.add(recentSearch, update: true)
+        }
+        
+    }
+    
+    func getRecentSearches() -> Results<RecentSearches>{
+        let searches = realm.objects(RecentSearches)
+        return searches
+    }
 }

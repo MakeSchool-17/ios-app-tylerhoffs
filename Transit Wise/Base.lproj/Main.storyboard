@@ -29,7 +29,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I4W-fK-SQU" id="7fr-uT-DlR">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hatfield Stop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jKj-6V-rji" userLabel="stopName">
@@ -69,7 +69,7 @@
                                         <rect key="frame" x="0.0" y="128" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RMV-Gv-wbN" id="Jov-Ea-Skl">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1547 Mssion Street" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uBG-g4-lKu" userLabel="addressLabel">
@@ -111,45 +111,50 @@
                                             <outlet property="cityLabel" destination="KsM-Fx-OT1" id="77b-U6-OJA"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="recentCell" rowHeight="70" id="bni-Yc-nRJ">
-                                        <rect key="frame" x="0.0" y="178" width="600" height="70"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="recentCell" rowHeight="50" id="bni-Yc-nRJ" customClass="RecentCell" customModule="Transit_Wise" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="178" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bni-Yc-nRJ" id="qH7-wV-sit">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="recentimg" translatesAutoresizingMaskIntoConstraints="NO" id="1cC-9k-7gI" userLabel="recentImage">
-                                                    <rect key="frame" x="17" y="5" width="60" height="60"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1547 Mssion Street" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lIt-g7-aQy" userLabel="addressLabel">
-                                                    <rect key="frame" x="92" y="13" width="265" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1547 Mssion Street" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lIt-g7-aQy" userLabel="addressLabel">
+                                                    <rect key="frame" x="63" y="6" width="265" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="265" id="3oi-aN-O8e"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="San Francisco, CA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o6E-FC-X5k" userLabel="cityLabel">
-                                                    <rect key="frame" x="92" y="36" width="154" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="San Francisco, CA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o6E-FC-X5k" userLabel="cityLabel">
+                                                    <rect key="frame" x="63" y="25" width="523" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="pBe-QI-Tvj"/>
-                                                        <constraint firstAttribute="width" constant="154" id="rnQ-Qf-1kp"/>
+                                                        <constraint firstAttribute="width" constant="523" id="rnQ-Qf-1kp"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="recentimg" translatesAutoresizingMaskIntoConstraints="NO" id="1cC-9k-7gI" userLabel="recentImage">
+                                                    <rect key="frame" x="24" y="15" width="20" height="20"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="lIt-g7-aQy" firstAttribute="top" secondItem="qH7-wV-sit" secondAttribute="topMargin" constant="5" id="2T2-P7-IHr"/>
+                                                <constraint firstItem="lIt-g7-aQy" firstAttribute="top" secondItem="qH7-wV-sit" secondAttribute="topMargin" constant="-2" id="2T2-P7-IHr"/>
                                                 <constraint firstItem="o6E-FC-X5k" firstAttribute="leading" secondItem="lIt-g7-aQy" secondAttribute="leading" id="5Fp-Ow-l6X"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="o6E-FC-X5k" secondAttribute="bottom" constant="4.5" id="SIK-D0-SZE"/>
-                                                <constraint firstItem="o6E-FC-X5k" firstAttribute="top" secondItem="lIt-g7-aQy" secondAttribute="bottom" constant="2" id="U9Z-Vc-dIH"/>
-                                                <constraint firstItem="lIt-g7-aQy" firstAttribute="leading" secondItem="1cC-9k-7gI" secondAttribute="trailing" constant="15" id="Z0K-yY-Evp"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="o6E-FC-X5k" secondAttribute="bottom" constant="-4" id="SIK-D0-SZE"/>
+                                                <constraint firstItem="o6E-FC-X5k" firstAttribute="top" secondItem="lIt-g7-aQy" secondAttribute="bottom" constant="-2" id="U9Z-Vc-dIH"/>
+                                                <constraint firstItem="lIt-g7-aQy" firstAttribute="leading" secondItem="1cC-9k-7gI" secondAttribute="trailing" constant="19" id="Z0K-yY-Evp"/>
                                                 <constraint firstItem="1cC-9k-7gI" firstAttribute="centerY" secondItem="qH7-wV-sit" secondAttribute="centerY" id="olq-3U-KXT"/>
-                                                <constraint firstItem="1cC-9k-7gI" firstAttribute="leading" secondItem="qH7-wV-sit" secondAttribute="leadingMargin" constant="9" id="ybZ-mm-aoK"/>
+                                                <constraint firstItem="1cC-9k-7gI" firstAttribute="leading" secondItem="qH7-wV-sit" secondAttribute="leadingMargin" constant="16" id="ybZ-mm-aoK"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addressLabel" destination="lIt-g7-aQy" id="wdI-M8-QVt"/>
+                                            <outlet property="cellImage" destination="1cC-9k-7gI" id="8r8-J1-0tz"/>
+                                            <outlet property="cityLabel" destination="o6E-FC-X5k" id="dE0-qs-y4O"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -244,7 +249,7 @@
                                             <constraint firstAttribute="height" constant="21" id="FbM-sY-nWE"/>
                                         </constraints>
                                         <attributedString key="attributedText">
-                                            <fragment content="Tansit">
+                                            <fragment content="Transit">
                                                 <attributes>
                                                     <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <font key="NSFont" size="23" name="HelveticaNeue-Light"/>
@@ -368,9 +373,9 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WFQ-gU-Pt1" userLabel="BackButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WFQ-gU-Pt1" userLabel="BackButton">
                                 <rect key="frame" x="14" y="29" width="60" height="26"/>
-                                <state key="normal" image="BackButton">
+                                <state key="normal" image="BackArrow">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -385,7 +390,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oNY-fS-3aj" id="PE3-6k-UJE">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gNn-yw-Y5T" userLabel="mapKeyImage">
@@ -435,7 +440,7 @@
                                         <rect key="frame" x="0.0" y="72" width="600" height="93"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E8k-xS-FmE" id="qOb-IJ-Vi8">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="93"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="92.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EYq-Ht-jmk">
@@ -520,6 +525,9 @@
                                     <outlet property="delegate" destination="3dM-BX-rxU" id="WIX-zi-X8B"/>
                                 </connections>
                             </tableView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DropShadow" translatesAutoresizingMaskIntoConstraints="NO" id="Ptw-Qz-Y7J">
+                                <rect key="frame" x="0.0" y="70" width="600" height="15"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.77761853690000005" blue="0.031799797749999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -572,10 +580,10 @@
                                         <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="agencyOptionCell" id="CMi-Vc-Kjs" customClass="AgencyOptionCell" customModule="Transit_Wise" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="50" width="560" height="44"/>
+                                                <rect key="frame" x="0.0" y="49.5" width="560" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CMi-Vc-Kjs" id="wIn-Ue-PWO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="560" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="560" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rdp-hF-5y1">
@@ -609,10 +617,10 @@
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="linkCell" id="JWB-Av-s6n" customClass="LinkCell" customModule="Transit_Wise" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="94" width="560" height="44"/>
+                                                <rect key="frame" x="0.0" y="93.5" width="560" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JWB-Av-s6n" id="XVg-PN-Kx4">
-                                                    <rect key="frame" x="0.0" y="0.0" width="560" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="560" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCM-vy-P8z">
@@ -718,7 +726,6 @@
     </scenes>
     <resources>
         <image name="BackArrow" width="25" height="25"/>
-        <image name="BackButton" width="60" height="26"/>
         <image name="CancelButton2" width="60" height="26"/>
         <image name="DirectionsButtonNoBack" width="24" height="26"/>
         <image name="DoneButton" width="60" height="29"/>
@@ -727,7 +734,7 @@
         <image name="SettingsButtonNoBack" width="30" height="30"/>
         <image name="SwitchButton" width="28" height="25"/>
         <image name="barbck" width="100" height="100"/>
-        <image name="recentimg" width="60" height="60"/>
+        <image name="recentimg" width="24" height="24"/>
         <image name="searchimg" width="29" height="29"/>
     </resources>
 </document>

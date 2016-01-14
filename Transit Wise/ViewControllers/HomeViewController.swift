@@ -10,6 +10,7 @@ import UIKit
 import MXParallaxHeader
 import GoogleMaps
 import CoreLocation
+import RealmSwift
 
 class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, GMSMapViewDelegate {
     
@@ -42,7 +43,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     let regularFont = UIFont.systemFontOfSize(UIFont.labelFontSize())
     let boldFont = UIFont.boldSystemFontOfSize(UIFont.labelFontSize())
     let saBounds = GMSCoordinateBounds(coordinate: CLLocationCoordinate2D(latitude: -24.940233, longitude: 27.000579), coordinate: CLLocationCoordinate2D(latitude: -26.955361, longitude: 29.098968))
-    
     var startLocation: SearchLocation?
     var endLocation: SearchLocation?
     var currentLocation: SearchLocation?
@@ -55,11 +55,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     var tableColors: [[Int]] = [[69,181,230],[69,230,131],[69,211,230],[230,147,69],[120,69,230],[230,69,72]]
     var previousColorIndex: Int = 0
     var textFieldIndex: Int = 0
+    var realmHelper: RealmHelper?
+    var recentSearches: Results<RecentSearches>?
     
     var foundCurrent = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        realmHelper = RealmHelper()
         parallaxHeight = Int(self.view.frame.height) - 250
         self.setNeedsStatusBarAppearanceUpdate()
         self.getOptions()
@@ -149,6 +152,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 return 0
             }
         }
+        else if (tableViewStatus == 4){
+            if((recentSearches?.count)! <= 5){
+                return (recentSearches?.count)!
+            }
+            else{
+                return 5
+            }
+        }
         else{
             return 0
         }
@@ -161,6 +172,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         else if(tableViewStatus == 3){
             return "Search Results"
         }
+        else if(tableViewStatus == 4){
+            return "Recent Searches"
+        }
         return nil
     }
     
@@ -171,6 +185,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         // 1: Display search results on trip planner page
         // 2: Display trips available
         // 3: Display search results on main page
+        // 4: Dislpay recent searches on trip planner page
+        // 5: Dislpay recent searches on main page
         
         var identifier = ""
         
@@ -217,8 +233,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             identifier = "searchCell"
             mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! SearchCell
-            print(indexPath.row)
-            
             cell.addressLabel?.text = self.availableRoutes?.trips![indexPath.row].shortCode
             cell.cityLabel?.text = ""
             return cell
@@ -239,13 +253,22 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             }
             
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! SearchCell
-            
-            
             cell.addressLabel?.attributedText = bolded
             cell.cityLabel?.attributedText = city
             
             return cell
             
+        }
+        else if(tableViewStatus == 4){
+            identifier = "recentCell"
+            let numberRecent = recentSearches!.count - 1
+            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! RecentCell
+
+            
+            cell.addressLabel?.text = self.recentSearches![numberRecent - indexPath.row].name
+            cell.cityLabel?.text = self.recentSearches![numberRecent - indexPath.row].subtitle
+            return cell
         }
         else{
             identifier = "recentCell"
@@ -342,6 +365,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 endLocation?.setFromID(predictions![indexPath.row].placeID){response in
                     if response == nil{
                         self.endTextField.text = self.endLocation?.name
+                        self.realmHelper?.addRecentSearch((self.endLocation?.name)!, subtitle: self.predictions![indexPath.row].attributedSecondaryText.string , lat: (self.endLocation?.lat)!, long: (self.endLocation?.long)!)
                         if let _ = self.endLocation?.lat {
                             if let _ = self.startLocation?.lat{
                                 self.tripSearch()
@@ -378,6 +402,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         else if(tableViewStatus == 3){
             endLocation?.setFromID(predictions![indexPath.row].placeID){response in
                 if response == nil{
+                    self.realmHelper?.addRecentSearch((self.endLocation?.name)!, subtitle: self.predictions![indexPath.row].attributedSecondaryText.string, lat: (self.endLocation?.lat)!, long: (self.endLocation?.long)!)
                     self.dropTripPlanner()
                     self.startLocation = self.currentLocation
                     self.startTextField.text = "Current Location"
@@ -389,6 +414,20 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             }
             
             
+        }
+        else if(tableViewStatus == 4){
+            directionButton.hidden = false
+            self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
+            self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+0, 0)
+            self.dropTripPlanner()
+            self.startLocation = self.currentLocation
+            self.startTextField.text = "Current Location"
+            let numberRecent = recentSearches!.count - 1
+            endLocation?.name = self.recentSearches![numberRecent - indexPath.row].name
+            endLocation?.lat = self.recentSearches![numberRecent - indexPath.row].lat.value
+            endLocation?.long = self.recentSearches![numberRecent - indexPath.row].long.value
+            self.endTextField.text = self.endLocation?.name
+            self.tripSearch()
         }
         else{
             self.performSegueWithIdentifier("ShowTrip", sender: self)
@@ -417,7 +456,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         mainTableView.rowHeight = 100
         mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
         
-        
+        directionButton.hidden = false
+        self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
+        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+0, 0)
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
             let tableHeader = self.mainTableView.parallaxHeader
             tableHeader.height = CGFloat(self.parallaxHeight!)
@@ -435,7 +476,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     }
     
     @IBAction func directionButtonTap(sender: UIButton) {
-        dropTripPlanner()
+        self.dropTripPlanner()
+        self.startLocation = self.currentLocation
+        self.startTextField.text = "Current Location"
+        self.endTextField.text = ""
     }
     
     func dropTripPlanner(){
@@ -458,7 +502,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 
                 }, completion: { finished in
                     if self.tableViewStatus == 0 {
-                        self.startTextField.text = self.startLocation?.name
+                        if(self.startTextField.text != "Current Location"){
+                            self.startTextField.text = self.startLocation?.name
+                        }
                     }
                     //self.tripPlannerBottomConstraint.constant = -130
             })
@@ -470,6 +516,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         if(self.viewDown){
             self.viewDown = false
             tableViewStatus = 0
+            searchBar.text = ""
             mainTableView.rowHeight = 100
             mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
             
@@ -563,9 +610,13 @@ extension HomeViewController{
         if(!searchActive){
             directionButton.hidden = true
             searchActive = true
-            tableViewStatus = 3
-            mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
+            tableViewStatus = 4
+            predictions = []
+            recentSearches = realmHelper?.getRecentSearches()
             mainTableView.rowHeight = 50
+            mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
+            
+            
             
             UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                 let tableHeader = self.mainTableView.parallaxHeader
@@ -584,6 +635,8 @@ extension HomeViewController{
                 }, completion: { finished in
                     print("View Moved!")
             })
+            
+            
         }
     }
     
@@ -594,26 +647,27 @@ extension HomeViewController{
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         searchActive = false
-        directionButton.hidden = false
-        self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
-        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+80, 0)
+        //directionButton.hidden = false
+        //self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
+        //self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+80, 0)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchActive = false
-        directionButton.hidden = false
-        self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
-        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+80, 0)
+        //directionButton.hidden = false
+        //self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
+        //self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+80, 0)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchActive = false
-        directionButton.hidden = false
-        self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
-        self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+80, 0)
+        //directionButton.hidden = false
+        //self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
+        //self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+80, 0)
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        tableViewStatus = 3
         if NSString(string: searchText).length > 0 {
             placeAutocomplete(searchBar.text!)
         }else{
@@ -643,12 +697,24 @@ extension HomeViewController{
             }, completion: { finished in
                 print("View Moved!")
         })
+        
         if(textField == startTextField!){
             self.textFieldIndex = 0
+            if(textField.text == "Current Location"){
+                textField.text = ""
+                startLocation!.lat = nil
+                startLocation!.name = ""
+            }
         }
         else{
             self.textFieldIndex = 1
+            if(textField.text == "Current Location"){
+                textField.text = ""
+                endLocation!.lat = nil
+                endLocation!.name = ""
+            }
         }
+        
         if textField.text?.characters.count > 0 {
             
             placeAutocomplete(textField.text!)

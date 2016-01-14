@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2121EC811C3F74EA00F674EB /* DirectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2121EC801C3F74EA00F674EB /* DirectionCell.swift */; };
+		214B46F41C4725A4006A4223 /* RecentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214B46F31C4725A4006A4223 /* RecentCell.swift */; };
 		214F14CD1C434C3100069382 /* LinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F14CC1C434C3100069382 /* LinkCell.swift */; };
 		215379E71C161B5D0069500B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215379E61C161B5D0069500B /* HomeViewController.swift */; };
 		215EB07B1C3CE6B900347122 /* BusStopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215EB07A1C3CE6B900347122 /* BusStopCell.swift */; };
@@ -103,6 +104,7 @@
 
 /* Begin PBXFileReference section */
 		2121EC801C3F74EA00F674EB /* DirectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionCell.swift; sourceTree = "<group>"; };
+		214B46F31C4725A4006A4223 /* RecentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentCell.swift; sourceTree = "<group>"; };
 		214F14CC1C434C3100069382 /* LinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCell.swift; sourceTree = "<group>"; };
 		215379E61C161B5D0069500B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		215EB07A1C3CE6B900347122 /* BusStopCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusStopCell.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				21E559C41C404858004AC365 /* BusDirectonCell.swift */,
 				21A2D3281C42EDB500603470 /* AgencyOptionCell.swift */,
 				214F14CC1C434C3100069382 /* LinkCell.swift */,
+				214B46F31C4725A4006A4223 /* RecentCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 				652B14841C422D8F00F69503 /* RealmModels.swift in Sources */,
 				65A872C21C1A3A660010D964 /* Options.swift in Sources */,
 				652B14861C4238CB00F69503 /* RealmHelper.swift in Sources */,
+				214B46F41C4725A4006A4223 /* RecentCell.swift in Sources */,
 				652841E51C0641DF0073F60E /* TravelDetails.swift in Sources */,
 				65FE1C791C3EFDAE00CBACCF /* Stops.swift in Sources */,
 				652841ED1C0643920073F60E /* Station.swift in Sources */,

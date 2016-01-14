@@ -53,4 +53,9 @@ class RecentSearches: Object{
     var lat = RealmOptional<Double>()
     var long = RealmOptional<Double>()
     dynamic var name: String? = nil
+    dynamic var subtitle: String? = nil
+    
+    override static func primaryKey() -> String? {
+        return "name"
+    }
 }
