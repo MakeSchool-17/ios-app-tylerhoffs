@@ -12,7 +12,7 @@ import GoogleMaps
 import CoreLocation
 import RealmSwift
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, GMSMapViewDelegate {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, GMSMapViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
     
     @IBOutlet var mainView: UIView!
@@ -70,6 +70,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         startLocation = SearchLocation()
         endLocation = SearchLocation()
         currentLocation = SearchLocation()
+        recentSearches = realmHelper?.getRecentSearches()
         nearbyStations = []
         
         mainTableView.rowHeight = 100
@@ -152,7 +153,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 return 0
             }
         }
-        else if (tableViewStatus == 4){
+        else if (tableViewStatus == 4 || tableViewStatus == 5){
             if((recentSearches?.count)! <= 5){
                 return (recentSearches?.count)!
             }
@@ -165,6 +166,16 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         }
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if(tableViewStatus == 0){
+            return 100
+        }
+        else{
+            return 50
+        }
+    }
+    
+    
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if(tableViewStatus == 1){
             return "Search Results"
@@ -175,11 +186,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         else if(tableViewStatus == 4){
             return "Recent Searches"
         }
+        else if(tableViewStatus == 5){
+            return "Recent Searches"
+        }
         return nil
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+        print(tableViewStatus)
         // Table View Statuses:
         // 0: Display bus stops
         // 1: Display search results on trip planner page
@@ -259,7 +273,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             return cell
             
         }
-        else if(tableViewStatus == 4){
+        else if(tableViewStatus == 4) || (tableViewStatus == 5){
             identifier = "recentCell"
             let numberRecent = recentSearches!.count - 1
             mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
@@ -350,6 +364,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     // MARK: - Table view delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         //selectedWaypoint = waypoints[indexPath.row]
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
         //self.performSegueWithIdentifier("ShowTrip", sender: self)
@@ -428,6 +443,25 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             endLocation?.long = self.recentSearches![numberRecent - indexPath.row].long.value
             self.endTextField.text = self.endLocation?.name
             self.tripSearch()
+        }
+        else if(tableViewStatus == 5){
+            
+            if(textFieldIndex == 1){
+                let numberRecent = recentSearches!.count - 1
+                endLocation?.name = self.recentSearches![numberRecent - indexPath.row].name
+                endLocation?.lat = self.recentSearches![numberRecent - indexPath.row].lat.value
+                endLocation?.long = self.recentSearches![numberRecent - indexPath.row].long.value
+                self.endTextField.text = self.endLocation?.name
+                self.tripSearch()
+            }
+            else{
+                let numberRecent = recentSearches!.count - 1
+                startLocation?.name = self.recentSearches![numberRecent - indexPath.row].name
+                startLocation?.lat = self.recentSearches![numberRecent - indexPath.row].lat.value
+                startLocation?.long = self.recentSearches![numberRecent - indexPath.row].long.value
+                self.startTextField.text = self.startLocation?.name
+                self.tripSearch()
+            }
         }
         else{
             self.performSegueWithIdentifier("ShowTrip", sender: self)
@@ -535,18 +569,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
                 
                 
                 }, completion: { finished in
-                    /* self.tripPlannerBottomConstraint.constant = 19
-                    UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-                    var tripPlannerFrame = self.tripPlannerView.frame
-                    tripPlannerFrame.origin.y = -156
-                    
-                    self.tripPlannerView.frame = tripPlannerFrame
-                    
-                    
-                    
-                    }, completion: { finished in
-                    print("View Moved2!")
-                    }) */
             })
             
             self.mainTableView.parallaxHeader.view?.hidden = false
@@ -612,7 +634,7 @@ extension HomeViewController{
             searchActive = true
             tableViewStatus = 4
             predictions = []
-            recentSearches = realmHelper?.getRecentSearches()
+            
             mainTableView.rowHeight = 50
             mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
             
@@ -680,9 +702,11 @@ extension HomeViewController{
     
     func textFieldDidBeginEditing(textField: UITextField) {
         
-        tableViewStatus = 1
+        
+        tableViewStatus = 5
         mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
         mainTableView.rowHeight = 50
+        
         
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
             
@@ -726,6 +750,7 @@ extension HomeViewController{
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        tableViewStatus = 1
         var txtAfterUpdate:NSString = textField.text! as NSString
         
         txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
