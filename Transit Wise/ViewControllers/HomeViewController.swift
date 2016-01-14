@@ -30,6 +30,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     @IBOutlet weak var slideCancelButton: UIButton!
     @IBOutlet weak var dropShadowImage: UIImageView!
     @IBOutlet weak var dropShadowImage2: UIImageView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     var viewDown: Bool = false
     var locationManager = CLLocationManager()
@@ -62,6 +63,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadingIndicator.transform = CGAffineTransformMakeScale(1.5, 1.5)
         realmHelper = RealmHelper()
         parallaxHeight = Int(self.view.frame.height) - 250
         self.setNeedsStatusBarAppearanceUpdate()
@@ -580,7 +582,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         //tableViewStatus = 1
         //mainTableView.reloadData()
         
-        
+        loadingIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         availableRoutes = Routes()
         
         
@@ -597,6 +600,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             }else{
                 print(response.error)
             }
+            self.loadingIndicator.stopAnimating()
+            UIApplication.sharedApplication().endIgnoringInteractionEvents()
         }
     }
     

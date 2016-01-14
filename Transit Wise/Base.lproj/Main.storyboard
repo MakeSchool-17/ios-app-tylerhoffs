@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -298,6 +298,11 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DropShadow" translatesAutoresizingMaskIntoConstraints="NO" id="hmK-UU-uo4">
                                 <rect key="frame" x="0.0" y="-15" width="600" height="15"/>
                             </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ULu-AE-pKc">
+                                <rect key="frame" x="281.5" y="282" width="37" height="37"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.15673449612403101" colorSpace="calibratedRGB"/>
+                                <color key="color" red="0.99215686274509807" green="0.72549019607843135" blue="0.054901960784313725" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.99607843139999996" green="0.76862745099999996" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -313,7 +318,9 @@
                             <constraint firstItem="Xaj-dE-YVP" firstAttribute="top" secondItem="rdx-ZO-77r" secondAttribute="bottom" constant="19" id="OCe-c6-Gwf"/>
                             <constraint firstItem="Xaj-dE-YVP" firstAttribute="leading" secondItem="7Ux-mH-WdY" secondAttribute="trailing" id="Qai-PO-M6S"/>
                             <constraint firstItem="KIO-R5-BYK" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="1" id="U3z-NB-Dxa"/>
+                            <constraint firstItem="ULu-AE-pKc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cp3-dG-dAS"/>
                             <constraint firstItem="g6F-ht-XJG" firstAttribute="top" secondItem="cXl-Ek-arU" secondAttribute="bottom" constant="7" id="fL5-1H-dpx"/>
+                            <constraint firstItem="ULu-AE-pKc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="jro-Gs-UoL"/>
                             <constraint firstAttribute="trailing" secondItem="g6F-ht-XJG" secondAttribute="trailing" id="llu-oU-ykn"/>
                             <constraint firstItem="cXl-Ek-arU" firstAttribute="top" secondItem="7Ux-mH-WdY" secondAttribute="top" id="rRh-Dh-ChY"/>
                             <constraint firstItem="Xaj-dE-YVP" firstAttribute="leading" secondItem="7Ux-mH-WdY" secondAttribute="trailing" id="sVr-gu-RrI"/>
@@ -332,6 +339,7 @@
                         <outlet property="dropShadowImage" destination="wgb-uX-ihM" id="Tma-kg-vyK"/>
                         <outlet property="dropShadowImage2" destination="hmK-UU-uo4" id="cFQ-CW-S9x"/>
                         <outlet property="endTextField" destination="XcR-Fq-JeG" id="mZi-B1-YWZ"/>
+                        <outlet property="loadingIndicator" destination="ULu-AE-pKc" id="SqO-iN-DQl"/>
                         <outlet property="mainTableView" destination="g6F-ht-XJG" id="izz-KP-M3x"/>
                         <outlet property="mainView" destination="8bC-Xf-vdC" id="uDw-Hr-N4B"/>
                         <outlet property="searchBar" destination="Xaj-dE-YVP" id="0hH-R5-Knv"/>
