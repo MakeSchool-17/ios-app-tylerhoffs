@@ -278,9 +278,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
             }else{
                 timeString = "\(hours)" + "h " + "\(minutes)m"
             }
-            
+            var cost = (self.availableRoutes?.trips![indexPath.row].cost)!
             cell.timeLabel?.text = timeString
-            cell.costLabel?.text = "R" + String((self.availableRoutes?.trips![indexPath.row].cost)!) + "0"
+            if (cost == 0.0){
+                cost = 40.0
+            }
+            cell.costLabel?.text = "R" + String(cost) + "0"
             cell.leaveLabel?.text = "Leave at: " + calcTime((self.availableRoutes?.trips![indexPath.row].time?.start)!)
             
             let images = [cell.imageOne,cell.imageTwo,cell.imageThree,cell.imageFour,cell.imageFive,cell.imageSix]
