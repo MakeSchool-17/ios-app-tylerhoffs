@@ -50,44 +50,6 @@ class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
 
-        // Do any additional setup after loading the view.
-        
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        /* EDGE CASE
-        let startName = "11 Greenfield Rd, Randburg"
-        let endName = "9 Florence Ave, Germiston"
-        
-        
-        apiClient.getDirectionsCallback(-26.15041, startLong: 28.01562, startName: startName, endLat: -26.1696916, endLong: 28.138237, endName: endName){ response in
-            if response.error == nil{
-                self.myTrip.JSONinit(response.json!)
-                self.myTrip.createPolylines(mapView)
-                self.directionsTableView.reloadData()
-            }else{
-                print(response.error)
-            }
-        } */
-        
-        /*
-        let startName = "Menlyn Park Shopping Centre, Pretoria, South Africa"
-        let endName = "Pretoria Central, Pretoria, Gauteng, South Africa"
-        
-        
-        apiClient.getDirectionsCallback(-25.782677, startLong: 28.276191, startName: startName, endLat: -25.7500498, endLong: 28.1688913, endName: endName){ response in
-            if response.error == nil{
-                self.myRoute.JSONinit(response.json!)
-                self.myTrip = self.myRoute.trips![0]
-                self.myTrip.createPolylines(mapView)
-                self.directionsTableView.reloadData()
-                self.departTimeLabel.text = "Depart at: " + self.calcTime((self.myTrip.time?.start)!)
-                self.arriveTimeLabel.text = "Arrive at: " + self.calcTime((self.myTrip.time?.end)!)
-            }else{
-                print(response.error)
-            }
-        }
-        */
-
 
     }
     
@@ -204,25 +166,9 @@ class MapViewController: UIViewController {
             myTrip.focusOnLeg(mapView!, leg: myTrip.legs![indexPath.row-2], depart: nil, arrive:  true)
         }
     }
-    
-    // MARK: - Scroll view delegate
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        //NSLog("progress %f", scrollView.parallaxHeader.progress)
-    }
 
     deinit {
         self.directionsTableView = nil
-    }
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        // self.directionsTableView.removeObserver(self.directionsTableView, forKeyPath: "contentOffset")
-        // self.directionsTableView.removeObserver(self.directionsTableView, forKeyPath: "contentInset")
     }
     
 }

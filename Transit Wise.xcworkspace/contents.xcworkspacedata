@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../../Documents/Design/Resources/gpxgmap_converted.gpx">
+   </FileRef>
+   <FileRef
       location = "group:Transit Wise.xcodeproj">
    </FileRef>
    <FileRef

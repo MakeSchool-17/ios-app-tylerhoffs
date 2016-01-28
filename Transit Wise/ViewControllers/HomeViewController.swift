@@ -12,7 +12,7 @@ import GoogleMaps
 import CoreLocation
 import RealmSwift
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, GMSMapViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController{
     
     
     @IBOutlet var mainView: UIView!
@@ -64,11 +64,17 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadingIndicator.transform = CGAffineTransformMakeScale(2, 2)
+        
+        loadingIndicator.transform = CGAffineTransformMakeScale(2, 2) //Change scale of loding indicator
         realmHelper = RealmHelper()
+        
+        //set initial height of parralax header contianing map
         parallaxHeight = Int(self.view.frame.height) - 250
-        self.setNeedsStatusBarAppearanceUpdate()
-        self.getOptions()
+        
+        self.setNeedsStatusBarAppearanceUpdate() //Part of changing status bar to white.
+        self.getOptions() //Update persisted options
+        
+        //Initialise various helpers and variables
         placesClient = GMSPlacesClient()
         startLocation = SearchLocation()
         endLocation = SearchLocation()
@@ -77,15 +83,16 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         nearbyStations = []
         
         mainTableView.rowHeight = 100
-        //mainTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         mainTableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
         
+        //Set initial camera position and apply it to the map
         let camera = GMSCameraPosition.cameraWithLatitude(-25.7561672,
             longitude:28.2289275, zoom:16)
         mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
         mapView!.delegate = self
         mapView!.settings.myLocationButton = true
         
+        //Initialize and display centre marker
         centerMarker = GMSMarker()
         centerMarker!.appearAnimation = kGMSMarkerAnimationPop
         centerMarker!.icon = UIImage(named: "pin")
@@ -99,8 +106,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-        //mapView!.addObserver(self, forKeyPath: "myLocation", options: NSKeyValueObservingOptions.New, context: nil)
-        
         // Parallax Header Setup
         let header = mapView
         mainTableView.parallaxHeader.view = header
@@ -111,8 +116,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tripPlannerView.addGestureRecognizer(tap)
-        //mapView?.addGestureRecognizer(tap)
         
+        
+        //3D Touch Shortcut Implemenation
         if #available(iOS 9.1, *) {
             let homeShortcut = UIApplicationShortcutItem(type: "com.transitwise.takemehome", localizedTitle: "Take Me Home", localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .Home), userInfo: nil)
             let workShortcut = UIApplicationShortcutItem(type: "com.transitwise.takemework", localizedTitle: "Take Me to Work", localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .Bookmark), userInfo: nil)
@@ -125,6 +131,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         
     }
     
+    //Set the main status bar to white (LightStyle)
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
@@ -132,405 +139,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
-    }
-    
-    // MARK: - Table view data source
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if (tableViewStatus == 1){
-            if let predictions = predictions{
-                return predictions.count
-            }else{
-                return 0
-            }
-        }else if (tableViewStatus == 0){
-            return (nearbyStations?.count)! // TODO: Get Stations List
-        }else if (tableViewStatus == 2){
-            print("AVAILABLE ROUTES \(self.availableRoutes?.trips?.count)")
-            if let _ = availableRoutes?.trips {
-                numberTrips = (self.availableRoutes?.trips?.count)!
-                return numberTrips
-            }
-            else{
-                numberTrips = 0
-                return 0
-            }
-            
-        }
-        else if (tableViewStatus == 3){
-            if let predictions = predictions{
-                return predictions.count
-            }else{
-                return 0
-            }
-        }
-        else if (tableViewStatus == 4 || tableViewStatus == 5){
-            if((recentSearches?.count)! <= 5){
-                return (recentSearches?.count)!
-            }
-            else{
-                return 5
-            }
-        }
-        else{
-            return 0
-        }
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if(tableViewStatus == 0){
-            return 80
-        }
-        else{
-            return 50
-        }
-    }
-    
-    
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if(tableViewStatus == 1){
-            return "Search Results"
-        }
-        else if(tableViewStatus == 2){
-            if (numberTrips == 0){
-                return "No Trips Found"
-            }else{
-                return "Available Trips"
-            }
-        }
-        else if(tableViewStatus == 3){
-            return "Search Results"
-        }
-        else if(tableViewStatus == 4){
-            return "Recent Searches"
-        }
-        else if(tableViewStatus == 5){
-            return "Recent Searches"
-        }
-        return nil
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print(tableViewStatus)
-        // Table View Statuses:
-        // 0: Display bus stops
-        // 1: Display search results on trip planner page
-        // 2: Display trips available
-        // 3: Display search results on main page
-        // 4: Dislpay recent searches on trip planner page
-        // 5: Dislpay recent searches on main page
-        
-        var identifier = ""
-        
-        if (tableViewStatus == 0){
-            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-            identifier = "busStopCell"
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! BusStopCell
-            cell.contentView.backgroundColor = getRandomColor()
-            cell.stopNameLabel.text = nearbyStations![indexPath.row].name! 
-            if(nearbyStations![indexPath.row].distance! > 1){
-                cell.stopDistanceLabel.text = "\(nearbyStations![indexPath.row].distance!)km"
-            }
-            else{
-                let metres = Int(nearbyStations![indexPath.row].distance! * 1000)
-                cell.stopDistanceLabel.text = "\(metres)m"
-            }
-            return cell
-        }
-        else if(tableViewStatus == 1){
-            identifier = "searchCell"
-            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-            let bolded = predictions![indexPath.row].attributedPrimaryText.mutableCopy() as! NSMutableAttributedString
-            bolded.enumerateAttribute(kGMSAutocompleteMatchAttribute, inRange: NSMakeRange(0, bolded.length), options: []) { (value, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
-                let font = (value == nil) ? self.regularFont : self.boldFont
-                bolded.addAttribute(NSFontAttributeName, value: font, range: range)
-            }
-            
-            let city = predictions![indexPath.row].attributedSecondaryText.mutableCopy() as! NSMutableAttributedString
-            city.enumerateAttribute(kGMSAutocompleteMatchAttribute, inRange: NSMakeRange(0, city.length), options: []) { (value, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
-                let font = (value == nil) ? self.regularFont : self.boldFont
-                city.addAttribute(NSFontAttributeName, value: font, range: range)
-            }
-            
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! SearchCell
-            
-            
-            cell.addressLabel?.attributedText = bolded
-            cell.cityLabel?.attributedText = city
-            //self.mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-            return cell
-            
-        }
-        else if(tableViewStatus == 2){
-            identifier = "tripCell"
-            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! TripCell
-            let duration = (self.availableRoutes?.trips![indexPath.row].time?.duration)!
-            let minutes = duration % 60
-            let hours = Int(duration/60)
-            var timeString = ""
-            if(hours == 0){
-                timeString = "\(minutes) mins"
-            }
-            else if(hours < 2){
-                timeString = "\(hours)" + "h " + "\(minutes)m"
-            }else{
-                timeString = "\(hours)" + "h " + "\(minutes)m"
-            }
-            var cost = (self.availableRoutes?.trips![indexPath.row].cost)!
-            cell.timeLabel?.text = timeString
-            if (cost == 0.0){
-                cost = 40.0
-            }
-            cell.costLabel?.text = "R" + String(cost) + "0"
-            cell.leaveLabel?.text = "Leave at: " + calcTime((self.availableRoutes?.trips![indexPath.row].time?.start)!)
-            
-            let images = [cell.imageOne,cell.imageTwo,cell.imageThree,cell.imageFour,cell.imageFive,cell.imageSix]
-            let chevron = [cell.chevronOne,cell.chevronTwo,cell.chevronThree,cell.chevronFour,cell.chevronFive]
-            
-            for i in 0...5 {
-                
-                if(i < self.availableRoutes?.trips![indexPath.row].legs?.count){
-                    print(self.availableRoutes?.trips![indexPath.row].legs![i].agency?.name)
-                    if (self.availableRoutes?.trips![indexPath.row].legs![i].pathType == "Walk"){
-                        images[i].image = UIImage(named: "walk")
-                    }
-                    else if((self.availableRoutes?.trips![indexPath.row].legs![i].agency?.name)! == "Gautrain"){
-                        images[i].image = UIImage(named: "train")
-                    }
-                    else if((self.availableRoutes?.trips![indexPath.row].legs![i].agency?.name)! == "Metrorail Gauteng"){
-                        images[i].image = UIImage(named: "train")
-                    }
-                    else{
-                        images[i].image = UIImage(named: "busicon")
-                    }
-                }
-                else{
-                    images[i].hidden = true
-                    if(i>0){
-                        chevron[i-1].hidden = true 
-                    }
-                }
-            }
-            
-            return cell
-        }
-        else if(tableViewStatus == 3){
-            identifier = "searchCell"
-            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-            let bolded = predictions![indexPath.row].attributedPrimaryText.mutableCopy() as! NSMutableAttributedString
-            bolded.enumerateAttribute(kGMSAutocompleteMatchAttribute, inRange: NSMakeRange(0, bolded.length), options: []) { (value, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
-                let font = (value == nil) ? self.regularFont : self.boldFont
-                bolded.addAttribute(NSFontAttributeName, value: font, range: range)
-            }
-            
-            let city = predictions![indexPath.row].attributedSecondaryText.mutableCopy() as! NSMutableAttributedString
-            city.enumerateAttribute(kGMSAutocompleteMatchAttribute, inRange: NSMakeRange(0, city.length), options: []) { (value, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
-                let font = (value == nil) ? self.regularFont : self.boldFont
-                city.addAttribute(NSFontAttributeName, value: font, range: range)
-            }
-            
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! SearchCell
-            cell.addressLabel?.attributedText = bolded
-            cell.cityLabel?.attributedText = city
-            
-            return cell
-            
-        }
-        else if(tableViewStatus == 4) || (tableViewStatus == 5){
-            identifier = "recentCell"
-            let numberRecent = recentSearches!.count - 1
-            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! RecentCell
-            
-            
-            cell.addressLabel?.text = self.recentSearches![numberRecent - indexPath.row].name
-            cell.cityLabel?.text = self.recentSearches![numberRecent - indexPath.row].subtitle
-            return cell
-        }
-        else{
-            identifier = "recentCell"
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
-            return cell
-        }
-        
-    }
-    
-    
-    
-    //Generate random colours!
-    ///http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
-    func hsvToRgb(h: Double, s: Double, v: Double) -> [Int]{
-        var r = 0.0
-        var g = 0.0
-        var b = 0.0
-        
-        let h_i = Int(h*6)
-        let f = h*6 - Double(h_i)
-        let p = v * (1 - s)
-        let q = v * (1 - f*s)
-        let t = v * (1 - (1 - f) * s)
-        
-        if(h_i==0){
-            r = v
-            g = t
-            b = p
-        }
-        else if(h_i==1){
-            r = q
-            g = v
-            b = p
-        }
-        else if(h_i==2){
-            r = p
-            g = v
-            b = t
-        }
-        else if(h_i==3){
-            r = p
-            g = q
-            b = v
-        }
-        else if(h_i==4){
-            r = t
-            g = p
-            b = v
-        }
-        else if(h_i==5){
-            r = v
-            g = p
-            b = q
-        }
-        return [Int(r*256),Int(g*256),Int(b*256)]
-    }
-    func getRandomColor() -> UIColor{
-        /*
-        var h = CGFloat(Float(arc4random()) / Float(UINT32_MAX))
-        h += 0.618033988749895
-        h %= 1
-        
-        let rgb = hsvToRgb(Double(h),s: 0.7,v: 0.90)
-        
-        let color = UIColor(red: CGFloat(rgb[0])/255.0, green: CGFloat(rgb[1])/255.0, blue: CGFloat(rgb[2])/255.0, alpha: 1.0)
-        */
-        
-        var randomNumber = Int(arc4random_uniform(6))
-        while(randomNumber == previousColorIndex){
-            randomNumber = Int(arc4random_uniform(6))
-        }
-        previousColorIndex = randomNumber
-        let rgb = tableColors[randomNumber]
-        let color = UIColor(red: CGFloat(rgb[0])/255.0, green: CGFloat(rgb[1])/255.0, blue: CGFloat(rgb[2])/255.0, alpha: 1.0)
-        return color
-        
-    }
-    
-    // MARK: - Table view delegate
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        //selectedWaypoint = waypoints[indexPath.row]
-        tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        //self.performSegueWithIdentifier("ShowTrip", sender: self)
-        if(tableViewStatus == 0){
-            startLocation?.name = nearbyStations![indexPath.row].name!
-            startLocation?.long = (nearbyStations![indexPath.row].loc?.long)!
-            startLocation?.lat = (nearbyStations![indexPath.row].loc?.lat)!
-            mapView?.animateToLocation(CLLocationCoordinate2DMake(CLLocationDegrees((startLocation?.lat)!), CLLocationDegrees((startLocation?.long)!)))
-            dropTripPlanner()
-        }
-        else if(tableViewStatus == 1){
-            if(textFieldIndex == 1){
-                endLocation?.setFromID(predictions![indexPath.row].placeID){response in
-                    if response == nil{
-                        self.endTextField.text = self.endLocation?.name
-                        self.realmHelper?.addRecentSearch((self.endLocation?.name)!, subtitle: self.predictions![indexPath.row].attributedSecondaryText.string , lat: (self.endLocation?.lat)!, long: (self.endLocation?.long)!)
-                        if let _ = self.endLocation?.lat {
-                            if let _ = self.startLocation?.lat{
-                                self.tripSearch()
-                            }
-                        }
-                        
-                        print("endLocation SET")
-                    }else{
-                        // There is an error
-                    }
-                }
-            }
-            else{
-                startLocation?.setFromID(predictions![indexPath.row].placeID){response in
-                    if response == nil{
-                        self.startTextField.text = self.startLocation?.name
-                        if let _ = self.endLocation?.lat {
-                            if let _ = self.startLocation?.lat{
-                                self.tripSearch()
-                            }
-                        }
-                        print("startLocation SET")
-                    }else{
-                        // There is an error
-                    }
-                }
-            }
-            
-        }
-        else if(tableViewStatus == 2){
-            currentTrip = availableRoutes?.trips![indexPath.row]
-            self.performSegueWithIdentifier("ShowTrip", sender: self)
-        }
-        else if(tableViewStatus == 3){
-            endLocation?.setFromID(predictions![indexPath.row].placeID){response in
-                if response == nil{
-                    self.realmHelper?.addRecentSearch((self.endLocation?.name)!, subtitle: self.predictions![indexPath.row].attributedSecondaryText.string, lat: (self.endLocation?.lat)!, long: (self.endLocation?.long)!)
-                    self.dropTripPlanner()
-                    self.startLocation = self.currentLocation
-                    self.startTextField.text = "Current Location"
-                    self.endTextField.text = self.endLocation?.name
-                    self.tripSearch()
-                }else{
-                    // There is an error
-                }
-            }
-            
-            
-        }
-        else if(tableViewStatus == 4){
-            directionButton.hidden = false
-            self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
-            self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+0, 0)
-            self.dropTripPlanner()
-            self.startLocation = self.currentLocation
-            self.startTextField.text = "Current Location"
-            let numberRecent = recentSearches!.count - 1
-            endLocation?.name = self.recentSearches![numberRecent - indexPath.row].name
-            endLocation?.lat = self.recentSearches![numberRecent - indexPath.row].lat.value
-            endLocation?.long = self.recentSearches![numberRecent - indexPath.row].long.value
-            self.endTextField.text = self.endLocation?.name
-            self.tripSearch()
-        }
-        else if(tableViewStatus == 5){
-            
-            if(textFieldIndex == 1){
-                let numberRecent = recentSearches!.count - 1
-                endLocation?.name = self.recentSearches![numberRecent - indexPath.row].name
-                endLocation?.lat = self.recentSearches![numberRecent - indexPath.row].lat.value
-                endLocation?.long = self.recentSearches![numberRecent - indexPath.row].long.value
-                self.endTextField.text = self.endLocation?.name
-                self.tripSearch()
-            }
-            else{
-                let numberRecent = recentSearches!.count - 1
-                startLocation?.name = self.recentSearches![numberRecent - indexPath.row].name
-                startLocation?.lat = self.recentSearches![numberRecent - indexPath.row].lat.value
-                startLocation?.long = self.recentSearches![numberRecent - indexPath.row].long.value
-                self.startTextField.text = self.startLocation?.name
-                self.tripSearch()
-            }
-        }
-        else{
-            self.performSegueWithIdentifier("ShowTrip", sender: self)
-        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -646,9 +254,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
         
     }
     
+    //Function interacting with APIHelper to send relevant information to the API and receive a list of trips
     func tripSearch(){
-        //tableViewStatus = 1
-        //mainTableView.reloadData()
         self.spinnerBackground.hidden = false
         loadingIndicator.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
@@ -704,7 +311,348 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITextFieldDele
     }
 }
 
-extension HomeViewController{
+// MARK: - Table view functions
+// Extension containing all of the table view functions
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
+    // Table View Statuses:
+    // 0: Display bus stops
+    // 1: Display search results on trip planner page
+    // 2: Display trips available
+    // 3: Display search results on main page
+    // 4: Dislpay recent searches on trip planner page
+    // 5: Dislpay recent searches on main page
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if (tableViewStatus == 1){
+            if let predictions = predictions{
+                return predictions.count
+            }else{
+                return 0
+            }
+        }else if (tableViewStatus == 0){
+            return (nearbyStations?.count)! // TODO: Get Stations List\
+            
+        }else if (tableViewStatus == 2){
+            if let _ = availableRoutes?.trips {
+                numberTrips = (self.availableRoutes?.trips?.count)!
+                return numberTrips
+            }
+            else{
+                numberTrips = 0
+                return 0
+            }
+            
+        }
+        else if (tableViewStatus == 3){
+            if let predictions = predictions{
+                return predictions.count
+            }else{
+                return 0
+            }
+        }
+        else if (tableViewStatus == 4 || tableViewStatus == 5){
+            if((recentSearches?.count)! <= 5){
+                return (recentSearches?.count)!
+            }
+            else{
+                return 5
+            }
+        }
+        else{
+            return 0
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if(tableViewStatus == 0){
+            return 80
+        }
+        else{
+            return 50
+        }
+    }
+    
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if(tableViewStatus == 1){
+            return "Search Results"
+        }
+        else if(tableViewStatus == 2){
+            if (numberTrips == 0){
+                return "No Trips Found"
+            }else{
+                return "Available Trips"
+            }
+        }
+        else if(tableViewStatus == 3){
+            return "Search Results"
+        }
+        else if(tableViewStatus == 4){
+            return "Recent Searches"
+        }
+        else if(tableViewStatus == 5){
+            return "Recent Searches"
+        }
+        return nil
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var identifier = ""
+        
+        if (tableViewStatus == 0){
+            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+            identifier = "busStopCell"
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! BusStopCell
+            
+            cell.contentView.backgroundColor = getRandomColor()
+            cell.stopNameLabel.text = nearbyStations![indexPath.row].name!
+            if(nearbyStations![indexPath.row].distance! > 1){
+                cell.stopDistanceLabel.text = "\(nearbyStations![indexPath.row].distance!)km"
+            }
+            else{
+                let metres = Int(nearbyStations![indexPath.row].distance! * 1000)
+                cell.stopDistanceLabel.text = "\(metres)m"
+            }
+            return cell
+        }
+        else if(tableViewStatus == 1){
+            identifier = "searchCell"
+            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+            
+            let bolded = predictions![indexPath.row].attributedPrimaryText.mutableCopy() as! NSMutableAttributedString
+            bolded.enumerateAttribute(kGMSAutocompleteMatchAttribute, inRange: NSMakeRange(0, bolded.length), options: []) { (value, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+                let font = (value == nil) ? self.regularFont : self.boldFont
+                bolded.addAttribute(NSFontAttributeName, value: font, range: range)
+            }
+            
+            let city = predictions![indexPath.row].attributedSecondaryText.mutableCopy() as! NSMutableAttributedString
+            city.enumerateAttribute(kGMSAutocompleteMatchAttribute, inRange: NSMakeRange(0, city.length), options: []) { (value, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+                let font = (value == nil) ? self.regularFont : self.boldFont
+                city.addAttribute(NSFontAttributeName, value: font, range: range)
+            }
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! SearchCell
+            
+            
+            cell.addressLabel?.attributedText = bolded
+            cell.cityLabel?.attributedText = city
+            return cell
+            
+        }
+        else if(tableViewStatus == 2){
+            identifier = "tripCell"
+            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! TripCell
+            let duration = (self.availableRoutes?.trips![indexPath.row].time?.duration)!
+            let minutes = duration % 60
+            let hours = Int(duration/60)
+            var timeString = ""
+            if(hours == 0){
+                timeString = "\(minutes) mins"
+            }
+            else if(hours < 2){
+                timeString = "\(hours)" + "h " + "\(minutes)m"
+            }else{
+                timeString = "\(hours)" + "h " + "\(minutes)m"
+            }
+            var cost = (self.availableRoutes?.trips![indexPath.row].cost)!
+            cell.timeLabel?.text = timeString
+            if (cost == 0.0){
+                cost = 40.0
+            }
+            cell.costLabel?.text = "R" + String(cost) + "0"
+            cell.leaveLabel?.text = "Leave at: " + calcTime((self.availableRoutes?.trips![indexPath.row].time?.start)!)
+            
+            let images = [cell.imageOne,cell.imageTwo,cell.imageThree,cell.imageFour,cell.imageFive,cell.imageSix]
+            let chevron = [cell.chevronOne,cell.chevronTwo,cell.chevronThree,cell.chevronFour,cell.chevronFive]
+            
+            for i in 0...5 {
+                
+                if(i < self.availableRoutes?.trips![indexPath.row].legs?.count){
+                    print(self.availableRoutes?.trips![indexPath.row].legs![i].agency?.name)
+                    if (self.availableRoutes?.trips![indexPath.row].legs![i].pathType == "Walk"){
+                        images[i].image = UIImage(named: "walk")
+                    }
+                    else if((self.availableRoutes?.trips![indexPath.row].legs![i].agency?.name)! == "Gautrain"){
+                        images[i].image = UIImage(named: "train")
+                    }
+                    else if((self.availableRoutes?.trips![indexPath.row].legs![i].agency?.name)! == "Metrorail Gauteng"){
+                        images[i].image = UIImage(named: "train")
+                    }
+                    else{
+                        images[i].image = UIImage(named: "busicon")
+                    }
+                }
+                else{
+                    images[i].hidden = true
+                    if(i>0){
+                        chevron[i-1].hidden = true
+                    }
+                }
+            }
+            
+            return cell
+        }
+        else if(tableViewStatus == 3){
+            identifier = "searchCell"
+            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+            let bolded = predictions![indexPath.row].attributedPrimaryText.mutableCopy() as! NSMutableAttributedString
+            bolded.enumerateAttribute(kGMSAutocompleteMatchAttribute, inRange: NSMakeRange(0, bolded.length), options: []) { (value, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+                let font = (value == nil) ? self.regularFont : self.boldFont
+                bolded.addAttribute(NSFontAttributeName, value: font, range: range)
+            }
+            
+            let city = predictions![indexPath.row].attributedSecondaryText.mutableCopy() as! NSMutableAttributedString
+            city.enumerateAttribute(kGMSAutocompleteMatchAttribute, inRange: NSMakeRange(0, city.length), options: []) { (value, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+                let font = (value == nil) ? self.regularFont : self.boldFont
+                city.addAttribute(NSFontAttributeName, value: font, range: range)
+            }
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! SearchCell
+            cell.addressLabel?.attributedText = bolded
+            cell.cityLabel?.attributedText = city
+            
+            return cell
+            
+        }
+        else if(tableViewStatus == 4) || (tableViewStatus == 5){
+            identifier = "recentCell"
+            let numberRecent = recentSearches!.count - 1
+            mainTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! RecentCell
+            
+            
+            cell.addressLabel?.text = self.recentSearches![numberRecent - indexPath.row].name
+            cell.cityLabel?.text = self.recentSearches![numberRecent - indexPath.row].subtitle
+            return cell
+        }
+        else{
+            identifier = "recentCell"
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
+            return cell
+        }
+        
+    }
+    
+    func getRandomColor() -> UIColor{
+        
+        var randomNumber = Int(arc4random_uniform(6))
+        while(randomNumber == previousColorIndex){
+            randomNumber = Int(arc4random_uniform(6))
+        }
+        previousColorIndex = randomNumber
+        let rgb = tableColors[randomNumber]
+        let color = UIColor(red: CGFloat(rgb[0])/255.0, green: CGFloat(rgb[1])/255.0, blue: CGFloat(rgb[2])/255.0, alpha: 1.0)
+        return color
+        
+    }
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        if(tableViewStatus == 0){
+            startLocation?.name = nearbyStations![indexPath.row].name!
+            startLocation?.long = (nearbyStations![indexPath.row].loc?.long)!
+            startLocation?.lat = (nearbyStations![indexPath.row].loc?.lat)!
+            mapView?.animateToLocation(CLLocationCoordinate2DMake(CLLocationDegrees((startLocation?.lat)!), CLLocationDegrees((startLocation?.long)!)))
+            dropTripPlanner()
+        }
+        else if(tableViewStatus == 1){
+            if(textFieldIndex == 1){
+                endLocation?.setFromID(predictions![indexPath.row].placeID){response in
+                    if response == nil{
+                        self.endTextField.text = self.endLocation?.name
+                        self.realmHelper?.addRecentSearch((self.endLocation?.name)!, subtitle: self.predictions![indexPath.row].attributedSecondaryText.string , lat: (self.endLocation?.lat)!, long: (self.endLocation?.long)!)
+                        if let _ = self.endLocation?.lat {
+                            if let _ = self.startLocation?.lat{
+                                self.tripSearch()
+                            }
+                        }
+                    }else{
+                        print("Location not set from ID")
+                    }
+                }
+            }
+            else{
+                startLocation?.setFromID(predictions![indexPath.row].placeID){response in
+                    if response == nil{
+                        self.startTextField.text = self.startLocation?.name
+                        if let _ = self.endLocation?.lat {
+                            if let _ = self.startLocation?.lat{
+                                self.tripSearch()
+                            }
+                        }
+                    }else{
+                        print("Location not set from ID")
+                    }
+                }
+            }
+            
+        }
+        else if(tableViewStatus == 2){
+            currentTrip = availableRoutes?.trips![indexPath.row]
+            self.performSegueWithIdentifier("ShowTrip", sender: self)
+        }
+        else if(tableViewStatus == 3){
+            endLocation?.setFromID(predictions![indexPath.row].placeID){response in
+                if response == nil{
+                    self.realmHelper?.addRecentSearch((self.endLocation?.name)!, subtitle: self.predictions![indexPath.row].attributedSecondaryText.string, lat: (self.endLocation?.lat)!, long: (self.endLocation?.long)!)
+                    self.dropTripPlanner()
+                    self.startLocation = self.currentLocation
+                    self.startTextField.text = "Current Location"
+                    self.endTextField.text = self.endLocation?.name
+                    self.tripSearch()
+                }else{
+                    print("Location not set from ID")
+                }
+            }
+            
+            
+        }
+        else if(tableViewStatus == 4){
+            directionButton.hidden = false
+            self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
+            self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+0, 0)
+            self.dropTripPlanner()
+            self.startLocation = self.currentLocation
+            self.startTextField.text = "Current Location"
+            let numberRecent = recentSearches!.count - 1
+            endLocation?.name = self.recentSearches![numberRecent - indexPath.row].name
+            endLocation?.lat = self.recentSearches![numberRecent - indexPath.row].lat.value
+            endLocation?.long = self.recentSearches![numberRecent - indexPath.row].long.value
+            self.endTextField.text = self.endLocation?.name
+            self.tripSearch()
+        }
+        else if(tableViewStatus == 5){
+            
+            if(textFieldIndex == 1){
+                let numberRecent = recentSearches!.count - 1
+                endLocation?.name = self.recentSearches![numberRecent - indexPath.row].name
+                endLocation?.lat = self.recentSearches![numberRecent - indexPath.row].lat.value
+                endLocation?.long = self.recentSearches![numberRecent - indexPath.row].long.value
+                self.endTextField.text = self.endLocation?.name
+                self.tripSearch()
+            }
+            else{
+                let numberRecent = recentSearches!.count - 1
+                startLocation?.name = self.recentSearches![numberRecent - indexPath.row].name
+                startLocation?.lat = self.recentSearches![numberRecent - indexPath.row].lat.value
+                startLocation?.long = self.recentSearches![numberRecent - indexPath.row].long.value
+                self.startTextField.text = self.startLocation?.name
+                self.tripSearch()
+            }
+        }
+        else{
+            self.performSegueWithIdentifier("ShowTrip", sender: self)
+        }
+    }
+    
+}
+
+// MARK: - Search bar functions
+// Extension containing all of the search bar functions
+extension HomeViewController: UISearchBarDelegate{
     
     //Search Bar Delegate Functions
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
@@ -717,8 +665,7 @@ extension HomeViewController{
             mainTableView.rowHeight = 50
             mainTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
             
-            
-            
+            //Animation to slide searchbar to the left and reveal a cancel button
             UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
                 let tableHeader = self.mainTableView.parallaxHeader
                 tableHeader.height = 0
@@ -726,11 +673,7 @@ extension HomeViewController{
                 self.mainTableView.parallaxHeader.minimumHeight = tableHeader.height
                 self.mainTableView.parallaxHeader.view?.hidden = true
                 
-                //self.searchBarLeftConstraint.constant -= 40
-                //self.searchBarRightConstraint.constant += 40
-                
                 self.searchBar.transform = CGAffineTransformMakeTranslation(-40, 0)
-                
                 self.slideCancelButton.transform = CGAffineTransformMakeTranslation(-80, 0)
                 
                 }, completion: { finished in
@@ -748,23 +691,14 @@ extension HomeViewController{
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         searchActive = false
-        //directionButton.hidden = false
-        //self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
-        //self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+80, 0)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchActive = false
-        //directionButton.hidden = false
-        //self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
-        //self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+80, 0)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchActive = false
-        //directionButton.hidden = false
-        //self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0)
-        //self.slideCancelButton.transform = CGAffineTransformMakeTranslation(+80, 0)
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -776,8 +710,8 @@ extension HomeViewController{
             self.mainTableView.reloadData()
         }
     }
-    
-    //Text Field Delegate Funtions
+}
+extension HomeViewController:  UITextFieldDelegate{
     
     func textFieldDidBeginEditing(textField: UITextField) {
         
@@ -862,13 +796,18 @@ extension HomeViewController{
         })
     }
     
-    //MARK: MapViewDelegate
+}
+//MARK: MapViewDelegate
+//Extension containing all the mapview reated function
+extension HomeViewController: GMSMapViewDelegate{
+    
     func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
         //        endLocation?.lat = marker.position.latitude
         //        endLocation?.long = marker.position.longitude
         return false
     }
     
+    //Function that draws a window above marker when it is tapped.
     func mapView(mapView: GMSMapView!, markerInfoWindow marker: GMSMarker!) -> UIView! {
         let customInfoWindow = NSBundle.mainBundle().loadNibNamed("CustomInfoWindow", owner: self, options: nil)[0] as! UIView
         if marker.hash == centerMarker?.hash{
@@ -877,6 +816,7 @@ extension HomeViewController{
         return nil
     }
     
+    //Function that handles taps on the window drawn above marker.
     func mapView(mapView: GMSMapView!, didTapInfoWindowOfMarker marker: GMSMarker!) {
         if marker == centerMarker{
             GMSGeocoder().reverseGeocodeCoordinate(marker.position){ response, error in
@@ -910,12 +850,14 @@ extension HomeViewController{
         }
     }
     
+    //Funciton that hmakes marker stay centered on the map
     func mapView(mapView: GMSMapView!, didChangeCameraPosition position: GMSCameraPosition!) {
         if saBounds.containsCoordinate(position.target){
             centerMarker?.position = position.target
         }
     }
     
+    //Function handling a long press on the map
     func mapView(mapView: GMSMapView!, didLongPressAtCoordinate coordinate: CLLocationCoordinate2D) {
         if saBounds.containsCoordinate(coordinate){
             mapView.animateToCameraPosition(GMSCameraPosition(target: coordinate, zoom: mapView.camera.zoom, bearing: mapView.camera.bearing, viewingAngle: mapView.camera.viewingAngle))
@@ -925,7 +867,10 @@ extension HomeViewController{
     
 }
 
+//MARK: CLLocationManagerDelegate
+//Extension containing a location manager to deal with user's current position
 extension HomeViewController: CLLocationManagerDelegate{
+    
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == CLAuthorizationStatus.AuthorizedWhenInUse {
             mapView!.myLocationEnabled = true
@@ -951,7 +896,10 @@ extension HomeViewController: CLLocationManagerDelegate{
     
 }
 
+//Extention for misc. functions
 extension HomeViewController{
+    
+    //Function that get's persisted options from last session.
     func getOptions(){
         apiHelper.getOptionsCallback(){response in
             if response.error == nil{
@@ -984,6 +932,7 @@ extension HomeViewController{
         }
     }
     
+    //Animation and function when switch button is tapped
     @IBAction func switchButtonTap(sender: AnyObject) {
         let temp = startLocation
         startLocation = endLocation
@@ -1014,6 +963,7 @@ extension HomeViewController{
         
     }
     
+    //Funciton that converts time from certain stored format to displayable format.
     func calcTime(minutes: Int) -> String{
         let timeToday = minutes % 1440
         let minutes = timeToday % 60
