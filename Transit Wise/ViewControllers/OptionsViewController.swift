@@ -38,6 +38,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate,UITableViewDa
 //        agencies = realmHelper.getAgencies()
 //    }
     
+    //Set status bar colour to white
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
@@ -98,10 +99,8 @@ class OptionsViewController: UIViewController, UITableViewDelegate,UITableViewDa
             presentViewController(activityViewController, animated: true, completion: nil)
         }
     }
-    
-    @IBAction func doneButtonTap(sender: AnyObject) {
-    }
-    
+
+    //Segment controller for two different option screeens
     @IBAction func segmentChange(sender: AnyObject) {
         tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
         if(optionsSegmentedControl.selectedSegmentIndex == 0){
