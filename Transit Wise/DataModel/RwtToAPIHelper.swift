@@ -16,6 +16,24 @@ class RwtToAPIHelper{
     typealias ApiCallback = (json: JSON?, error: NSError?) -> Void
     typealias CoordinatesCallback = (place: GMSPlace?, error: NSError?) -> Void
     
+    
+    /**
+     Get Number of minutes that have passed since Monday 00:00.
+     
+     - returns: minutes returned as integer
+     */
+    func getCurrentMinutes()->Int {
+        
+        let myCalendar = NSCalendar.currentCalendar()
+        var myComponents = myCalendar.components(.Weekday, fromDate: NSDate())
+        let weekDay = myComponents.weekday
+        myComponents = myCalendar.components(.Hour, fromDate: NSDate())
+        let hour = myComponents.hour
+        myComponents = myCalendar.components(.Minute, fromDate: NSDate())
+        let minute = myComponents.minute
+        return ((weekDay-1)*1440 + (hour*60) + minute)
+    }
+    
     //MARK: API Calls
     
     /**
@@ -30,20 +48,20 @@ class RwtToAPIHelper{
     
     */
     func getDirectionsCallback(startLat: Double, startLong: Double, startName: String, endLat: Double, endLong: Double, endName: String, callback: ApiCallback){
-        
+        let time = getCurrentMinutes()
         let headers    = ["app": "testing", "Content-Type": "application/json"]
-        let parameters = ["start":
+        let params = ["start":
             ["loc": [startLat,startLong], "name": startName],
             "end":
                 ["loc": [endLat,endLong], "name": endName],
             "options":
                 ["exclude":
                     ["agencies": [], "cats": []]],
-            "time": 900,
-            "_csrf": "Unathi Xcode",
+            "time": time,
+            "_csrf": "Transit Wise iOS App",
             "multiple": true]
         
-        let request    = Alamofire.request(.POST, "https://rwt.to/api/site/directions", parameters: parameters, encoding: .JSON, headers: headers)
+        let request    = Alamofire.request(.POST, "https://rwt.to/api/site/directions", parameters: params as? [String : AnyObject], encoding: .JSON, headers: headers)
         
         request.validate().responseJSON { response in
             switch response.result {
@@ -133,7 +151,12 @@ class RwtToAPIHelper{
         
     }
     
-    
+    /**
+     Get details of a location using GMSPlaceID
+     
+     - parameter placeID:  placeID from GMSPlaceID
+     - parameter callback: Callback once response received
+     */
     func getPlaceDetailsFromID(placeID: String, callback: CoordinatesCallback){
         let placesClient = GMSPlacesClient()
         placesClient.lookUpPlaceID(placeID, callback: { (place: GMSPlace?, error: NSError?) -> Void in

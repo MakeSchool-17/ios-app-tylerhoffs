@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -883,7 +883,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="doneButtonTap:" destination="ieU-Z7-8s5" eventType="touchUpInside" id="P0D-vz-0H1"/>
                                     <segue destination="pdr-B2-sYM" kind="unwind" unwindAction="unwindToSegue:" id="Fsh-FP-0uG"/>
                                 </connections>
                             </button>
@@ -919,7 +918,6 @@
                     </view>
                     <connections>
                         <outlet property="appIconImage" destination="9J0-8T-1av" id="oSs-7t-kxz"/>
-                        <outlet property="doneButton" destination="qjy-XK-zKo" id="sKb-ty-4I5"/>
                         <outlet property="headerLabel" destination="0gU-08-DHm" id="FgS-xV-HRX"/>
                         <outlet property="nameLabel" destination="tHb-bZ-74G" id="XEB-ke-odJ"/>
                         <outlet property="optionsSegmentedControl" destination="9rF-G1-H9b" id="aRk-UK-nDi"/>

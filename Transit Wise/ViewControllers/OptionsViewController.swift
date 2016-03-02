@@ -78,25 +78,27 @@ class OptionsViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        if(indexPath.row == 0){
-            let email = "support@transitwise.co.za"
-            let url = NSURL(string: "mailto:\(email)")
-            UIApplication.sharedApplication().openURL(url!)
-        }
-        else if(indexPath.row == 1){
-            UIApplication.sharedApplication().openURL(NSURL(string: "https://twitter.com/transitwise")!)
-        }
-        else if(indexPath.row == 2){
-            UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/transitwise/")!)
-        }
-        else if(indexPath.row == 3){
-            let shareString = "String to share"
-            
-            let objectsToShare = [shareString]
-            
-            let activityViewController      = UIActivityViewController(activityItems: objectsToShare as [AnyObject], applicationActivities: nil)
-            
-            presentViewController(activityViewController, animated: true, completion: nil)
+        if(optionsSegmentedControl.selectedSegmentIndex == 1){
+            if(indexPath.row == 0){
+                let email = "support@transitwise.co.za"
+                let url = NSURL(string: "mailto:\(email)")
+                UIApplication.sharedApplication().openURL(url!)
+            }
+            else if(indexPath.row == 1){
+                UIApplication.sharedApplication().openURL(NSURL(string: "https://twitter.com/transitwise")!)
+            }
+            else if(indexPath.row == 2){
+                UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/transitwise/")!)
+            }
+            else if(indexPath.row == 3){
+                let shareString = "String to share"
+                
+                let objectsToShare = [shareString]
+                
+                let activityViewController      = UIActivityViewController(activityItems: objectsToShare as [AnyObject], applicationActivities: nil)
+                
+                presentViewController(activityViewController, animated: true, completion: nil)
+            }
         }
     }
 

@@ -256,33 +256,38 @@ class HomeViewController: UIViewController{
     
     //Function interacting with APIHelper to send relevant information to the API and receive a list of trips
     func tripSearch(){
-        self.spinnerBackground.hidden = false
-        loadingIndicator.startAnimating()
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        availableRoutes = Routes()
-        
-        
-        apiHelper.getDirectionsCallback((startLocation?.lat)!, startLong: (startLocation?.long)!, startName: (startLocation?.name)!, endLat: (endLocation?.lat)!, endLong: (endLocation?.long)!, endName: (endLocation?.name)!){ response in
-            if response.error == nil{
-                self.availableRoutes!.JSONinit(response.json!)
+        if let _ = self.endLocation?.lat {
+            if let _ = self.startLocation?.lat{
+
+                self.spinnerBackground.hidden = false
+                loadingIndicator.startAnimating()
+                UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+                availableRoutes = Routes()
                 
-                self.tableViewStatus = 2
-                self.mainTableView.reloadData()
-                self.mainTableView.parallaxHeader.height = 90
-                self.mainTableView.parallaxHeader.minimumHeight = 90
-                self.mainTableView.parallaxHeader.view?.hidden = true
                 
-            }else{
-                print(response.error)
-                self.tableViewStatus = 2
-                self.mainTableView.reloadData()
-                self.mainTableView.parallaxHeader.height = 90
-                self.mainTableView.parallaxHeader.minimumHeight = 90
-                self.mainTableView.parallaxHeader.view?.hidden = true
+                apiHelper.getDirectionsCallback((startLocation?.lat)!, startLong: (startLocation?.long)!, startName: (startLocation?.name)!, endLat: (endLocation?.lat)!, endLong: (endLocation?.long)!, endName: (endLocation?.name)!){ response in
+                    if response.error == nil{
+                        self.availableRoutes!.JSONinit(response.json!)
+                        
+                        self.tableViewStatus = 2
+                        self.mainTableView.reloadData()
+                        self.mainTableView.parallaxHeader.height = 90
+                        self.mainTableView.parallaxHeader.minimumHeight = 90
+                        self.mainTableView.parallaxHeader.view?.hidden = true
+                        
+                    }else{
+                        print(response.error)
+                        self.tableViewStatus = 2
+                        self.mainTableView.reloadData()
+                        self.mainTableView.parallaxHeader.height = 90
+                        self.mainTableView.parallaxHeader.minimumHeight = 90
+                        self.mainTableView.parallaxHeader.view?.hidden = true
+                    }
+                    self.loadingIndicator.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    self.spinnerBackground.hidden = true
+                }
             }
-            self.loadingIndicator.stopAnimating()
-            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-            self.spinnerBackground.hidden = true
         }
     }
     
@@ -564,11 +569,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
                     if response == nil{
                         self.endTextField.text = self.endLocation?.name
                         self.realmHelper?.addRecentSearch((self.endLocation?.name)!, subtitle: self.predictions![indexPath.row].attributedSecondaryText.string , lat: (self.endLocation?.lat)!, long: (self.endLocation?.long)!)
-                        if let _ = self.endLocation?.lat {
-                            if let _ = self.startLocation?.lat{
-                                self.tripSearch()
-                            }
-                        }
+                        self.tripSearch()
                     }else{
                         print("Location not set from ID")
                     }
@@ -578,11 +579,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
                 startLocation?.setFromID(predictions![indexPath.row].placeID){response in
                     if response == nil{
                         self.startTextField.text = self.startLocation?.name
-                        if let _ = self.endLocation?.lat {
-                            if let _ = self.startLocation?.lat{
-                                self.tripSearch()
-                            }
-                        }
+                        self.tripSearch()
                     }else{
                         print("Location not set from ID")
                     }
@@ -953,11 +950,7 @@ extension HomeViewController{
             self.startTextField.text = self.endTextField.text
             self.endTextField.text = temp2
                 
-            if let _ = self.endLocation?.lat {
-                if let _ = self.startLocation?.lat{
-                    self.tripSearch()
-                }
-            }
+            self.tripSearch()
         })
         
         
